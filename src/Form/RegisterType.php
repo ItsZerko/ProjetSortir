@@ -17,7 +17,7 @@ class RegisterType extends AbstractType
 
             ->add('nom')
             ->add('prenom')
-            ->add('pseudo')
+            ->add('username')
             ->add('telephone')
             ->add('mail')
             ->add('actif')
