@@ -72,6 +72,27 @@ class Participant implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $passwordVerif;
+
+    /**
+     * @return mixed
+     */
+    public function getPasswordVerif()
+    {
+        return $this->passwordVerif;
+    }
+
+    /**
+     * @param mixed $passwordVerif
+     */
+    public function setPasswordVerif($passwordVerif): void
+    {
+        $this->passwordVerif = $passwordVerif;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
