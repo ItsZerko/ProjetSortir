@@ -44,22 +44,21 @@ class SecurityController extends AbstractController
     /**
      * @Route ("/register", name="register")
      */
-
-    public function register(\Symfony\Component\HttpFoundation\Request $request, UserPasswordEncoder $passwordEncoder){
+    public function register(Request $request, UserPasswordEncoder $passwordEncoder)
+    {
 
         $participant = new Participant();
-        $registerForm = $this-> createForm(RegisterType::class, $participant);
+        $registerForm = $this->createForm(RegisterType::class, $participant);
 
-        $registerForm ->handleRequest($request);
+        $registerForm->handleRequest($request);
 
-        if ($registerForm->isValid()&& $registerForm->isSubmitted()){
+        if ($registerForm->isValid() && $registerForm->isSubmitted()) {
             $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
             $participant->setPassword();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($participant);
             $em->flush();
-            return $this->redirectToRoute('home');
         }
 
         return $this->render('security/register.html.twig', [
