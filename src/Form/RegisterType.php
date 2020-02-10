@@ -22,6 +22,7 @@ class RegisterType extends AbstractType
             ->add('mail')
             ->add('actif')
             ->add('password')
+            ->add('passwordVerif')
             ->add('envoyer', SubmitType::class)
 
         ;

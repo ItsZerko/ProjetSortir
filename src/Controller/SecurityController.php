@@ -53,15 +53,25 @@ class  SecurityController extends AbstractController
         $registerForm->handleRequest($request);
 
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {
-            $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
-            $participant->setPassword($password);
-            $participant->setRoles(['ROLE_USER']);
-            $participant->setActif(true);
+
+            $passwordVerif1 = $participant->getPassword();
+            $passwordVerif2 = $participant->getPasswordVerif();
+
+            if ($passwordVerif1 === $passwordVerif2) {
+                $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
+                $participant->setPassword($password);
+                $participant->setRoles(['ROLE_USER']);
+                $participant->setActif(true);
 
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($participant);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($participant);
+                $em->flush();
+            } else{
+                return $this->render('security/register.html.twig', [
+                    "registerForm" => $registerForm->createView()
+                ]);
+            }
         }
 
         return $this->render('security/register.html.twig', [
