@@ -53,9 +53,12 @@ class  SecurityController extends AbstractController
 
         $registerForm->handleRequest($request);
 
-        if ($registerForm->isSubmitted()&& $registerForm->isValid()) {
+        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
             $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
             $participant->setPassword($password);
+            $participant->settRoles(['ROLE_USER']);
+            $participant->setActif(true);
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($participant);

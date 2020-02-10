@@ -1,7 +1,12 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: null }
+        users:
+            entity:
+                # the class of the entity that represents users
+                class: 'App\Entity\Participant'
+                # the property to query by - e.g. username, email, etc
+                property: 'mail'
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -30,4 +35,6 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
     encoders:
         App\Entity\Participant:
+
             algorithm: bcrypt
+

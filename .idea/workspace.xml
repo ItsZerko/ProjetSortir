@@ -181,6 +181,11 @@
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:10.27.200.6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@493808b2" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:10.27.200.6 [2]" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
             </expand>
@@ -212,15 +217,31 @@
     <state x="232" y="168" key="#HTTP_Proxy" timestamp="1581341630457">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
+<<<<<<< HEAD
     <state x="232" y="168" key="#HTTP_Proxy/0.0.1280.984@0.0.1280.984" timestamp="1581341630457" />
     <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581341633791">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581341633791" />
+=======
+    <state x="232" y="168" key="#HTTP_Proxy/0.0.1280.984@0.0.1280.984" timestamp="1581330796173" />
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581340077586">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581340077586" />
+>>>>>>> 23f559e2c7104805bf8827100f3eb61747f8dcba
     <state x="433" y="209" key="#com.intellij.ide.util.MemberChooser" timestamp="1581339584703">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="433" y="209" key="#com.intellij.ide.util.MemberChooser/0.0.1280.984@0.0.1280.984" timestamp="1581339584703" />
+    <state x="370" y="248" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1581340300822">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="370" y="248" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.984@0.0.1280.984" timestamp="1581340300822" />
+    <state x="498" y="239" key="com.intellij.database.view.ui.DbObjectDialog" timestamp="1581341728681">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="498" y="239" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1280.984@0.0.1280.984" timestamp="1581341728681" />
     <state x="341" y="317" key="com.intellij.ide.util.TipDialog" timestamp="1581335809036">
       <screen x="0" y="0" width="1280" height="984" />
     </state>

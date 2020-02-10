@@ -20,7 +20,6 @@ class RegisterType extends AbstractType
             ->add('pseudo')
             ->add('telephone')
             ->add('mail')
-            ->add('administrateur')
             ->add('actif')
             ->add('password')
             ->add('envoyer', SubmitType::class)

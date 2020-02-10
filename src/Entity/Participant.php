@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  */
-class Participant implements  UserInterface
+class Participant implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -17,7 +17,10 @@ class Participant implements  UserInterface
      */
     private $id;
 
-
+    /**
+     * @ORM\Column(type="array", length=255, nullable=false)
+     */
+    private $roles;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -59,10 +62,6 @@ class Participant implements  UserInterface
      */
     private $nom;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $administrateur;
 
     /**
      * @ORM\Column(type="boolean")
@@ -82,6 +81,7 @@ class Participant implements  UserInterface
     {
         return $this->nom;
     }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -130,17 +130,6 @@ class Participant implements  UserInterface
         return $this;
     }
 
-    public function getAdministrateur(): ?bool
-    {
-        return $this->administrateur;
-    }
-
-    public function setAdministrateur(bool $administrateur): self
-    {
-        $this->administrateur = $administrateur;
-
-        return $this;
-    }
 
     public function getActif(): ?bool
     {
@@ -157,11 +146,16 @@ class Participant implements  UserInterface
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+       return $this->roles;
+    }  /**
+     * @inheritDoc
+     */
+    public function settRoles($roles)
+    {
+       $this->roles=$roles;
     }
-
 
 
     /**
