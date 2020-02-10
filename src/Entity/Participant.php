@@ -54,6 +54,10 @@ class Participant implements  UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $mail;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
 
     /**
      * @ORM\Column(type="boolean")

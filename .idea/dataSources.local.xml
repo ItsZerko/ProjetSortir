@@ -18,5 +18,11 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="projetsortir@localhost" uuid="07f32d49-6e41-4734-97a3-a57eef008f4f">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

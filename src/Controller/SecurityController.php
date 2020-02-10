@@ -6,13 +6,14 @@ use App\Entity\Participant;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends AbstractController
+class  SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
@@ -44,7 +45,7 @@ class SecurityController extends AbstractController
     /**
      * @Route ("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoder $passwordEncoder)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
 
         $participant = new Participant();
@@ -52,9 +53,9 @@ class SecurityController extends AbstractController
 
         $registerForm->handleRequest($request);
 
-        if ($registerForm->isValid() && $registerForm->isSubmitted()) {
+        if ($registerForm->isSubmitted()&& $registerForm->isValid()) {
             $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
-            $participant->setPassword();
+            $participant->setPassword($password);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($participant);

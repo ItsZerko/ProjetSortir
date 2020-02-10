@@ -7,5 +7,11 @@
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://10.27.200.6:3306</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="projetsortir@localhost" uuid="07f32d49-6e41-4734-97a3-a57eef008f4f">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/projetsortir</jdbc-url>
+    </data-source>
   </component>
 </project>

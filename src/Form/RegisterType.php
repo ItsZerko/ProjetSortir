@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use phpDocumentor\Reflection\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,12 +14,17 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('nom')
             ->add('prenom')
+            ->add('pseudo')
             ->add('telephone')
             ->add('mail')
             ->add('administrateur')
             ->add('actif')
+            ->add('password')
+            ->add('envoyer', SubmitType::class)
+
         ;
     }
 

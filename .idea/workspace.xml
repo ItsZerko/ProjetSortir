@@ -34,12 +34,6 @@
         <item name="10.27.200.6" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="10.27.200.6" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="projetsortir: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-      </path>
     </expand>
     <select />
   </component>
@@ -165,7 +159,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="mariadb" />
+    <property name="DatabaseDriversLRU" value="mariadb&#10;mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -215,14 +209,14 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="232" y="168" key="#HTTP_Proxy" timestamp="1581330796173">
+    <state x="232" y="168" key="#HTTP_Proxy" timestamp="1581341630457">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="232" y="168" key="#HTTP_Proxy/0.0.1280.984@0.0.1280.984" timestamp="1581330796173" />
-    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581331039577">
+    <state x="232" y="168" key="#HTTP_Proxy/0.0.1280.984@0.0.1280.984" timestamp="1581341630457" />
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581341633791">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581331039577" />
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581341633791" />
     <state x="433" y="209" key="#com.intellij.ide.util.MemberChooser" timestamp="1581339584703">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
