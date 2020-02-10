@@ -14,31 +14,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends AbstractController
 {
     /**
-     * @Route("/formulaire", name="formulaire")
+     * @Route("/modifier/{id}", name="modifier")
      */
 
-    public function formulaire(EntityManagerInterface $em, Request $request)
+    public function modifier(EntityManagerInterface $em, Request $request, $id)
     {
-        $newParticipant = new Participant();
-        $form = $this->createForm(ParticipantType::class, $newParticipant);
+        $participantRepository = $em->getRepository(Participant::class);
 
-        //dit au formulaire : "récupère ce qui a été écrit par l'utilisateur dans le formulaire" :
+        //récupère tout mon enregistrement :
+        $participantExistant = $participantRepository->find($id);
+        $form = $this->createForm(IdeaType::class,  $participantExistant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //envoie les informations en BDD :
-            $em->persist($newParticipant);
+            // persist est inutile ici car c'est uniquement pour une nouvelle entity !!!
+            //    $em->persist($ideaExistantes);
             $em->flush();
 
-            //ajouter un message de confirmation à l'utilisateur :
-            $this->addFlash("success", "Ajouté !");
-
-            //rediriger vers la page home
-            return $this->redirectToRoute('home');
-
+            $this->addFlash('success', 'Souhait modifié !');
+            return $this->redirectToRoute('list');
         }
-        return $this->render("participantProfil/formulaire.html.twig", [
-            "formParticipant" => $form->createView(),
-            ]);
+
+        return $this->render('idea/modifier.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
