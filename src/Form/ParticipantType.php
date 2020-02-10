@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ParticipantType extends AbstractType
 {
@@ -16,9 +17,9 @@ class ParticipantType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('mail')
-    
             ->add('actif')
             ->add('password')
+            ->add('enregistrer', SubmitType::class)
         ;
     }
 
