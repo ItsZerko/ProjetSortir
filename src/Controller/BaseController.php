@@ -13,7 +13,7 @@ class BaseController extends AbstractController
     public function index()
     {
 
-        $user = $this->getUser()->getPseudo();
+        $user = $this->getUser()->getUsername();
         return $this->render('base/index.html.twig', [
             'controller_name' => 'BaseController',
             'user'=>$user

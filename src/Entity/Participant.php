@@ -25,22 +25,22 @@ class Participant implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $pseudo;
+    private $username;
 
     /**
      * @return mixed
      */
-    public function getPseudo()
+    public function getUsername()
     {
-        return $this->pseudo;
+        return $this->username;
     }
 
     /**
-     * @param mixed $pseudo
+     * @param mixed $username
      */
-    public function setPseudo($pseudo): void
+    public function setUsername($username): void
     {
-        $this->pseudo = $pseudo;
+        $this->username = $username;
     }
 
     /**
@@ -166,13 +166,7 @@ class Participant implements UserInterface
         // TODO: Implement getSalt() method.
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getUsername()
-    {
-        // TODO: Implement getUsername() method.
-    }
+
 
     /**
      * @inheritDoc
