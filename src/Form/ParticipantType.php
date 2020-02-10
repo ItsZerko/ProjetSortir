@@ -16,7 +16,7 @@ class ParticipantType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('mail')
-            ->add('administrateur')
+    
             ->add('actif')
             ->add('password')
         ;
