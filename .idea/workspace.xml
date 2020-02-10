@@ -7,7 +7,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -158,6 +158,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1Xby8wvDgc7KpIdsi1BvxQEpHGI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -217,6 +218,7 @@
       <option name="presentableId" value="Default" />
       <updated>1581328932306</updated>
       <workItem from="1581328933666" duration="4292000" />
+      <workItem from="1581335808708" duration="2312000" />
     </task>
     <servers />
   </component>
@@ -232,5 +234,13 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581331039577" />
+    <state x="341" y="317" key="com.intellij.ide.util.TipDialog" timestamp="1581335809036">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="341" y="317" key="com.intellij.ide.util.TipDialog/0.0.1280.984@0.0.1280.984" timestamp="1581335809036" />
+    <state x="-17" y="216" width="672" height="678" key="search.everywhere.popup" timestamp="1581337169312">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="-17" y="216" width="672" height="678" key="search.everywhere.popup/0.0.1280.984@0.0.1280.984" timestamp="1581337169312" />
   </component>
 </project>

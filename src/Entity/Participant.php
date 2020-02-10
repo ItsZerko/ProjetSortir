@@ -46,6 +46,10 @@ class Participant implements  UserInterface
      * @ORM\Column(type="boolean")
      */
     private $actif;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
 
     public function getId(): ?int
     {
@@ -55,6 +59,10 @@ class Participant implements  UserInterface
     public function getNom(): ?string
     {
         return $this->nom;
+    }
+    public function getPassword(): ?string
+    {
+        return $this->password;
     }
 
     public function setNom(string $nom): self
@@ -132,13 +140,7 @@ class Participant implements  UserInterface
         // TODO: Implement getRoles() method.
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPassword()
-    {
-        // TODO: Implement getPassword() method.
-    }
+
 
     /**
      * @inheritDoc
@@ -162,5 +164,15 @@ class Participant implements  UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @param mixed $password
+     * @return Participant
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
     }
 }

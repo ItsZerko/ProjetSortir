@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
+use App\Form\RegisterType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -34,5 +39,31 @@ class SecurityController extends AbstractController
     public function logout()
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+    }
+
+    /**
+     * @Route ("/register", name="register")
+     */
+
+    public function register(\Symfony\Component\HttpFoundation\Request $request, UserPasswordEncoder $passwordEncoder){
+
+        $participant = new Participant();
+        $registerForm = $this-> createForm(RegisterType::class, $participant);
+
+        $registerForm ->handleRequest($request);
+
+        if ($registerForm->isValid()&& $registerForm->isSubmitted()){
+            $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
+            $participant->setPassword();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($participant);
+            $em->flush();
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('security/register.html.twig', [
+            "registerForm" => $registerForm->createView()
+        ]);
     }
 }
