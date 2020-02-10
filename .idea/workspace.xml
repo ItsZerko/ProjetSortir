@@ -183,22 +183,11 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:10.27.200.6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@7e8fdf4c" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@8b551ef" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:10.27.200.6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@3c475b24" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:10.27.200.6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@371957e7" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:10.27.200.6" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@5ad3f58d" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="root:10.27.200.6 [2]" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
             </expand>
             <select />
@@ -234,6 +223,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581331039577" />
+    <state x="433" y="209" key="#com.intellij.ide.util.MemberChooser" timestamp="1581339584703">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="433" y="209" key="#com.intellij.ide.util.MemberChooser/0.0.1280.984@0.0.1280.984" timestamp="1581339584703" />
     <state x="341" y="317" key="com.intellij.ide.util.TipDialog" timestamp="1581335809036">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
