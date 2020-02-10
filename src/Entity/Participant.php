@@ -152,7 +152,7 @@ class Participant implements UserInterface
     }  /**
      * @inheritDoc
      */
-    public function settRoles($roles)
+    public function setRoles($roles)
     {
        $this->roles=$roles;
     }
