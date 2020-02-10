@@ -22,7 +22,7 @@ class ParticipantController extends AbstractController
 
         //récupère tout mon enregistrement :
         $participantExistant = $participantRepository->find($id);
-        $form = $this->createForm(ParticipantType::class,  $participantExistant);
+        $form = $this->createForm(ParticipantType::class, $participantExistant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -35,7 +35,8 @@ class ParticipantController extends AbstractController
         }
 
         return $this->render('profil/modifier.html.twig', [
-            'formParticipant' => $form->createView()
+            'formParticipant' => $form->createView(),
+            'participent' => $participantExistant
         ]);
     }
 }
