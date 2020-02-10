@@ -3,7 +3,17 @@
     <div class="row">
         <div class="col-8 offset-2">
             {{ form(formParticipant) }}
+            <a href="{{ path('modifier', {'id':participant.id}) }}">Modifier</a>
+            <a href="{{ path('base') }}">Annuler</a>
         </div>
     </div>
+
+    {# Affichage des Flashes #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div>{{ label }} : {{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
 {% endblock %}
 
