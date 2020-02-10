@@ -85,7 +85,7 @@ class ParticipantAuthAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('welcome'));
+        return new RedirectResponse($this->urlGenerator->generate('base'));
 
     }
 
