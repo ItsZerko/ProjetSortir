@@ -15,12 +15,14 @@ class ParticipantType extends AbstractType
         $builder
             ->add('username')
             ->add('prenom')
+            ->add('nom')
             ->add('telephone')
             ->add('mail')
-            ->add('actif')
             ->add('password')
             ->add('passwordVerif')
             ->add('enregistrer', SubmitType::class)
+//            rajouter la photo à télécharger
+//            ajouter la lieu de rattachement
         ;
     }
 
