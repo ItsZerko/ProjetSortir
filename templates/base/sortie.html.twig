@@ -14,8 +14,12 @@
 
 {% block body %}
 
-    <div>
-        {{ form_start() }}
+    <div class= "sortie">
+        {{ form_start(sortieForm) }}
+
+        {{ form_widget(sortieForm) }}
+
+        {{ form_end(sortieForm) }}
 
 
 
