@@ -4,20 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\ParticipantType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipantController extends AbstractController
 {
     /**
      * @Route("/modifier/{id}", name="modifier")
-     * @param null $id
-     * @param EntityManagerInterface $em
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
 
     public function form($id = null, EntityManagerInterface $em, Request $request)
@@ -28,19 +26,19 @@ class ParticipantController extends AbstractController
             $participant = $em->getRepository(Participant::class)->find($id);
         }
 
-
-        //récupère tout mon enregistrement :
-        $participantExistant = $em->find($id);
-        $form = $this->createForm(ParticipantType::class, $participantExistant);
-
         $form = $this->createForm(ParticipantType::class, $participant);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($id == null) {
                 $currentUser = $this->getUser();
+                $participant->getUsername($currentUser);
+                $participant->getNom($currentUser);
+                $participant->getPrenom($currentUser);
+                $participant->getTelephone($currentUser);
                 $participant->setMail($currentUser);
+                $participant->getPassword($currentUser);
+                $participant->getPasswordVerif($currentUser);
 
                 $em->persist($participant);
                 $this->addFlash('success', 'User Created');
@@ -50,18 +48,11 @@ class ParticipantController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('base');
         }
-
-
-
-        return $this->render(
-            "profil/modifier.html.twig",
-            [
-                "formParticipant" => $form->createView(),
-                "participant"=>$participant
-            ]
-        );
-
+        return $this->render('profil/modifier.html.twig', [
+            'formParticipant' => $form->createView(),
+            'participant' => $participant
+        ]);
     }
 }

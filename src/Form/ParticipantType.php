@@ -19,6 +19,7 @@ class ParticipantType extends AbstractType
             ->add('mail')
             ->add('actif')
             ->add('password')
+            ->add('passwordVerif')
             ->add('enregistrer', SubmitType::class)
         ;
     }
