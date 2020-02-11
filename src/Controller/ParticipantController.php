@@ -24,7 +24,13 @@ class ParticipantController extends AbstractController
             $participant = $em->getRepository(Participant::class)->find($id);
         }
 
+<<<<<<< HEAD
+        //récupère tout mon enregistrement :
+        $participantExistant = $participantRepository->find($id);
+        $form = $this->createForm(ParticipantType::class, $participantExistant);
+=======
         $form = $this->createForm(ParticipantType::class, $participant);
+>>>>>>> 58a052d349f6ecfd8116e2c21f17593185fadaa9
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,6 +49,12 @@ class ParticipantController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+<<<<<<< HEAD
+        return $this->render('profil/modifier.html.twig', [
+            'formParticipant' => $form->createView(),
+            'participent' => $participantExistant
+        ]);
+=======
         return $this->render(
             "profil/modifier.html.twig",
             [
@@ -50,5 +62,6 @@ class ParticipantController extends AbstractController
                 "participant"=>$participant
             ]
         );
+>>>>>>> 58a052d349f6ecfd8116e2c21f17593185fadaa9
     }
 }

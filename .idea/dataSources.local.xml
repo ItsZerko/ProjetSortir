@@ -23,5 +23,13 @@
       <user-name>u</user-name>
       <schema-mapping />
     </data-source>
+    <data-source name="@localhost" uuid="501989fb-cdf4-4921-b32e-4b2a079c19dc">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <schema-mapping />
+    </data-source>
+    <data-source name="projetsortir" uuid="6e0e7dbc-7dd0-4d34-a771-271383bfcb04">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MARIADB" exact-version="0" />
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
