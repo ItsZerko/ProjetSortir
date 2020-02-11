@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\ParticipantType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipantController extends AbstractController
@@ -17,7 +19,7 @@ class ParticipantController extends AbstractController
      * @param null $id
      * @param EntityManagerInterface $em
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
 
     public function form($id = null, EntityManagerInterface $em, Request $request)
@@ -31,7 +33,7 @@ class ParticipantController extends AbstractController
 
         //récupère tout mon enregistrement :
         $participantExistant = $em->find($id);
-        $form = $this->createForm(ParticipantType::class, $participantExistant);
+
 
         $form = $this->createForm(ParticipantType::class, $participant);
 
