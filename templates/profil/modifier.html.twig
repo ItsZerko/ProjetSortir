@@ -3,8 +3,7 @@
     <div class="row">
         <div class="col-8 offset-2">
             {{ form(formParticipant) }}
-            <a href="{{ path('modifier', {'id':participant.id}) }}">Modifier</a>
-            <a href="{{ path('base') }}">Annuler</a>
+            <a href="{{ path('base') }}"><button type="submit">Annuler</button></a>
         </div>
     </div>
 

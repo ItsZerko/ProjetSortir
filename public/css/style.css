@@ -1,0 +1,17 @@
+body{
+    background-image: url("https://cdn.pixabay.com/photo/2019/11/29/08/34/space-4660847_1280.jpg");
+}
+
+.header {
+    background-color: white;
+    border-bottom: black solid 1px;
+    height: 4em;
+}
+
+.textHeader{
+font-size: 2em;
+}
+
+a, a:hover {
+    color: black;
+}
