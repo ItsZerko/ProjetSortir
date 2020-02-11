@@ -29,6 +29,7 @@ class Participant implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=4, minMessage="Votre username doit faire au moins 4 caractères")
      */
     private $username;
 
@@ -42,6 +43,7 @@ class Participant implements UserInterface
 
     /**
      * @param mixed $username
+     *
      */
     public function setUsername($username): void
     {
@@ -80,6 +82,8 @@ class Participant implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit faire au moins 8 caractères")
+     * @Assert\EqualTo(propertyPath="password")
      */
     private $passwordVerif;
 
