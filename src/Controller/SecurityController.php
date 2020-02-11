@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\RegisterType;
+use App\Security\ParticipantAuthAuthenticator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class  SecurityController extends AbstractController
@@ -40,42 +43,55 @@ class  SecurityController extends AbstractController
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
-
     /**
-     * @Route ("/register", name="register")
+     * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param ParticipantAuthAuthenticator $authenticator
+     * @param SessionInterface $session
+     * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             GuardAuthenticatorHandler $guardHandler,
+                             ParticipantAuthAuthenticator $authenticator,
+                             SessionInterface $session): Response
     {
 
-        $participant = new Participant();
-        $registerForm = $this->createForm(RegisterType::class, $participant);
 
-        $registerForm->handleRequest($request);
+        $user = new Participant();
+        $form = $this->createForm(RegisterType::class, $user);
+        $form->handleRequest($request);
 
-        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles(['ROLE_ADMIN']);
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
 
-            $passwordVerif1 = $participant->getPassword();
-            $passwordVerif2 = $participant->getPasswordVerif();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $session->set('pseudo',$user->getUsername());
+            $session->set('id',$user->getId());
+            // do anything else you need here, like send an email
 
-            if ($passwordVerif1 === $passwordVerif2) {
-                $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
-                $participant->setPassword($password);
-                $participant->setRoles(['ROLE_USER']);
-                $participant->setActif(true);
-
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($participant);
-                $em->flush();
-            } else{
-                return $this->render('security/register.html.twig', [
-                    "registerForm" => $registerForm->createView()
-                ]);
-            }
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
         }
 
         return $this->render('security/register.html.twig', [
-            "registerForm" => $registerForm->createView()
+            'registerForm' => $form->createView(),
         ]);
     }
+
 }
