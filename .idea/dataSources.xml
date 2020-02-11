@@ -13,5 +13,17 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/projetsortir</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="@localhost" uuid="501989fb-cdf4-4921-b32e-4b2a079c19dc">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="projetsortir" uuid="6e0e7dbc-7dd0-4d34-a771-271383bfcb04">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://localhost:3306/projetsortir</jdbc-url>
+    </data-source>
   </component>
 </project>
