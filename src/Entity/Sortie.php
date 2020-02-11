@@ -25,12 +25,12 @@ class Sortie
     private $nom;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
 
     /**
-     * @ORM\Column(type="dateinterval")
+     * @ORM\Column(type="datetime")
      */
     private $duree;
 
@@ -84,12 +84,12 @@ class Sortie
         return $this;
     }
 
-    public function getDuree(): ?\DateInterval
+    public function getDuree(): ?\DateTimeInterface
     {
         return $this->duree;
     }
 
-    public function setDuree(\DateInterval $duree): self
+    public function setDuree(\DateTimeInterface $duree): self
     {
         $this->duree = $duree;
 

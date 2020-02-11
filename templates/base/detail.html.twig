@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container-fluid bgList">
+    <div class="row">
+        <div class="offset-1 col-3">
+            <p>{{ detailSortie.nom }}</p>
+        </div>
+        <div class="col-3">
+            <p>{{ detailSortie.dateHeureDebut | date('d/m/Y') }}</p>
+        </div>
+        <div class="col-3">
+            <a><button class="btn">{{ detailSortie.duree| date('d/m/Y') }}</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

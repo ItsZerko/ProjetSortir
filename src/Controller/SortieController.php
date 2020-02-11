@@ -22,19 +22,29 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/", name="base")
-     * @param EntityManagerInterface $em
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/liste", name="liste")
      */
+    public function recupListeSortie(EntityManagerInterface $em)
+    {
 
+        $ListeSortie = $em->getRepository(Sortie::class)->findAll();
 
-        public function recupListeSortie(EntityManagerInterface $em){
+        return $this->render('base/liste.html.twig', [
+            "listeSortie" => $ListeSortie
+        ]);
 
-            $ListeSortie = $em->getRepository(Sortie::class)->findAll();
+    }
 
-            return $this->render('base/index.html.twig', [
-                "listeSortie" => $ListeSortie
-            ]);
+    /**
+     * @Route("/detail/{id}", name="detail")
+     */
+    public function afficherDetail(EntityManagerInterface $em, $id)
+    {
 
-        }
+        $detailSortie = $em->getRepository(Sortie::class)->find($id);
+
+        return $this->render('base/detail.html.twig', [
+            "detailSortie" => $detailSortie
+        ]);
+    }
 }
