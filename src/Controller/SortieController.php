@@ -50,16 +50,9 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/", name="base")
      * @param EntityManagerInterface $em
      * @return Response
      * @Route("/liste", name="liste")
-<<<<<<< HEAD
-
-=======
-     * @param EntityManagerInterface $em
-     * @return Response
->>>>>>> a74ff8a4fc7386ee1a28b1e97ce6732795b9abb1
      */
     public function recupListeSortie(EntityManagerInterface $em)
     {

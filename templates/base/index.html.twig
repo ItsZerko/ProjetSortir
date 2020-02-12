@@ -15,21 +15,11 @@
             <div class="col-3">
                 <a href="{{ path('app_login') }}" class="textHeader">Connexion</a>
             </div>
-<<<<<<< HEAD
-            <div class="col-3">
-                <a href="{{ path('app_register') }}" class="textHeader">S'inscrire</a>
-            </div>
-=======
 
             <div class="col-3">
                 <a href="{{ path('app_register') }}" class="textHeader">S'inscrire</a>
             </div>
-            {% if app.user %}
-            <div class="col-3">
-                <a href="{{ path('modifier',{'id':participant.id}) }}" class="textHeader">Modifier</a>
-            </div>
-            {% endif %}
->>>>>>> 8c624218b4d1c405175bcf9d706916538af1564a
+
         </div>
     </div>
 
