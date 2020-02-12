@@ -70,4 +70,20 @@ class ParticipantController extends AbstractController
             'participant' => $participant
         ]);
     }
+
+    /**
+     * @Route("/monProfil/{id}", name="monProfil")
+     */
+
+    public function monProfil($id = null, EntityManagerInterface $em, Request $request)
+    {
+        $participantRepository = $em->getRepository(Participant::class);
+        $participant = $participantRepository->find($id);
+
+            //afficher participant dans ma page :
+            return $this->render("profil/monProfil.html.twig",
+                [
+                    "participant" => $participant
+                ]);
+        }
 }

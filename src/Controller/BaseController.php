@@ -16,6 +16,7 @@ class BaseController extends AbstractController
 
         return $this->render('base/index.html.twig', [
             'controller_name' => 'BaseController',
+
         ]);
     }
 }
