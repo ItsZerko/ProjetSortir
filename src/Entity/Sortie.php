@@ -55,6 +55,12 @@ class Sortie
      */
     private $etat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur")
+     */
+    private $sortie;
+
+
     public function getId(): ?int
     {
         return $this->id;
