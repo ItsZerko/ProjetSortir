@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\SortieFormType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,18 +17,49 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/sortie", name="sortie")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
      */
-    public function index()
+    public function index(Request $request, EntityManagerInterface $em)
     {
-        return $this->render('base/index.html.twig', [
+
+
+    $sortie =  new Sortie();
+    $etat = new Etat();
+
+        $form = $this->createForm(SortieFormType ::class, $sortie);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->persist($sortie);
+            $em->flush();
+
+         //   $this->addFlash("warning","DONE !");
+            $this->redirectToRoute('sortie');
+
+        }
+
+
+        return $this->render('base/sortie.html.twig', [
             'controller_name' => 'SortieController',
+             'sortieForm'=> $form->createView()
         ]);
     }
 
     /**
-     * @Route("/liste", name="liste")
+     * @Route("/", name="base")
      * @param EntityManagerInterface $em
      * @return Response
+     * @Route("/liste", name="liste")
+<<<<<<< HEAD
+
+=======
+     * @param EntityManagerInterface $em
+     * @return Response
+>>>>>>> a74ff8a4fc7386ee1a28b1e97ce6732795b9abb1
      */
     public function recupListeSortie(EntityManagerInterface $em)
     {

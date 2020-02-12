@@ -16,6 +16,13 @@ class ParticipantController extends AbstractController
 {
     /**
      * @Route("/modifier/{id}", name="modifier")
+
+     * @param null $id
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse|Response
+
+
      */
 
     public function form($id = null, EntityManagerInterface $em, Request $request)
@@ -25,6 +32,14 @@ class ParticipantController extends AbstractController
         } else {
             $participant = $em->getRepository(Participant::class)->find($id);
         }
+
+
+
+        //récupère tout mon enregistrement :
+        $participantExistant = $em->find($id);
+
+
+
 
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);

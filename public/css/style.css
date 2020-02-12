@@ -15,6 +15,20 @@ font-size: 2em;
 a, a:hover {
     color: black;
 }
+
+
+.sortie {
+    color: white;
+    margin: 0 auto;
+
+    width: 50%;
+    background-color: #222222;
+    height: 25%;
+}
+
+
+
 .bgList{
     background-color: #AAAAAA;
+
 }

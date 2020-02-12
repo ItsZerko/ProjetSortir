@@ -92,7 +92,7 @@ class Participant implements UserInterface
      * @Assert\Length(min=8, minMessage="Votre mot de passe doit faire au moins 8 caractères")
      * @Assert\EqualTo(propertyPath="password", message="Mot de passe différent")
      */
-    private $passwordVerif;
+    public $passwordVerif;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
