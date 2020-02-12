@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ParticipantController extends AbstractController
 {
@@ -21,7 +22,7 @@ class ParticipantController extends AbstractController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function form($id = null, EntityManagerInterface $em, Request $request)
+    public function form($id = null, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, Request $request)
     {
         if ($id == null) {
             $participant = new Participant();
@@ -29,15 +30,14 @@ class ParticipantController extends AbstractController
             $participant = $em->getRepository(Participant::class)->find($id);
         }
 
-
-
-        //récupère tout mon enregistrement :
-//        $participantExistant = $em->find($id);
-
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $participant->setPassword(
+                $passwordEncoder->encodePassword(
+                    $participant,
+                    $form->get('password')->getData()));
             if ($id == null) {
                 $currentUser = $this->getUser();
                 $em = $this->getDoctrine()->getManager();

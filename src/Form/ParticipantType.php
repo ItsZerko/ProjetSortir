@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use App\Entity\Site;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,8 +21,9 @@ class ParticipantType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('mail')
-            ->add('password')
-            ->add('passwordVerif')
+            ->add('password', PasswordType::class)
+            ->add('passwordVerif',PasswordType::class)
+            ->add('site', EntityType::class, ['class'=>Site::class, 'choice_label'=>'nom'])
             ->add('enregistrer', SubmitType::class)
 //            rajouter la photo à télécharger
 //            ajouter la lieu de rattachement
