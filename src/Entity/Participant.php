@@ -88,6 +88,15 @@ class Participant implements UserInterface
     private $passwordVerif;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
+     */
+    private $sorties;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sortie")
+     */
+    private $organisateur;
+
+    /**
      * @return mixed
      */
     public function getPasswordVerif()
@@ -215,6 +224,22 @@ class Participant implements UserInterface
     {
         $this->password = $password;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSorties()
+    {
+        return $this->sorties;
+    }
+
+    /**
+     * @param mixed $sorties
+     */
+    public function setSorties($sorties): void
+    {
+        $this->sorties = $sorties;
     }
 
 }
