@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -94,14 +96,21 @@ class Participant implements UserInterface
      */
     public $passwordVerif;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
-     */
-    private $sorties;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sortie")
      */
     private $organisateur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_participant")
+     */
+    private $id_insc;
+
+    public function __construct()
+    {
+        $this->id_insc = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -233,21 +242,6 @@ class Participant implements UserInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSorties()
-    {
-        return $this->sorties;
-    }
-
-    /**
-     * @param mixed $sorties
-     */
-    public function setSorties($sorties): void
-    {
-        $this->sorties = $sorties;
-    }
 
     /**
      * @return mixed
@@ -263,6 +257,37 @@ class Participant implements UserInterface
     public function setSite($site): void
     {
         $this->site = $site;
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getIdInsc(): Collection
+    {
+        return $this->id_insc;
+    }
+
+    public function addIdInsc(Inscription $idInsc): self
+    {
+        if (!$this->id_insc->contains($idInsc)) {
+            $this->id_insc[] = $idInsc;
+            $idInsc->setIdParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdInsc(Inscription $idInsc): self
+    {
+        if ($this->id_insc->contains($idInsc)) {
+            $this->id_insc->removeElement($idInsc);
+            // set the owning side to null (unless already changed)
+            if ($idInsc->getIdParticipant() === $this) {
+                $idInsc->setIdParticipant(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -5310,7 +5310,11 @@
     </column>
     <column id="1204" parent="407" name="date_inscription">
       <Position>3</Position>
+<<<<<<< HEAD
       <DataType>datetime|0s</DataType>
+=======
+      <DataType>date|0s</DataType>
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -5598,6 +5602,7 @@ sortie_id</ColNames>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
+<<<<<<< HEAD
     <column id="1255" parent="413" name="etat">
       <Position>9</Position>
       <DataType>varchar(255)|0s</DataType>
@@ -5609,35 +5614,62 @@ sortie_id</ColNames>
       <Type>btree</Type>
     </index>
     <key id="1257" parent="413" name="PRIMARY">
+=======
+    <index id="1255" parent="413" name="IDX_3C3FD3F2CC72D953">
+      <ColNames>sortie_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="1256" parent="413" name="PRIMARY">
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
+<<<<<<< HEAD
     <foreign-key id="1258" parent="413" name="FK_3C3FD3F2CC72D953">
+=======
+    <foreign-key id="1257" parent="413" name="FK_3C3FD3F2CC72D953">
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <ColNames>sortie_id</ColNames>
       <RefTableName>participant</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
+<<<<<<< HEAD
     <column id="1259" parent="414" name="id">
+=======
+    <column id="1258" parent="414" name="id">
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
+<<<<<<< HEAD
     <column id="1260" parent="414" name="nom">
+=======
+    <column id="1259" parent="414" name="nom">
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
+<<<<<<< HEAD
     <column id="1261" parent="414" name="code_postal">
+=======
+    <column id="1260" parent="414" name="code_postal">
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
+<<<<<<< HEAD
     <key id="1262" parent="414" name="PRIMARY">
+=======
+    <key id="1261" parent="414" name="PRIMARY">
+>>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
