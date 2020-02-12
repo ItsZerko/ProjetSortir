@@ -21,6 +21,12 @@ class Site
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="site")
+     * Cas possible cascade={"remove"}
+     */
+    private $participants;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,5 +42,21 @@ class Site
         $this->nom = $nom;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    /**
+     * @param mixed $participants
+     */
+    public function setParticipants($participants): void
+    {
+        $this->participants = $participants;
     }
 }

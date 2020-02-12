@@ -34,6 +34,13 @@ class Participant implements UserInterface
     private $username;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="participants")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $site;
+
+
+    /**
      * @return mixed
      */
     public function getUsername()
@@ -240,6 +247,22 @@ class Participant implements UserInterface
     public function setSorties($sorties): void
     {
         $this->sorties = $sorties;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site): void
+    {
+        $this->site = $site;
     }
 
 }
