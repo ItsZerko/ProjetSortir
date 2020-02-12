@@ -9,16 +9,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sortie
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
+
+
     private $id;
-    /**
-     *
-     * TODO TABLE ETAT SORTIE
-     */
+
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -30,7 +31,7 @@ class Sortie
     private $dateHeureDebut;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $duree;
 
@@ -50,10 +51,44 @@ class Sortie
     private $infoSortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false)
+
+     * @ORM\Column(type="string", length=255)
      */
     private $etat;
+
+
+    public function getEtat(): string
+    {
+        return $this->etat;
+    }
+
+
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortie()
+    {
+        return $this->sortie;
+    }
+
+    /**
+     * @param mixed $sortie
+     */
+    public function setSortie($sortie): void
+    {
+        $this->sortie = $sortie;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur")
+     */
+    private $sortie;
+
 
     public function getId(): ?int
     {
@@ -72,24 +107,24 @@ class Sortie
         return $this;
     }
 
-    public function getDateHeureDebut(): ?\DateTimeInterface
+    public function getDateHeureDebut(): ?\DateTime
     {
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut(\DateTimeInterface $dateHeureDebut): self
+    public function setDateHeureDebut(\DateTime $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
 
         return $this;
     }
 
-    public function getDuree(): ?\DateTimeInterface
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
 
-    public function setDuree(\DateTimeInterface $duree): self
+    public function setDuree(int $duree): self
     {
         $this->duree = $duree;
 
@@ -132,15 +167,7 @@ class Sortie
         return $this;
     }
 
-    public function getEtat(): ?Etat
-    {
-        return $this->etat;
-    }
 
-    public function setEtat(?Etat $etat): self
-    {
-        $this->etat = $etat;
 
-        return $this;
-    }
+
 }

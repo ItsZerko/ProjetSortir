@@ -11,14 +11,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ParticipantController extends AbstractController
 {
     /**
      * @Route("/modifier/{id}", name="modifier")
+     * @param null $id
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-
-    public function form($id = null, EntityManagerInterface $em, Request $request)
+    public function form($id = null, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, Request $request)
     {
         if ($id == null) {
             $participant = new Participant();
@@ -30,16 +34,13 @@ class ParticipantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $participant->setPassword(
+                $passwordEncoder->encodePassword(
+                    $participant,
+                    $form->get('password')->getData()));
             if ($id == null) {
                 $currentUser = $this->getUser();
-                $participant->getUsername($currentUser);
-                $participant->getNom($currentUser);
-                $participant->getPrenom($currentUser);
-                $participant->getTelephone($currentUser);
-                $participant->setMail($currentUser);
-                $participant->getPassword($currentUser);
-                $participant->getPasswordVerif($currentUser);
-
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($participant);
                 $this->addFlash('success', 'User Created');
             } else {

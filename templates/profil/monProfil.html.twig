@@ -8,7 +8,11 @@
             <p>Nom : {{ participant.nom }}</p>
             <p>Téléphone : {{ participant.telephone }}</p>
             <p>Email : {{ participant.mail }}</p>
+<<<<<<< HEAD
             <p>Site de rattachement : </p>
+=======
+            <p>Site de rattachement :{{ participant.site.nom }} </p>
+>>>>>>> 8e25d2e29e3b2a0b968de8886562794ae4e3b3ac
             <a href="{{ path('modifier',{'id':participant.id}) }}"><button type="submit">Modifier</button></a>
         </div>
     </div>

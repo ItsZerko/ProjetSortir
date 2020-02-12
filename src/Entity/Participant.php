@@ -34,6 +34,13 @@ class Participant implements UserInterface
     private $username;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="participants")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $site;
+
+
+    /**
      * @return mixed
      */
     public function getUsername()
@@ -85,7 +92,16 @@ class Participant implements UserInterface
      * @Assert\Length(min=8, minMessage="Votre mot de passe doit faire au moins 8 caractères")
      * @Assert\EqualTo(propertyPath="password", message="Mot de passe différent")
      */
-    private $passwordVerif;
+    public $passwordVerif;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
+     */
+    private $sorties;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sortie")
+     */
+    private $organisateur;
 
     /**
      * @return mixed
@@ -215,6 +231,38 @@ class Participant implements UserInterface
     {
         $this->password = $password;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSorties()
+    {
+        return $this->sorties;
+    }
+
+    /**
+     * @param mixed $sorties
+     */
+    public function setSorties($sorties): void
+    {
+        $this->sorties = $sorties;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site): void
+    {
+        $this->site = $site;
     }
 
 }
