@@ -9,16 +9,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sortie
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
+
+
     private $id;
-    /**
-     *
-     * TODO TABLE ETAT SORTIE
-     */
+
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -30,7 +31,7 @@ class Sortie
     private $dateHeureDebut;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $duree;
 
@@ -84,24 +85,24 @@ class Sortie
         return $this;
     }
 
-    public function getDuree(): ?\DateTime
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
 
-    public function setDuree(\DateTime $duree): self
+    public function setDuree(int $duree): self
     {
         $this->duree = $duree;
 
         return $this;
     }
 
-    public function getDateLimiteInscription(): ?\DateTime
+    public function getDateLimiteInscription(): ?\DateTimeInterface
     {
         return $this->dateLimiteInscription;
     }
 
-    public function setDateLimiteInscription(\DateTime $dateLimiteInscription): self
+    public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): self
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
 

@@ -16,10 +16,13 @@ class ParticipantController extends AbstractController
 {
     /**
      * @Route("/modifier/{id}", name="modifier")
+
      * @param null $id
      * @param EntityManagerInterface $em
      * @param Request $request
      * @return RedirectResponse|Response
+
+
      */
 
     public function form($id = null, EntityManagerInterface $em, Request $request)
@@ -31,18 +34,26 @@ class ParticipantController extends AbstractController
         }
 
 
+
         //récupère tout mon enregistrement :
         $participantExistant = $em->find($id);
 
 
-        $form = $this->createForm(ParticipantType::class, $participant);
 
+
+        $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($id == null) {
                 $currentUser = $this->getUser();
+                $participant->getUsername($currentUser);
+                $participant->getNom($currentUser);
+                $participant->getPrenom($currentUser);
+                $participant->getTelephone($currentUser);
                 $participant->setMail($currentUser);
+                $participant->getPassword($currentUser);
+                $participant->getPasswordVerif($currentUser);
 
                 $em->persist($participant);
                 $this->addFlash('success', 'User Created');
@@ -52,18 +63,11 @@ class ParticipantController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('base');
         }
-
-
-
-        return $this->render(
-            "profil/modifier.html.twig",
-            [
-                "formParticipant" => $form->createView(),
-                "participant"=>$participant
-            ]
-        );
-
+        return $this->render('profil/modifier.html.twig', [
+            'formParticipant' => $form->createView(),
+            'participant' => $participant
+        ]);
     }
 }

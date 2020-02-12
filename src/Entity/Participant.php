@@ -216,4 +216,5 @@ class Participant implements UserInterface
         $this->password = $password;
         return $this;
     }
+
 }
