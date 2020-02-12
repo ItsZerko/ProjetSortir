@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,15 +53,24 @@ class Sortie
     private $infoSortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $etat;
+         private $etat;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur")
      */
     private $sortie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie")
+     */
+    private $id_inscr;
+
+    public function __construct()
+    {
+        $this->id_inscr = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -139,15 +150,63 @@ class Sortie
         return $this;
     }
 
-    public function getEtat(): ?Etat
+
+    /**
+     * @return mixed
+     */
+    public function getSortie()
+    {
+        return $this->sortie;
+    }
+
+    /**
+     * @param mixed $sortie
+     */
+    public function setSortie($sortie): void
+    {
+        $this->sortie = $sortie;
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getIdInscr(): Collection
+    {
+        return $this->id_inscr;
+    }
+
+    public function addIdInscr(Inscription $idInscr): self
+    {
+        if (!$this->id_inscr->contains($idInscr)) {
+            $this->id_inscr[] = $idInscr;
+            $idInscr->setIdSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdInscr(Inscription $idInscr): self
+    {
+        if ($this->id_inscr->contains($idInscr)) {
+            $this->id_inscr->removeElement($idInscr);
+            // set the owning side to null (unless already changed)
+            if ($idInscr->getIdSortie() === $this) {
+                $idInscr->setIdSortie(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    public function getEtat():string
     {
         return $this->etat;
     }
 
-    public function setEtat(?Etat $etat): self
+
+    public function setEtat($etat)
     {
         $this->etat = $etat;
-
-        return $this;
     }
 }
