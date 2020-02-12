@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Mon profil :</h1>
+    <div class="row">
+        <div class="col-8 offset-2">
+            {{ participant.username }}
+            <p>Prénom : {{ participant.prenom }}</p>
+            <p>Nom : {{ participant.nom }}</p>
+            <p>Téléphone : {{ participant.telephone }}</p>
+            <p>Email : {{ participant.mail }}</p>
+            <p>Site de rattachement : </p>
+            <a href="{{ path('modifier',{'id':participant.id}) }}"><button type="submit">Modifier</button></a>
+        </div>
+    </div>
+
+    {# Affichage des Flashes #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div>{{ label }} : {{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}
