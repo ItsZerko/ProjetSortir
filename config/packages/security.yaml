@@ -15,8 +15,6 @@ security:
             remember_me:
                 secret:   '%kernel.secret%'
 
-
-
             anonymous: lazy
             guard:
                 authenticators:

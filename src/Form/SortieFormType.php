@@ -26,7 +26,7 @@ class SortieFormType extends AbstractType
             ])
             ->add('nbInscriptionMax')
             ->add('infoSortie')
-            ->add('lieu', EntityType::class,
+            ->add('ville', EntityType::class,
                 ['class'=> Lieu ::class, 'choice_label' =>'nom'])
                 ->add('save',ButtonType::class,['attr'=>['class'=>'btn btn-sucess']] );
 

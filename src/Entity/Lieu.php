@@ -45,7 +45,7 @@ class Lieu
     private $ville;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="lieu", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="ville", orphanRemoval=true)
      */
     private $sorties;
 

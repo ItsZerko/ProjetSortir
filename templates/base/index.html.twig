@@ -12,7 +12,7 @@
                 <p class="textHeader"> non connecté : <a href="{{ path('app_login') }}">Login</a></p>
                 {% endif %}
             </div>
-            {% if is_granted ('ROLE_USER') %}
+            {% if is_granted ('ROLE_ADMIN') %}
             <div class="col-3">
                 <a href="{{ path('app_login') }}" class="textHeader">Connexion</a>
             </div>
