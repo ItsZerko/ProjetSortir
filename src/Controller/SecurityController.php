@@ -94,4 +94,39 @@ class  SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/participant", name="participant")
+     */
+
+    public function participant()
+    {
+        $this->denyAccessUnlessGranted("ROLE_PART");
+    }
+
+    /**
+     * @Route("/utilisateur", name="utilisateur")
+     */
+
+    public function profile()
+    {
+        $this->denyAccessUnlessGranted("ROLE_USER");
+    }
+
+    /**
+     * @Route("/administrateur", name="administrateur")
+     */
+
+    public function admin()
+    {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+    }
+
+    /**
+     * @Route("/organisateur", name="organisateur")
+     */
+
+    public function organisateur()
+    {
+        $this->denyAccessUnlessGranted("ROLE_ORGA");
+    }
 }

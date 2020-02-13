@@ -53,10 +53,6 @@ class Sortie
     private $infoSortie;
 
     /**
-<<<<<<< HEAD
-
-=======
->>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
      * @ORM\Column(type="string", length=255)
      */
          private $etat;
@@ -182,28 +178,6 @@ class Sortie
         return $this;
     }
 
-<<<<<<< HEAD
-
-
-
-=======
-
-    /**
-     * @return mixed
-     */
-    public function getSortie()
-    {
-        return $this->sortie;
-    }
-
-    /**
-     * @param mixed $sortie
-     */
-    public function setSortie($sortie): void
-    {
-        $this->sortie = $sortie;
-    }
-
     /**
      * @return Collection|Inscription[]
      */
@@ -218,7 +192,6 @@ class Sortie
             $this->id_inscr[] = $idInscr;
             $idInscr->setIdSortie($this);
         }
-
         return $this;
     }
 
@@ -231,20 +204,6 @@ class Sortie
                 $idInscr->setIdSortie(null);
             }
         }
-
         return $this;
     }
-
-
-    public function getEtat():string
-    {
-        return $this->etat;
-    }
-
-
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-    }
->>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
 }

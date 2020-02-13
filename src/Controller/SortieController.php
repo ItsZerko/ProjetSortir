@@ -26,23 +26,18 @@ class SortieController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function index(Request $request, EntityManagerInterface $em)
+    public function creationSortie(Request $request, EntityManagerInterface $em)
     {
 
-
         $sortie = new Sortie();
-        $etat = new Etat();
 
         $form = $this->createForm(SortieFormType ::class, $sortie);
         $form->handleRequest($request);
 
-<<<<<<< HEAD
-        if($form->isSubmitted() && $form->isValid()) {
-$sortie->setEtat('Créée');
-=======
-        if ($form->isSubmitted() && $form->isValid()) {
 
->>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
+        if($form->isSubmitted() && $form->isValid()) {
+        $sortie->setEtat('Créée');
+
 
             $em->persist($sortie);
             $em->flush();
