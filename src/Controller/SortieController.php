@@ -40,11 +40,9 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-<<<<<<< HEAD
 
             $sortie->setEtat('Créée');
-=======
->>>>>>> 33a64ed0ea3d096c0b3413971304e685ec44cd81
+
             $em->persist($sortie);
             $em->flush();
             $this->redirectToRoute('sortie');
@@ -85,11 +83,25 @@ class SortieController extends AbstractController
     public function afficherDetail(Request $request, EntityManagerInterface $em, $id)
     {
 
+
+        $participant = $this->getUser()->getUsername();
+        $participantId = $em->getRepository(Participant::class)->findOneBy(
+            ["username" => $participant,
+            ]);
+        $idP = $participantId->getId();
+
+
+        $inscription = $em->getRepository(Inscription::class)->findOneBy(
+            [
+                "id_participant" => $idP,
+                "id_sortie" => $id
+            ]);
         $detailSortie = $em->getRepository(Sortie::class)->find($id);
 
         return $this->render('Sortie/detail.html.twig',
             [
                 "detailSortie" => $detailSortie,
+                "inscription" => $inscription
             ]);
     }
 
@@ -116,8 +128,6 @@ class SortieController extends AbstractController
             $inscription->setIdSortie($sortieId);
             $inscription->setDateInscription($time);
 
-            dump($inscription);
-            die();
 
             $em->persist($inscription);
             $em->flush();
@@ -133,12 +143,40 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route ("/etat", name="etat")
+     * @Route("/annuler/{id}", name="annulerSortie")
      */
-    public function etatInsc()
+    public function annulerSortie(EntityManagerInterface $em, Request $request, $id)
     {
 
+        $participant = $this->getUser()->getUsername();
+        $participantId = $em->getRepository(Participant::class)->findOneBy(
+            ["username" => $participant,
+            ]);
 
+        $sortieId = $em->getRepository(Sortie::class)->findOneBy([
+            "id" => $id
+        ]);
+        $inscription = $em->getRepository(Inscription::class)->findOneBy(
+            [
+                "id_participant" => $participantId,
+                "id_sortie" => $id
+            ]);
+
+
+        if ($this->getUser() !== null) {
+            $em->remove($inscription);
+            $em->flush();
+
+
+            return $this->redirectToRoute('liste');
+        }
+
+
+        return $this->render('Sortie/detail.html.twig', [
+            'id' => $id,
+            'erreur' => 'blabla'
+        ]);
     }
+
 
 }

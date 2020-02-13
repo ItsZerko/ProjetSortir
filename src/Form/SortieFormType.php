@@ -31,20 +31,15 @@ class SortieFormType extends AbstractType
             ])
             ->add('nbInscriptionMax')
             ->add('infoSortie')
-<<<<<<< HEAD
             ->add('lieu', EntityType::class,
-                ['class'=> Lieu ::class , 'choice_label' =>'nom'])
-=======
-            ->add('ville', EntityType::class,
-                ['class'=> Lieu ::class, 'choice_label' =>'nom'])
-                ->add('save',ButtonType::class,['attr'=>['class'=>'btn btn-sucess']] );
->>>>>>> 33a64ed0ea3d096c0b3413971304e685ec44cd81
+                ['class' => Lieu ::class, 'choice_label' => 'nom'])
+////            ->add('ville', EntityType::class,
+//                ['class' => Lieu ::class, 'choice_label' => 'nom'])
+            ->add('save', ButtonType::class, ['attr' => ['class' => 'btn btn-sucess']]);
 
-           ->add('enregistrer', SubmitType::class)
-            ->add('publier', SubmitType::class)
-            ->add('annuler', SubmitType::class)
-
-        ;
+//            ->add('enregistrer', SubmitType::class)
+//            ->add('publier', SubmitType::class)
+//            ->add('annuler', SubmitType::class);
 
 
     }
