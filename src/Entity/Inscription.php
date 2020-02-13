@@ -24,7 +24,6 @@ class Inscription
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="id_insc")
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\Column(type="string")
      */
     private $id_participant;
 
@@ -51,12 +50,12 @@ class Inscription
         return $this;
     }
 
-    public function getIdParticipant(): ?string
+    public function getIdParticipant(): ?Participant
     {
         return $this->id_participant;
     }
 
-    public function setIdParticipant(?string $id_participant): self
+    public function setIdParticipant(?Participant $id_participant): self
     {
         $this->id_participant = $id_participant;
 

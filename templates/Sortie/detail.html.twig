@@ -9,11 +9,11 @@
             <p>{{ detailSortie.dateHeureDebut | date('d/m/Y') }}</p>
         </div>
         <div class="col-3">
-            <a><button class="btn">{{ detailSortie.duree| date('d/m/Y') }}</button></a>
+            <a>{{ detailSortie.duree| date('d/m/Y') }}</a>
         </div>
         <div class="col-3">
-    {{ form(inscriptionForm) }}
         </div>
+        <button class="btn"><a href="{{ path('inscriptionSortie',{'id': detailSortie.id})}}">Inscrire</a></button>
     </div>
 </div>
 {% endblock %}

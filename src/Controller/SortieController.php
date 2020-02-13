@@ -33,12 +33,12 @@ class SortieController extends AbstractController
 
         $sortie = new Sortie();
 
-        $lieu= $em->getRepository(Lieu::class);
+        $lieu = $em->getRepository(Lieu::class);
         $form = $this->createForm(SortieFormType ::class, $sortie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-        $sortie->setEtat('Créée');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setEtat('Créée');
 
             $em->persist($sortie);
             $em->flush();
@@ -64,7 +64,7 @@ class SortieController extends AbstractController
 
         $ListeSortie = $em->getRepository(Sortie::class)->findAll();
 
-        return $this->render('base/liste.html.twig', [
+        return $this->render('Sortie/liste.html.twig', [
             "listeSortie" => $ListeSortie
         ]);
 
@@ -83,40 +83,60 @@ class SortieController extends AbstractController
     public function afficherDetail(Request $request, EntityManagerInterface $em, $id)
     {
 
+        $detailSortie = $em->getRepository(Sortie::class)->find($id);
+
+        return $this->render('Sortie/detail.html.twig',
+            [
+                "detailSortie" => $detailSortie,
+            ]);
+    }
+
+    /**
+     * @Route("/inscriptionSortie/{id}", name="inscriptionSortie")
+     */
+    public function incriptionSortie(EntityManagerInterface $em, Request $request, $id)
+    {
 
         $inscription = new Inscription();
         $participant = $this->getUser()->getUsername();
+        $participantId = $em->getRepository(Participant::class)->findOneBy(
+            ["username" => $participant,
+            ]);
+        $sortieId = $em->getRepository(Sortie::class)->findOneBy([
+            "id" => $id
+        ]);
 
-        $detailSortie = $em->getRepository(Sortie::class)->find($id);
-
-
-        $form = $this->createForm(InscriptionType::class, $inscription);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $this->getUser() !== null) {
+        if ($this->getUser() !== null) {
 
             $time = new \DateTime();
+
+            $inscription->setIdParticipant($participantId);
+            $inscription->setIdSortie($sortieId);
             $inscription->setDateInscription($time);
-            $inscription->setIdParticipant($participant);
 
-            $inscription->setIdSortie($detailSortie);
-
+            dump($inscription);
+            die();
 
             $em->persist($inscription);
-
             $em->flush();
 
-            return $this->redirectToRoute('base');
-
+            return $this->redirectToRoute('liste');
         }
-        return $this->render('base/detail.html.twig', [
 
-            "detailSortie" => $detailSortie,
-            'inscriptionForm' => $form->createView()
 
+        return $this->render('Sortie/detail.html.twig', [
+            'id' => $id,
+            'erreur' => 'blabla'
         ]);
     }
 
+    /**
+     * @Route ("/etat", name="etat")
+     */
+    public function etatInsc()
+    {
+
+
+    }
 
 }
