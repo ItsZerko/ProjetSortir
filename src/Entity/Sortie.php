@@ -53,10 +53,7 @@ class Sortie
     private $infoSortie;
 
     /**
-<<<<<<< HEAD
 
-=======
->>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
      * @ORM\Column(type="string", length=255)
      */
          private $etat;
@@ -98,6 +95,12 @@ class Sortie
      * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie")
      */
     private $id_inscr;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieu;
 
     public function __construct()
     {
@@ -182,27 +185,9 @@ class Sortie
         return $this;
     }
 
-<<<<<<< HEAD
 
 
 
-=======
-
-    /**
-     * @return mixed
-     */
-    public function getSortie()
-    {
-        return $this->sortie;
-    }
-
-    /**
-     * @param mixed $sortie
-     */
-    public function setSortie($sortie): void
-    {
-        $this->sortie = $sortie;
-    }
 
     /**
      * @return Collection|Inscription[]
@@ -235,16 +220,19 @@ class Sortie
         return $this;
     }
 
-
-    public function getEtat():string
+    public function getLieu(): ?Lieu
     {
-        return $this->etat;
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
     }
 
 
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-    }
->>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
+
+
 }

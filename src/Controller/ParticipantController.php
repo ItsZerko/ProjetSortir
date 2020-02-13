@@ -18,6 +18,7 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/modifier/{id}", name="modifier")
      * @param null $id
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @param EntityManagerInterface $em
      * @param Request $request
      * @return RedirectResponse|Response
@@ -59,6 +60,10 @@ class ParticipantController extends AbstractController
 
     /**
      * @Route("/monProfil/{id}", name="monProfil")
+     * @param null $id
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return Response
      */
 
     public function monProfil($id = null, EntityManagerInterface $em, Request $request)

@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Etat;
+
 use App\Entity\Inscription;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\Lieu;
 use App\Form\InscriptionSortieType;
 use App\Form\InscriptionType;
+
 use App\Form\SortieFormType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,18 +33,16 @@ class SortieController extends AbstractController
 
 
         $sortie = new Sortie();
-        $etat = new Etat();
+        $lieu= $em->getRepository(Lieu::class);
+
 
         $form = $this->createForm(SortieFormType ::class, $sortie);
         $form->handleRequest($request);
 
-<<<<<<< HEAD
-        if($form->isSubmitted() && $form->isValid()) {
-$sortie->setEtat('Créée');
-=======
-        if ($form->isSubmitted() && $form->isValid()) {
 
->>>>>>> e6ba983c817ab97d471257ce639f915d7d9d53f4
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setEtat('Créée');
+
 
             $em->persist($sortie);
             $em->flush();
@@ -50,13 +50,12 @@ $sortie->setEtat('Créée');
             //   $this->addFlash("warning","DONE !");
             $this->redirectToRoute('sortie');
 
+
         }
-
-
         return $this->render('base/sortie.html.twig', [
             'controller_name' => 'SortieController',
-            'sortieForm' => $form->createView()
-        ]);
+            'sortieForm' => $form->createView()]);
+
     }
 
     /**
@@ -83,6 +82,8 @@ $sortie->setEtat('Créée');
      * @return Response
      * @throws Exception
      */
+
+
     public function afficherDetail(Request $request, EntityManagerInterface $em, $id)
     {
 
