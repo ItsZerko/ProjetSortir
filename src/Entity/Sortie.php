@@ -95,6 +95,12 @@ class Sortie
      */
     private $id_inscr;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieu;
+
     public function __construct()
     {
         $this->id_inscr = new ArrayCollection();
@@ -178,6 +184,7 @@ class Sortie
         return $this;
     }
 
+
     /**
      * @return Collection|Inscription[]
      */
@@ -206,4 +213,17 @@ class Sortie
         }
         return $this;
     }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
 }
+
