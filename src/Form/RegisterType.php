@@ -22,8 +22,8 @@ class RegisterType extends AbstractType
             ->add('telephone')
             ->add('mail')
             ->add('actif')
-            ->add('password', PasswordType::class)
-            ->add('passwordVerif', PasswordType::class)
+            ->add('password', PasswordType::class, ['attr'=>['placeholder'=>'8 caracteres minimum']])
+            ->add('passwordVerif', PasswordType::class,['attr'=>['placeholder'=>'Resaisir password']])
             ->add('envoyer', SubmitType::class)
 
         ;

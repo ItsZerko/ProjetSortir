@@ -2,19 +2,25 @@
 {% block body %}
     {% for listeSorties in listeSortie %}
 
-<div class="container-fluid bgList">
-    <div class="row">
-        <div class="offset-1 col-3">
-            <p>{{ listeSorties.nom }}</p>
+        <div class="container-fluid bgList">
+            <div class="sortie">
+
+
+            </div>
+            <div class="row">
+                <div class="offset-1 col-3">
+                    <p>{{ listeSorties.nom }}</p>
+                </div>
+                <div class="col-3">
+                    <p>{{ listeSorties.dateHeureDebut | date('d/m/Y') }}</p>
+                </div>
+                <div class="col-3">
+                    <a href="{{ path('detail',{'id':listeSorties.id}) }}">DETAIL</a>
+                </div>
+            </div>
         </div>
-        <div class="col-3">
-            <p>{{ listeSorties.dateHeureDebut | date('d/m/Y') }}</p>
         </div>
-        <div class="col-3">
-        <a href="{{ path('detail',{'id':listeSorties.id}) }}">DETAIL</a>
-        </div>
-    </div>
-</div>
+
 
     {% endfor %}
 {% endblock %}

@@ -1,5 +1,80 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {{ form(registerForm) }}
+    <div class="register">
+
+        {{ form_start(registerForm) }}
+
+
+        <div class="row ">
+
+            <div class="col-4 ">
+
+                {{ form_row(registerForm.nom) }}
+            </div>
+
+            <div class="col-4">
+                {{ form_row(registerForm.prenom) }}
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-4">
+
+                {{ form_row(registerForm.username) }}
+            </div>
+
+            <div class="col-4">
+
+                {{ form_row(registerForm.telephone) }}
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-4">
+                {{ form_row(registerForm.mail) }}
+
+            </div>
+
+            <div class="col-4">
+                {{ form_row(registerForm.actif) }}
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-4">
+
+                {{ form_row(registerForm.password) }}
+            </div>
+
+            <div class="col-4">
+                {{ form_row(registerForm.passwordVerif) }}
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col text-center">
+
+                {{ form_row(registerForm.envoyer) }}
+            </div>
+
+
+
+        </div>
+
+
+        {{ form_end(registerForm) }}
+
+    </div>
+
 
 {% endblock %}

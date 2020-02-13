@@ -18,12 +18,29 @@ a, a:hover {
 
 
 .sortie {
+    position:relative;
+    border-radius:10px;
     color: white;
     margin: 0 auto;
-
-    width: 50%;
+    top:50px;
+    width: 75%;
     background-color: #222222;
     height: 25%;
+    border:white 3px solid;
+}
+
+.register {
+    position:relative;
+    border-radius:10px;
+    top:50px;
+    color: white;
+    margin: 0 auto;
+    width: 75%;
+    background-color: mediumslateblue;
+    border:black 2px solid;
+    height: 25%;
+
+
 }
 
 
@@ -31,4 +48,9 @@ a, a:hover {
 .bgList{
     background-color: #AAAAAA;
 
+}
+
+.imgT{
+display:inline-block;
+    border-radius:50%;
 }

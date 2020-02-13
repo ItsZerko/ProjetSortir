@@ -3,7 +3,8 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
 
     <script>
 
@@ -11,16 +12,96 @@
 {% endblock %}
 
 {% block body %}
-
-    <div class= "sortie">
+    <div class="sortie">
         {{ form_start(sortieForm) }}
 
-        {{ form_widget(sortieForm) }}
+        <div class="row">
+            <div class="col-4 ml-5">
 
-<button type ="submit">Submit </button>
+                {{ form_row(sortieForm.nom) }}
+
+            </div>
+            <div class="col-4">
+                {{ form_row(sortieForm.lieu) }}
+
+
+            </div>
+            <div class="col-1 mt-4">
+
+                <a href="{{ path('sortie') }}" ><img src="img/addBtn.jpeg" alt="Ajouter un lieu"  width="50" height="50" class="imgT"/></a>
+
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-4 ml-5">
+                {{ form_row(sortieForm.dateHeureDebut) }}
+
+            </div>
+            <div class="col-4">
+
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-4 ml-5">
+                {{ form_row(sortieForm.dateLimiteInscription) }}
+
+
+            </div>
+            <div class="col-4 ">
+
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-4 ml-5">
+                {{ form_row(sortieForm.nbInscriptionMax) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 ml-5">
+                {{ form_row(sortieForm.duree) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 ml-5">
+                {{ form_row(sortieForm.infoSortie) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 ml-5">
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-2">
+                {{ form_row(sortieForm.enregistrer) }}
+
+            </div>
+            <div class="col-2">
+                {{ form_row(sortieForm.publier) }}
+
+            </div>
+            <div class="col-2">
+                {{ form_row(sortieForm.annuler) }}
+
+            </div>
+
+        </div>
+
+
+
         {{ form_end(sortieForm) }}
-
-
 
     </div>
 

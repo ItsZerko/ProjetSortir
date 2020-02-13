@@ -186,9 +186,6 @@ class Sortie
     }
 
 
-
-
-
     /**
      * @return Collection|Inscription[]
      */
