@@ -26,7 +26,7 @@ class ParticipantType extends AbstractType
             ->add('site', EntityType::class, ['class'=>Site::class, 'choice_label'=>'nom'])
             ->add('enregistrer', SubmitType::class)
 //            rajouter la photo à télécharger
-//            ajouter la lieu de rattachement
+//            ajouter la ville de rattachement
         ;
     }
 

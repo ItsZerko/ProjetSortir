@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Gérer les lieux</h1>
+    <h2>Filtrer les lieux :</h2>
+    <p>Le nom contient : </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Ville</th>
+            <th>Code postal</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td> {{ ville.nom }}</td>
+                <td> {{ ville.codePostal }}</td>
+                <td><a href="{{ path("supprimer_lieu",{'id':ville.id}) }}"> Supprimer </a></td>
+{#              <td><a href="{{ path("lieu_modifier",{'id':ville.id}) }}"> X </a></td>#}
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path("formulaire_ville") }}">Ajouter</a>
+
+{% endblock %}

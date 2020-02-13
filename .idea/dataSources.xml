@@ -13,5 +13,11 @@
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://10.27.200.6:3306/projetsortir</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="projetsortir@localhost" uuid="31bef56a-aea6-4f46-a0e3-90f32d5d9f89">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://localhost:3306/projetsortir</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$USER_HOME$/.idea/Administrateur.iml" filepath="$USER_HOME$/.idea/Administrateur.iml" />
+      <module fileurl="file://D:/Symfony/bucket-list-me/.idea/Bucket-List.iml" filepath="D:/Symfony/bucket-list-me/.idea/Bucket-List.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ProjetSortir.iml" filepath="$PROJECT_DIR$/.idea/ProjetSortir.iml" />
       <module fileurl="file://D:/Symfony/bucket-list-2020-master/.idea/bucket-list-2020-master.iml" filepath="D:/Symfony/bucket-list-2020-master/.idea/bucket-list-2020-master.iml" />
+      <module fileurl="file://D:/parcAnimalier/.idea/parcAnimalier.iml" filepath="D:/parcAnimalier/.idea/parcAnimalier.iml" />
     </modules>
   </component>
 </project>

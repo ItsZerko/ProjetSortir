@@ -53,7 +53,6 @@ class Sortie
     private $infoSortie;
 
     /**
-
      * @ORM\Column(type="string", length=255)
      */
          private $etat;
@@ -94,7 +93,7 @@ class Sortie
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie")
      */
-    private $id_inscr;
+    private $idInscr;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
@@ -104,7 +103,7 @@ class Sortie
 
     public function __construct()
     {
-        $this->id_inscr = new ArrayCollection();
+        $this->idInscr = new ArrayCollection();
     }
 
 
@@ -191,29 +190,27 @@ class Sortie
      */
     public function getIdInscr(): Collection
     {
-        return $this->id_inscr;
+        return $this->idInscr;
     }
 
     public function addIdInscr(Inscription $idInscr): self
     {
-        if (!$this->id_inscr->contains($idInscr)) {
-            $this->id_inscr[] = $idInscr;
+        if (!$this->idInscr->contains($idInscr)) {
+            $this->idInscr[] = $idInscr;
             $idInscr->setIdSortie($this);
         }
-
         return $this;
     }
 
     public function removeIdInscr(Inscription $idInscr): self
     {
-        if ($this->id_inscr->contains($idInscr)) {
-            $this->id_inscr->removeElement($idInscr);
+        if ($this->idInscr->contains($idInscr)) {
+            $this->idInscr->removeElement($idInscr);
             // set the owning side to null (unless already changed)
             if ($idInscr->getIdSortie() === $this) {
                 $idInscr->setIdSortie(null);
             }
         }
-
         return $this;
     }
 
@@ -228,8 +225,5 @@ class Sortie
 
         return $this;
     }
-
-
-
-
 }
+
