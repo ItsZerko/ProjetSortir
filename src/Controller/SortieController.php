@@ -33,18 +33,18 @@ class SortieController extends AbstractController
 
         $sortie = new Sortie();
 
-        $lieu = $em->getRepository(Lieu::class);
+        $lieu = $em->getRepository(Lieu::class)->find(2);
         $form = $this->createForm(SortieFormType ::class, $sortie);
+
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-<<<<<<< HEAD
+
 
             $sortie->setEtat('Créée');
-=======
->>>>>>> 33a64ed0ea3d096c0b3413971304e685ec44cd81
+
             $em->persist($sortie);
             $em->flush();
             $this->redirectToRoute('sortie');
@@ -52,9 +52,14 @@ class SortieController extends AbstractController
         }
         return $this->render('base/sortie.html.twig', [
             'controller_name' => 'SortieController',
-            'sortieForm' => $form->createView()]);
+
+            'sortieForm' => $form->createView(),
+            'detail'=> ['lieu' =>$lieu->getNom(),
+          'test2'=> $lieu->getRue()]]);
 
     }
+
+
 
     /**
      * @param EntityManagerInterface $em

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Sortie;
 use App\Entity\Lieu;
 use App\Entity\Ville;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -16,10 +17,22 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class SortieFormType extends AbstractType
 {
+
+    public function test (FormBuilderInterface $builder, array $options) {
+
+        
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $listener = function (FormEvent $event) {
+            $test ='Hello';
+            dump($test);
+        };
         $builder
             ->add('nom')
             ->add('dateHeureDebut', DateType::class, [
@@ -31,29 +44,32 @@ class SortieFormType extends AbstractType
             ])
             ->add('nbInscriptionMax')
             ->add('infoSortie')
-<<<<<<< HEAD
             ->add('lieu', EntityType::class,
-                ['class'=> Lieu ::class , 'choice_label' =>'nom'])
-=======
-            ->add('ville', EntityType::class,
-                ['class'=> Lieu ::class, 'choice_label' =>'nom'])
-                ->add('save',ButtonType::class,['attr'=>['class'=>'btn btn-sucess']] );
->>>>>>> 33a64ed0ea3d096c0b3413971304e685ec44cd81
+                ['class' => Lieu ::class, 'choice_label' => 'nom' ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $user = $event->getData();
 
-           ->add('enregistrer', SubmitType::class)
-            ->add('publier', SubmitType::class)
-            ->add('annuler', SubmitType::class)
-
-        ;
+            }
+            )
 
 
-    }
+                    ->add('enregistrer', SubmitType::class)
+                    ->add('publier', SubmitType::class)
+                    ->add('annuler', SubmitType::class);
+
+
+            }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Sortie::class,
+            'data_class' => Sortie::class
+
+
 
         ]);
     }
+
+
+
 }
