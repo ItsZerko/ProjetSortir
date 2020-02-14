@@ -5,14 +5,16 @@ namespace App\Controller;
 
 use App\Entity\Inscription;
 use App\Entity\Participant;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Lieu;
 use App\Entity\Ville;
 use App\Form\InscriptionSortieType;
 use App\Form\InscriptionType;
-
 use App\Form\SortieFormType;
+
 use App\Form\LieuType;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -32,7 +34,7 @@ class SortieController extends AbstractController
      */
     public function creationSortie(Request $request, EntityManagerInterface $em)
     {
-$test ="Hello";
+
         $sortie = new Sortie();
 
         $lieu = $em->getRepository(Lieu::class)->find(2);
@@ -104,48 +106,29 @@ if ($form->isSubmitted() && $form->isValid()){
      */
     public function recupListeSortie(EntityManagerInterface $em)
     {
-
+        $sites = $em->getRepository(Site::class)->findAll();
         $ListeSortie = $em->getRepository(Sortie::class)->findAll();
 
         return $this->render('Sortie/liste.html.twig', [
-            "listeSortie" => $ListeSortie
+            "listeSortie" => $ListeSortie,
+            "sites"=>$sites,
         ]);
-
     }
+
 
     /**
      * @Route("/detail/{id}", name="detail")
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param $id
-     * @return Response
-     * @throws Exception
      */
-
-
-    public function afficherDetail(Request $request, EntityManagerInterface $em, $id)
+    public function detail($id, EntityManagerInterface $em)
     {
+        $sortieRepository = $em->getRepository(Sortie::class);
+        $sortie=$sortieRepository->find($id);
 
-
-        $participant = $this->getUser()->getUsername();
-        $participantId = $em->getRepository(Participant::class)->findOneBy(
-            ["username" => $participant,
-            ]);
-        $idP = $participantId->getId();
-
-
-        $inscription = $em->getRepository(Inscription::class)->findOneBy(
+        return $this->render("sortie/detail.html.twig",
             [
-                "id_participant" => $idP,
-                "id_sortie" => $id
-            ]);
-        $detailSortie = $em->getRepository(Sortie::class)->find($id);
-
-        return $this->render('Sortie/detail.html.twig',
-            [
-                "detailSortie" => $detailSortie,
-                "inscription" => $inscription
-            ]);
+                "sortie" => $sortie
+            ]
+        );
     }
 
     /**
@@ -153,36 +136,27 @@ if ($form->isSubmitted() && $form->isValid()){
      */
     public function incriptionSortie(EntityManagerInterface $em, Request $request, $id)
     {
-
         $inscription = new Inscription();
-        $participant = $this->getUser()->getUsername();
-        $participantId = $em->getRepository(Participant::class)->findOneBy(
-            ["username" => $participant,
-            ]);
-        $sortieId = $em->getRepository(Sortie::class)->findOneBy([
-            "id" => $id
-        ]);
+        $participant = $this->getUser();
+        $sortie = $em->getRepository(Sortie::class)->find($id);
 
-        if ($this->getUser() !== null) {
-
-            $time = new \DateTime();
-
-            $inscription->setIdParticipant($participantId);
-            $inscription->setIdSortie($sortieId);
+        $time = new \DateTime();
+            $inscription->setIdParticipant($participant);
+            $inscription->getIdSortie($sortie);
             $inscription->setDateInscription($time);
-
+dump($participant);
+dump($sortie);
+die();
 
             $em->persist($inscription);
             $em->flush();
 
             return $this->redirectToRoute('liste');
-        }
 
-
-        return $this->render('Sortie/detail.html.twig', [
-            'id' => $id,
-            'erreur' => 'blabla'
-        ]);
+//        return $this->render('Sortie/detail.html.twig', [
+//            'id' => $id,
+//            'erreur' => 'blabla'
+//        ]);
     }
 
     /**
@@ -190,7 +164,6 @@ if ($form->isSubmitted() && $form->isValid()){
      */
     public function annulerSortie(EntityManagerInterface $em, Request $request, $id)
     {
-
         $participant = $this->getUser()->getUsername();
         $participantId = $em->getRepository(Participant::class)->findOneBy(
             ["username" => $participant,
@@ -214,12 +187,10 @@ if ($form->isSubmitted() && $form->isValid()){
             return $this->redirectToRoute('liste');
         }
 
-
         return $this->render('Sortie/detail.html.twig', [
             'id' => $id,
             'erreur' => 'blabla'
         ]);
     }
-
 
 }

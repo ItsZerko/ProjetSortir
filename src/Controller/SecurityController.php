@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\RegisterType;
 use App\Security\ParticipantAuthAuthenticator;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,7 @@ class  SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+
     }
 
     /**
@@ -59,14 +61,12 @@ class  SecurityController extends AbstractController
                              ParticipantAuthAuthenticator $authenticator,
                              SessionInterface $session): Response
     {
-
-
         $user = new Participant();
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRoles(['ROLE_USER']);
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -81,7 +81,6 @@ class  SecurityController extends AbstractController
                     $form->get('passwordVerif')->getData()
                 )
             );
-
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -103,14 +102,34 @@ class  SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/participant", name="participant")
-     */
+//    /**
+//     * @Route("/register", name="app_register")
+//     */
+//    public function registration(UserPasswordEncoderInterface $passwordEncoder, Request $request, EntityManagerInterface $em)
+//    {
+//        $user = new User();
+//        $form = $this->createForm(RegisterType::class, $user);
+//
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            // Etape de plus : hasher le mot de pass
+//            $hash = $passwordEncoder->encodePassword($user, $user->getPassword());
+//            $user->setPassword($hash);
+//
+//            $user->setRoles(['ROLE_USER']);
+//
+//            $em->persist($user);
+//            $em->flush();
+//            $this->addFlash("success", "Inscription OK !");
+//            return $this->redirectToRoute('liste');
+//        }
+//
+//        return $this->render('security/register.html.twig', [
+//            "form" => $form->createView()
+//        ]);
+//    }
 
-    public function participant()
-    {
-        $this->denyAccessUnlessGranted("ROLE_PART");
-    }
 
     /**
      * @Route("/utilisateur", name="utilisateur")
@@ -128,14 +147,5 @@ class  SecurityController extends AbstractController
     public function admin()
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
-    }
-
-    /**
-     * @Route("/organisateur", name="organisateur")
-     */
-
-    public function organisateur()
-    {
-        $this->denyAccessUnlessGranted("ROLE_ORGA");
     }
 }

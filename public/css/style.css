@@ -8,6 +8,10 @@ body{
     height: 4em;
 }
 
+.fond {
+    background-color: white;
+}
+
 .textHeader{
 font-size: 2em;
 }

@@ -3,27 +3,15 @@
     <div class="container-fluid bgList">
         <div class="row">
             <div class=" col-3">
-                <p>{{ detailSortie.nom }}</p>
+                <p>{{ sortie.nom }}</p>
             </div>
             <div class="col-3">
-                <p>{{ detailSortie.dateHeureDebut | date('d/m/Y') }}</p>
+                <p>{{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
             </div>
             <div class="col-3">
-                <a>{{ detailSortie.duree| date('d/m/Y') }}</a>
+                <a>{{ sortie.duree| date('d/m/Y') }}</a>
             </div>
             <div class="col-3">
-
-            </div>
-            {% if inscription == null %}
-                <button class="btn"><a href="{{ path('inscriptionSortie',{'id': detailSortie.id}) }}">Inscrire</a>
-                </button>
-            {% else %}
-                <button class="btn"><a href="{{ path('annulerSortie',{'id': detailSortie.id}) }}">annuler</a>
-                </button>
-            {% endif %}
-{
-
-
         </div>
     </div>
 {% endblock %}
