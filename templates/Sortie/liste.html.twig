@@ -1,26 +1,51 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {% for listeSorties in listeSortie %}
 
-        <div class="container-fluid bgList">
-            <div class="sortie">
+    <header>
+        <h1>Filtrer les sorties :</h1>
+    </header>
 
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Sites :</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+            {% for site in sites %}
+              <option> {{ site.nom }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-            </div>
-            <div class="row">
-                <div class="offset-1 col-3">
-                    <p>{{ listeSorties.nom }}</p>
-                </div>
-                <div class="col-3">
-                    <p>{{ listeSorties.dateHeureDebut | date('d/m/Y') }}</p>
-                </div>
-                <div class="col-3">
-                    <a href="{{ path('detail',{'id':listeSorties.id}) }}">DETAIL</a>
-                </div>
-            </div>
-        </div>
-        </div>
+    <!-- tableau de liste des sorties : -->
+    <div class="fond">
+    <table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th >Nom de la sortie</th>
+            <th>Date de la sortie</th>
+            <th>Clôture</th>
+            <th>Inscrits/places</th>
+            <th>Etat</th>
+            <th>Inscrit</th>
+            <th>Organisateur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for listeSorties in listeSortie %}
+            <tr>
+                <td> {{ listeSorties.nom }}</td>
+                <td> {{ listeSorties.dateHeureDebut | date('d/m/Y') }}</td>
+                <td> {{ listeSorties.dateLimiteInscription | date('d/m/Y') }}</td>
+                <td> {{ listeSorties | length }} / {{ listeSorties.nbInscriptionMax }}</td>
+                <td> {{ listeSorties.etat }}</td>
+                <td><a href="{{ path('detail',{'id':listeSorties.id}) }}">afficher</a></td>
+{#                <td><a href="{{ path('',{'id':listeSorties.id}) }}">modifier</a></td>#}
+                <td><a href="{{ path('inscriptionSortie',{'id':listeSorties.id}) }}">s'inscrire</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- fin du tableau de liste des sorties : -->
 
+    <button><a href="{{ path('sortie') }}">Créer une sortie</a></button>
 
-    {% endfor %}
 {% endblock %}

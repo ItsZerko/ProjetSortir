@@ -6,31 +6,15 @@
     <div class="container-fluid header">
         <div class="row">
             <div class="col-3">
-                {% if app.user %}
-                   <p class="textHeader">{{ app.user.username }} : <a href="{{ path('app_logout') }}">Logout</a></p>
-                {% else %}
+                    {% if app.user %}
+                       <p class="textHeader">{{ app.user.username }} : <a href="{{ path('app_logout') }}">Logout</a></p>
+                    {% else %}
                 <p class="textHeader"> non connecté : <a href="{{ path('app_login') }}">Login</a></p>
+                        <div class="col-3">
+                        <a href="{{ path('app_register') }}" class="textHeader">S'inscrire</a>
+                    </div>
                 {% endif %}
             </div>
-            {% if is_granted ('ROLE_ADMIN') %}
-            <div class="col-3">
-                <a href="{{ path('app_login') }}" class="textHeader">Connexion</a>
-            </div>
-            <div class="col-3">
-                <a href="{{ path('app_register') }}" class="textHeader">S'inscrire</a>
-            </div>
-            <div class="col-3">
-                <a href="{{ path('monProfil') }}" class="textHeader">Mon profil</a>
-            </div>
-            <div class="col-3">
-            <a href="{{ path('modifier') }}" class="textHeader">Modifier mon profil</a>
-            </div>
-            {% endif %}
-            {% if is_granted ('ROLE_ORGA') %}
-            <div class="col-3">
-            <a href="{{ path('sortie') }}" class="textHeader">Gérer une sortie</a>
-            </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
