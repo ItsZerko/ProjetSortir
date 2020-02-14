@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+
+    <script>
+
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="ajouterLieu">
+        {{ form_start(formLieu) }}
+
+        <div class="row">
+            <div class="col-4 ml-5">
+
+                {{ form_row(formLieu.nom) }}
+
+            </div>
+            <div class="col-4">
+                {{ form_row(formLieu.rue) }}
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-4 ml-5">
+                {{ form_row(formLieu.latitude) }}
+
+            </div>
+            <div class="col-4">
+               {{ form_row(formLieu.longitude) }}
+
+            </div>
+
+            <div class="col-4">
+                {{ form_row(formLieu.codePostal) }}
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-3 ml-5 ">
+
+                {{ form_row(formLieu.ville) }}
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-3 ml-5 ">
+
+                <button type="submit" class="btn btn-success">Soumettre</button>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+
+
+        {{ form_end(formLieu) }}
+
+    </div>
+
+{% endblock %}
+

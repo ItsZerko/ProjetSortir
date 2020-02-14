@@ -7,10 +7,12 @@ use App\Entity\Inscription;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Lieu;
+use App\Entity\Ville;
 use App\Form\InscriptionSortieType;
 use App\Form\InscriptionType;
 
 use App\Form\SortieFormType;
+use App\Form\LieuType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -30,7 +32,7 @@ class SortieController extends AbstractController
      */
     public function creationSortie(Request $request, EntityManagerInterface $em)
     {
-
+$test ="Hello";
         $sortie = new Sortie();
 
         $lieu = $em->getRepository(Lieu::class)->find(2);
@@ -55,7 +57,41 @@ class SortieController extends AbstractController
 
             'sortieForm' => $form->createView(),
             'detail'=> ['lieu' =>$lieu->getNom(),
-          'test2'=> $lieu->getRue()]]);
+          'test2'=> $lieu->getRue()]
+        ]);
+
+    }
+
+    /**
+     * @Route("/ajouterLieu", name="ajouterLieu")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function AjouterLieu(Request $request, EntityManagerInterface $em) {
+       $lieu = new Lieu();
+       $ville = new Ville();
+        $form = $this->createForm(LieuType ::class, $lieu);
+
+
+        $form->handleRequest($request);
+if ($form->isSubmitted() && $form->isValid()){
+    $villeNom= $form->get('ville')->getData();
+    $villeCode=$form->get('codePostal')->getData();
+    $ville->setNom($villeNom);
+    $ville->setCodePostal($villeCode);
+    $lieu->setVille($ville);
+    $em->persist($lieu);
+    $em->flush();
+    $this->redirectToRoute('sortie');
+
+
+
+}
+
+        return $this->render('Sortie/ajouterLieu.html.twig', [
+            'controller_name' => 'SortieController',
+            'formLieu'=>$form->createView()]);
 
     }
 

@@ -39,7 +39,7 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieus")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieus", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $ville;
