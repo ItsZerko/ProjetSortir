@@ -43,6 +43,7 @@ class  SecurityController extends AbstractController
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
+
     /**
      * @Route("/register", name="app_register")
      * @param Request $request
@@ -74,11 +75,19 @@ class  SecurityController extends AbstractController
                 )
             );
 
+            $user->setPasswordVerif(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('passwordVerif')->getData()
+                )
+            );
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $session->set('pseudo',$user->getUsername());
-            $session->set('id',$user->getId());
+            $session->set('pseudo', $user->getUsername());
+            $session->set('id', $user->getId());
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(

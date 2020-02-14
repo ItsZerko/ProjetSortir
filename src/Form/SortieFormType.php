@@ -21,10 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SortieFormType extends AbstractType
 {
 
-    public function test (FormBuilderInterface $builder, array $options) {
 
-        
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -45,12 +42,16 @@ class SortieFormType extends AbstractType
             ->add('nbInscriptionMax')
             ->add('infoSortie')
             ->add('lieu', EntityType::class,
-                ['class' => Lieu ::class, 'choice_label' => 'nom' ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $user = $event->getData();
 
-            }
-            )
+                ['class' => Lieu ::class, 'choice_label' => 'nom' ])
+
+
+
+
+
+
+            ->add('save', ButtonType::class, ['attr' => ['class' => 'btn btn-sucess']])
+
 
 
                     ->add('enregistrer', SubmitType::class)
@@ -58,13 +59,16 @@ class SortieFormType extends AbstractType
                     ->add('annuler', SubmitType::class);
 
 
+     /*   $builder->add('ville', EntityType::class,
+            ['class' => Lieu ::class, 'choice_label' => 'nom']);*/
+
             }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class
-
 
 
         ]);
