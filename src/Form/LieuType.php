@@ -24,7 +24,7 @@ class LieuType extends AbstractType
 
         $builder->add('ville', TextType::class, ['attr'=>['placeholder','ville'],'mapped' => false]);
 
-        $builder->add('codePostal', TextType::class, ['attr'=>['placeholder','Code Postal'],'mapped' => false]);
+        $builder->add('codePostal', TextType::class, ['attr'=>['placeholder','C P'],'mapped' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

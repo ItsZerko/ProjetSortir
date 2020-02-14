@@ -75,12 +75,6 @@ class  SecurityController extends AbstractController
                 )
             );
 
-            $user->setPasswordVerif(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('passwordVerif')->getData()
-                )
-            );
 
 
             $entityManager = $this->getDoctrine()->getManager();

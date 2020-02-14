@@ -33,6 +33,7 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request, EntityManagerInterface $em)
     {
 $test ="Hello";
+
         $sortie = new Sortie();
 
         $lieu = $em->getRepository(Lieu::class)->find(2);
@@ -83,7 +84,7 @@ if ($form->isSubmitted() && $form->isValid()){
     $lieu->setVille($ville);
     $em->persist($lieu);
     $em->flush();
-    $this->redirectToRoute('sortie');
+  return  $this->redirectToRoute('liste');
 
 
 
