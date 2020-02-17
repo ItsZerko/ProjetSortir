@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  * @UniqueEntity("mail")
  */
-
 class Participant implements UserInterface
 {
     /**
@@ -40,24 +39,6 @@ class Participant implements UserInterface
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $site;
-
-
-    /**
-     * @return mixed
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param mixed $username
-     *
-     */
-    public function setUsername($username): void
-    {
-        $this->username = $username;
-    }
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -103,6 +84,7 @@ class Participant implements UserInterface
     private $organisateur;
 
     /**
+     * @var Collection|Inscription[]
      * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_participant")
      */
     private $id_insc;
@@ -110,6 +92,23 @@ class Participant implements UserInterface
     public function __construct()
     {
         $this->id_insc = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     *
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
     }
 
     /**
@@ -204,13 +203,15 @@ class Participant implements UserInterface
      */
     public function getRoles(): array
     {
-       return $this->roles;
-    }  /**
+        return $this->roles;
+    }
+
+    /**
      * @inheritDoc
      */
     public function setRoles($roles)
     {
-       $this->roles=$roles;
+        $this->roles = $roles;
     }
 
 
@@ -221,7 +222,6 @@ class Participant implements UserInterface
     {
         // TODO: Implement getSalt() method.
     }
-
 
 
     /**
@@ -290,4 +290,13 @@ class Participant implements UserInterface
         return $this;
     }
 
+    public function isInscrit(Sortie $sortie): bool
+    {
+        foreach ($this->id_insc as $inscription) {
+            if ($inscription->getIdSortie() == $sortie) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

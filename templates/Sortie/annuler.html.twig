@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<body>
+
+<h1>Annuler une sortie</h1>
+
+<p>Nom de la sortie : {{ sortie.nom }}</p>
+<p>Date de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
+{#<p>Site de l'organisateur :{{ sortie.participant.site.nom }}</p>#}
+{#<p>Lieu de la sortie : {{ sortie.lieu.nom }} {{ sortie.lieu.rue }} {{ sortie.ville.nom }} {{ sortie.ville.codePostal }}</p>#}
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Motif</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+</body>
+
+ <button><a href="">Annuler une sortie</a></button>
+
+{% endblock %}

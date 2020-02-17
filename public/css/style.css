@@ -12,6 +12,10 @@ body{
     background-color: white;
 }
 
+.table ville td {
+    background-color: white;
+}
+
 .textHeader{
 font-size: 2em;
 }

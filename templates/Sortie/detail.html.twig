@@ -1,17 +1,42 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid bgList">
-        <div class="row">
-            <div class=" col-3">
-                <p>{{ sortie.nom }}</p>
-            </div>
-            <div class="col-3">
-                <p>{{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
-            </div>
-            <div class="col-3">
-                <a>{{ sortie.duree| date('d/m/Y') }}</a>
-            </div>
-            <div class="col-3">
-        </div>
-    </div>
+    <!-- colonne de gauche -->
+    <ul class="list-group-left">
+        <li class="list-group-item">Nom de la sortie : {{ sortie.nom }}</li>
+        <li class="list-group-item">Date et heure de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</li>
+        <li class="list-group-item">Date limite d'inscription :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}</li>
+        <li class="list-group-item">Nombre de places :  {{ sortie.nbInscriptionMax }}</li>
+        <li class="list-group-item">Durée : {{ sortie.duree | date('d/m/Y') }}</li>
+        <li class="list-group-item">Description et infos : {{ sortie.infoSortie}}</li>
+    </ul>
+    <!-- fin de colonne de gauche -->
+
+    <!-- colonne de droite -->
+    <ul class="list-group-right">
+        <li class="list-group-item">Lieu : {{ sortie.lieu.nom }}</li>
+        <li class="list-group-item">Rue : {{ sortie.lieu.rue }}</li>
+        <li class="list-group-item">Ville : {{ sortie.lieu.ville.nom }}</li>
+        <li class="list-group-item">Code postal : {{ sortie.lieu.ville.codePostal }}</li>
+        <li class="list-group-item">Latitude : {{ sortie.lieu.latitude }}</li>
+        <li class="list-group-item">Longitude : {{ sortie.lieu.longitude }}</li>
+    </ul>
+   <!-- fin de colonne de droite -->
+
+    <!-- liste des participants inscrits : -->
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Pseudo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+{#            <td>{{ sortie.participant.username }}</td>#}
+{#            <td>{{ sortie.participant.nom  }}</td>#}
+        </tr>
+        </tbody>
+    </table>
+    <!-- fin de la liste des inscrits -->
+
 {% endblock %}

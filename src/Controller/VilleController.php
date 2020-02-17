@@ -21,8 +21,11 @@ class VilleController extends AbstractController
      * @Route("/formulaire_ville", name="formulaire_ville")
      */
 
+
     public function formulaireVille(EntityManagerInterface $em, Request $request)
     {
+        if ($this->isGranted("ROLE_ADMIN")) {
+
         $newVille = new Ville();
         $form = $this->createForm(VilleType::class, $newVille);
 
@@ -38,35 +41,45 @@ class VilleController extends AbstractController
         return $this->render("ville/formulaire_ville.html.twig", [
             "form" => $form->createView(),
         ]);
+    } else {
+            return $this->redirectToRoute('liste');
+        }
     }
 
     /**
      * @Route("/ville", name="ville")
      */
-    public function listerVille(EntityManagerInterface $em) {
+    public function listerVille(EntityManagerInterface $em)
+    {
+
+        if ($this->isGranted("ROLE_ADMIN")) {
 
         $villeRepository = $em->getRepository(Ville::class);
         $villes = $villeRepository->findAll();
-         return $this->render("ville/listeVille.html.twig",
-             [
-                 "villes" => $villes
-             ]);
-     }
-
-    /**
-     * @Route("/supprimer_lieu/{id}", name="supprimer_lieu")
-     */
-    public function supprimer(EntityManagerInterface $em, $id=null)
-    {
-        $villes = $em->getRepository(Ville::class)->find($id);
-        $em->remove($villes);
-        $em->flush();
-        $this->addFlash('success', 'Ville supprimée !');
-        return $this->redirectToRoute('ville');
+        return $this->render("ville/listeVille.html.twig",
+            [
+                "villes" => $villes
+            ]);
+    } else {
+            return $this->redirectToRoute('liste');
+        }
     }
 
-
-
+    /**
+     * @Route("/supprimer_ville/{id}", name="supprimer_ville")
+     */
+    public function supprimer(EntityManagerInterface $em, $id = null)
+    {
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $villes = $em->getRepository(Ville::class)->find($id);
+            $em->remove($villes);
+            $em->flush();
+            $this->addFlash('success', 'Ville supprimée !');
+            return $this->redirectToRoute('ville');
+        } else {
+            return $this->redirectToRoute('liste');
+        }
+    }
 }
 
 

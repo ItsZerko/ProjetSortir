@@ -27,10 +27,13 @@
         {% endif %}
         {% if is_granted ('ROLE_ADMIN') %}
             <div class="col-3">
+                <a href="{{ path('app_logout') }}" class="textHeader">Se déconnecter</a>
+            </div>
+            <div class="col-3">
                 <a href="{{ path('ville') }}" class="textHeader">Gérer les villes</a>
             </div>
             <div class="col-3">
-                {#                    <a href="{{ path('sites') }}" class="textHeader">Gérer les sites</a>#}
+            <a href="{{ path('site') }}" class="textHeader">Gérer les sites</a>
             </div>
             <div class="col-3">
                 {#                    <a href="{{ path('utilisateur') }}" class="textHeader">Gérer les utilisateurs</a>#}

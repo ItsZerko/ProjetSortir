@@ -46,7 +46,6 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-
             $sortie->setEtat('Créée');
 
             $em->persist($sortie);
@@ -58,8 +57,8 @@ class SortieController extends AbstractController
             'controller_name' => 'SortieController',
 
             'sortieForm' => $form->createView(),
-            'detail'=> ['lieu' =>$lieu->getNom(),
-          'test2'=> $lieu->getRue()]
+            'detail' => ['lieu' => $lieu->getNom(),
+                'test2' => $lieu->getRue()]
         ]);
 
     }
@@ -70,49 +69,86 @@ class SortieController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function AjouterLieu(Request $request, EntityManagerInterface $em) {
-       $lieu = new Lieu();
-       $ville = new Ville();
+    public function AjouterLieu(Request $request, EntityManagerInterface $em)
+    {
+        $lieu = new Lieu();
+        $ville = new Ville();
         $form = $this->createForm(LieuType ::class, $lieu);
 
 
         $form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()){
-    $villeNom= $form->get('ville')->getData();
-    $villeCode=$form->get('codePostal')->getData();
-    $ville->setNom($villeNom);
-    $ville->setCodePostal($villeCode);
-    $lieu->setVille($ville);
-    $em->persist($lieu);
-    $em->flush();
-    $this->redirectToRoute('sortie');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $villeNom = $form->get('ville')->getData();
+            $villeCode = $form->get('codePostal')->getData();
+            $ville->setNom($villeNom);
+            $ville->setCodePostal($villeCode);
+            $lieu->setVille($ville);
+            $em->persist($lieu);
+            $em->flush();
+            $this->redirectToRoute('sortie');
 
 
-
-}
+        }
 
         return $this->render('Sortie/ajouterLieu.html.twig', [
             'controller_name' => 'SortieController',
-            'formLieu'=>$form->createView()]);
+            'formLieu' => $form->createView()]);
 
     }
 
+    /**
+     * @Route ("/recherche", name="recherche")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $requete
+     * @return Response
+     */
+    public function recherche(EntityManagerInterface $em, Request $request, $requete){
 
+        $recherche=$request->get('recherche');
+        if($requete->getMethod() == 'POST'){
+            $repository = $this->getDoctrine()
+                ->getEntityManager()
+                ->getRepository('ProjetbibliothequeBundle:Inscrit');
+            $listeinscrit = $repository->findByNomApproximatif($requete);
+
+            return $this->render('ProjetbibliothequeBundle:Inscrit:index.html.twig', array(
+                'entities' => $listeinscrit,
+            ));
+        }
+    }
 
     /**
      * @param EntityManagerInterface $em
      * @return Response
      * @Route("/liste", name="liste")
      */
-    public function recupListeSortie(EntityManagerInterface $em)
+    public function recupListeSortie(EntityManagerInterface $em, Request $request)
     {
-        $sites = $em->getRepository(Site::class)->findAll();
-        $ListeSortie = $em->getRepository(Sortie::class)->findAll();
 
-        return $this->render('Sortie/liste.html.twig', [
-            "listeSortie" => $ListeSortie,
-            "sites"=>$sites,
+
+        $user = $this->getUser()->getUsername();
+        $sites = $em->getRepository(Site::class)->findAll();
+        $listeSorties = $em->getRepository(Sortie::class)->findAll();
+        dump($listeSorties);
+        $participants = $em->getRepository(Participant::class)->findOneBy([
+            "username" => $user
         ]);
+        $inscription = $em->getRepository(Inscription::class)->findBy([
+            "id_sortie" => $listeSorties
+        ]);
+
+
+        return $this->render(
+            'Sortie/liste.html.twig',
+            compact('listeSorties', 'sites', 'inscription', 'participants')
+        );
+//            [
+//            "listeSorties" => $listeSorties,
+//            "sites" => $sites,
+//            "inscription" => $inscription,
+//            "participants" => $participants,
+//        ]);
     }
 
 
@@ -122,7 +158,7 @@ if ($form->isSubmitted() && $form->isValid()){
     public function detail($id, EntityManagerInterface $em)
     {
         $sortieRepository = $em->getRepository(Sortie::class);
-        $sortie=$sortieRepository->find($id);
+        $sortie = $sortieRepository->find($id);
 
         return $this->render("sortie/detail.html.twig",
             [
@@ -141,17 +177,15 @@ if ($form->isSubmitted() && $form->isValid()){
         $sortie = $em->getRepository(Sortie::class)->find($id);
 
         $time = new \DateTime();
-            $inscription->setIdParticipant($participant);
-            $inscription->getIdSortie($sortie);
-            $inscription->setDateInscription($time);
-dump($participant);
-dump($sortie);
-die();
+        $inscription->setIdParticipant($participant);
+        $inscription->setIdSortie($sortie);
+        $inscription->setDateInscription($time);
 
-            $em->persist($inscription);
-            $em->flush();
 
-            return $this->redirectToRoute('liste');
+        $em->persist($inscription);
+        $em->flush();
+
+        return $this->redirectToRoute('liste');
 
 //        return $this->render('Sortie/detail.html.twig', [
 //            'id' => $id,
@@ -160,9 +194,9 @@ die();
     }
 
     /**
-     * @Route("/annuler/{id}", name="annulerSortie")
+     * @Route("/desinscrire/{id}", name="desinscrire")
      */
-    public function annulerSortie(EntityManagerInterface $em, Request $request, $id)
+    public function désinscrire(EntityManagerInterface $em, Request $request, $id)
     {
         $participant = $this->getUser()->getUsername();
         $participantId = $em->getRepository(Participant::class)->findOneBy(
