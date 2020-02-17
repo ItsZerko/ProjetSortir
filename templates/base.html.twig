@@ -19,7 +19,7 @@
     <nav>
         {% if is_granted ('ROLE_USER') %}
             <div class="col-3">
-                <a href="{{ path('modifier')}}" class="textHeader">Mon profil</a>
+                <a href="{{ path('modifier',{'id':app.user.id})}}" class="textHeader">Mon profil</a>
             </div>
             <div class="col-3">
                 <a href="{{ path('app_logout') }}" class="textHeader">Se déconnecter</a>

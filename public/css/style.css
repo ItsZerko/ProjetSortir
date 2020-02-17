@@ -13,8 +13,8 @@ body{
 }
 
 .table ville td {
-    background-color: white;
-}
+            background-color: white;
+        }
 
 .textHeader{
 font-size: 2em;
@@ -30,11 +30,12 @@ a, a:hover {
     border-radius:10px;
     color: white;
     margin: 0 auto;
-    top:50px;
+    top:0px;
     width: 75%;
     background-color: #222222;
     height: 25%;
     border:white 3px solid;
+    opacity:0.85;
 }
 
 .register {
@@ -61,10 +62,19 @@ a, a:hover {
     background-color: #222222;
     height: 25%;
     border:white 3px solid;
+    text-decoration: none;
 
 
 }
 
+
+.btnS{
+
+    text-decoration: none;
+
+
+
+}
 
 
 .bgList{

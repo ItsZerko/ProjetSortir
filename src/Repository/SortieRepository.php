@@ -14,6 +14,14 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class SortieRepository extends ServiceEntityRepository
 {
+    public function findByNomApproximatif($nom) {
+        $queryBuider = $this->createQueryBuilder('s');
+        $queryBuider->where('s.nom LIKE :nom')
+            ->setParameter('nom', '%'.$nom.'%');
+
+        return $queryBuider->getQuery()->getResult();
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sortie::class);
