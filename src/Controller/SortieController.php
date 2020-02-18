@@ -45,13 +45,31 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setLieu($lieu);
+            if ($form->get('enregistrer')->isClicked()){
 
 
-            $sortie->setEtat('Créée');
+                $sortie->setEtat('Créée');
 
-            $em->persist($sortie);
-            $em->flush();
-            $this->redirectToRoute('sortie');
+                $em->persist($sortie);
+                $em->flush();
+            return    $this->redirectToRoute('liste');
+
+            }
+            else if ($form->get('publier')->isClicked()) {
+
+                $sortie->setEtat('Publiée');
+
+                $em->persist($sortie);
+                $em->flush();
+           return     $this->redirectToRoute('liste');
+
+
+
+            }
+
+
+
 
         }
         return $this->render('Sortie/formulaire_sortie.html.twig', [
@@ -86,7 +104,7 @@ class SortieController extends AbstractController
             $lieu->setVille($ville);
             $em->persist($lieu);
             $em->flush();
-            $this->redirectToRoute('sortie');
+           return $this->redirectToRoute('sortie');
 
 
         }

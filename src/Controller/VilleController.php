@@ -53,10 +53,9 @@ class VilleController extends AbstractController
     /**
      * @Route("/ville", name="ville")
      * @param EntityManagerInterface $em
-<<<<<<< HEAD
-=======
+
      * @param Request $request
->>>>>>> 24ac92e762ba049cd4cc4f748a6a448f4d8f94e3
+
      * @return RedirectResponse|Response
      */
     public function listerVille(EntityManagerInterface $em, Request $request)

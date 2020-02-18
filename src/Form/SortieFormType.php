@@ -44,23 +44,19 @@ class SortieFormType extends AbstractType
                 [
                     'class' => Lieu ::class,
                     'choice_label' => 'nom',
-                    'attr' => [
+                    'attr' => ['id'=>'test',
                         'onchange' => 'updateLieu(this.value)'
                     ]
                 ]
             )
-//            ->add('save', ButtonType::class, ['attr' => ['class' => 'btn btn-sucess']])
+
             ->add('enregistrer', SubmitType::class)
             ->add('publier', SubmitType::class)
             ->add('annuler', SubmitType::class);
 
-//                    ->add('enregistrer', SubmitType::class, ['attr'=>['id'=>'save']])
-//                    ->add('publier', SubmitType::class, ['attr'=>['id'=>'publish']])
-//                    ->add('annuler', ButtonType::class);
 
 
-        /*   $builder->add('ville', EntityType::class,
-               ['class' => Lieu ::class, 'choice_label' => 'nom']);*/
+
 
     }
 

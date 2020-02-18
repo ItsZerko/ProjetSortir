@@ -10,7 +10,7 @@
 
     </script>
 {% endblock %}
-
+{% set val =0 %}
 {% block body %}
     <div class="sortie">
         {{ form_start(sortieForm) }}
@@ -108,12 +108,20 @@ Code Postal : {{ detail.test2 }}
 {% block javascripts %}
     {{ parent() }}
     <script>
-        function updateLieu(value) {
-            // recupérer la valeur du select
-            console.log(value);
-            console.log(val);
 
-        window.location.href="changeLieu";
+        function onClickSelector(event)
+        {
+
+            const test = event.valueOf();
+            console.log(test);
+        }
+
+        function updateLieu(value) {
+
+            console.log(value);
+
+document.querySelector('#selector').addEventListener('click', onClickSelector);
+
         }
     </script>
 {% endblock %}
