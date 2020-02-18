@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="10.27.200.6" uuid="dc3f1039-4b3f-4410-8160-cdd72e245ff6">
+    <data-source source="LOCAL" name="projetsortir@10.27.200.16" uuid="f094e392-92e1-42f8-85ec-4994607755e0">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://10.27.200.6:3306</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="projetsortir" uuid="6e0e7dbc-7dd0-4d34-a771-271383bfcb04">
-      <driver-ref>mariadb</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://10.27.200.6:3306/projetsortir</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="projetsortir@localhost" uuid="31bef56a-aea6-4f46-a0e3-90f32d5d9f89">
-      <driver-ref>mariadb</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://localhost:3306/projetsortir</jdbc-url>
+      <jdbc-url>jdbc:mariadb://10.27.200.16:3306/projetsortir</jdbc-url>
     </data-source>
     <data-source source="LOCAL" name="projetsortir@10.27.200.16" uuid="5cc1c427-e10e-41f5-ab70-3913d76ef5d6">
       <driver-ref>mariadb</driver-ref>

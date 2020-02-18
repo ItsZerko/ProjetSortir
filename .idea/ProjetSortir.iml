@@ -128,5 +128,10 @@
     <orderEntry type="module" module-name="bucket-list-2020-master" />
     <orderEntry type="module" module-name="parcAnimalier" />
     <orderEntry type="module" module-name="parcAnimalier" />
+    <orderEntry type="module" module-name="sortir" />
+    <orderEntry type="library" name="jquery-3.4.1.slim" level="application" />
+    <orderEntry type="library" name="popper" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="bootstrap-datepicker" level="application" />
   </component>
 </module>

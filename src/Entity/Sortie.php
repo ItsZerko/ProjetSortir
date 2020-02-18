@@ -105,6 +105,8 @@ class Sortie
      */
     private $lieu;
 
+
+
     public function __construct()
     {
         $this->idInscr = new ArrayCollection();
@@ -230,10 +232,8 @@ class Sortie
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSites()
+
+    public function getSites(): ?Site
     {
         return $this->sites;
     }
@@ -245,5 +245,7 @@ class Sortie
     {
         $this->sites = $sites;
     }
+
+
 }
 

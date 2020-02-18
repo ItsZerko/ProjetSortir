@@ -5,9 +5,12 @@ namespace App\Controller;
 
 use App\Entity\Ville;
 use App\Form\InscriptionSortieType;
+use App\Form\RechercheType;
+use App\Form\RechercheVilleType;
 use App\Form\VilleType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +22,14 @@ class VilleController extends AbstractController
 
     /**
      * @Route("/formulaire_ville", name="formulaire_ville")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-
     public function formulaireVille(EntityManagerInterface $em, Request $request)
     {
+        if ($this->isGranted("ROLE_ADMIN")) {
+
         $newVille = new Ville();
         $form = $this->createForm(VilleType::class, $newVille);
 
@@ -38,35 +45,72 @@ class VilleController extends AbstractController
         return $this->render("ville/formulaire_ville.html.twig", [
             "form" => $form->createView(),
         ]);
+    } else {
+            return $this->redirectToRoute('liste');
+        }
     }
 
     /**
      * @Route("/ville", name="ville")
+     * @param EntityManagerInterface $em
+<<<<<<< HEAD
+=======
+     * @param Request $request
+>>>>>>> 24ac92e762ba049cd4cc4f748a6a448f4d8f94e3
+     * @return RedirectResponse|Response
      */
-    public function listerVille(EntityManagerInterface $em) {
-
-        $villeRepository = $em->getRepository(Ville::class);
-        $villes = $villeRepository->findAll();
-         return $this->render("ville/listeVille.html.twig",
-             [
-                 "villes" => $villes
-             ]);
-     }
-
-    /**
-     * @Route("/supprimer_lieu/{id}", name="supprimer_lieu")
-     */
-    public function supprimer(EntityManagerInterface $em, $id=null)
+    public function listerVille(EntityManagerInterface $em, Request $request)
     {
-        $villes = $em->getRepository(Ville::class)->find($id);
-        $em->remove($villes);
-        $em->flush();
-        $this->addFlash('success', 'Ville supprimée !');
-        return $this->redirectToRoute('ville');
+
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $villes = $em->getRepository(Ville::class)->findAll();
+
+            $form = $this->createForm( RechercheVilleType::class);
+            $form->handleRequest($request);
+
+
+            $villeRecherchee = $form->get('villeRecherchee')->getData();
+
+            if($form->isSubmitted()&& $villeRecherchee !== null)
+            {
+                $villes = $em->getRepository(Ville::class)->findBy([
+                    "nom"=>$villeRecherchee
+                ]);
+
+            }
+
+
+        return $this->render("ville/listeVille.html.twig",
+            [
+                'villes' => $villes,
+                'recherche'=>$form->createView()
+            ]);
+
+    } else {
+            return $this->redirectToRoute('liste');
+        }
     }
 
+    /**
+     * @Route("/supprimer_ville/{id}", name="supprimer_ville")
+     * @param EntityManagerInterface $em
+     * @param null $id
+     * @return RedirectResponse
+     */
+    public function supprimer(EntityManagerInterface $em, $id = null)
+    {
 
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $villes = $em->getRepository(Ville::class)->find($id);
 
+            $em->remove($villes);
+            $em->flush();
+            $this->addFlash('success', 'Ville supprimée !');
+            return $this->redirectToRoute('ville');
+        } else {
+            return $this->redirectToRoute('liste');
+        }
+    }
 }
 
 

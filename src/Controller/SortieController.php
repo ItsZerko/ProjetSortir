@@ -20,6 +20,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Console\Helper\HelperSet;
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +32,13 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/sortie", name="sortie")
+     *  @Route("/changeLieu/{id}", name="changLieu")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function creationSortie(Request $request, EntityManagerInterface $em)
+
+    public function creationSortie(Request $request, EntityManagerInterface $em, $id=null)
     {
 
         $sortie = new Sortie();
@@ -55,7 +59,8 @@ class SortieController extends AbstractController
             $this->redirectToRoute('sortie');
 
         }
-        return $this->render('base/sortie.html.twig', [
+
+        return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
 
             'sortieForm' => $form->createView(),
@@ -105,14 +110,28 @@ class SortieController extends AbstractController
      * @param $requete
      * @return Response
      */
-    public function recherche(EntityManagerInterface $em, Request $request)
-    {
 
+
+
+    public function recherche(EntityManagerInterface $em, Request $request, $requete){
+
+        $recherche=$request->get('recherche');
+        if($requete->getMethod() == 'POST'){
+            $repository = $this->getDoctrine()
+                ->getEntityManager()
+                ->getRepository('ProjetbibliothequeBundle:Inscrit');
+            $listeinscrit = $repository->findByNomApproximatif($requete);
+
+            return $this->render('ProjetbibliothequeBundle:Inscrit:index.html.twig', array(
+                'entities' => $listeinscrit,
+            ));
+        }
 
     }
 
     /**
      * @param EntityManagerInterface $em
+     * @param Request $request
      * @return Response
      * @Route("/liste", name="liste")
      */
@@ -123,12 +142,16 @@ class SortieController extends AbstractController
         $user = $this->getUser()->getUsername();
         $sites = $em->getRepository(Site::class)->findAll();
         $listeSorties = $em->getRepository(Sortie::class)->findAll();
+
+        dump($listeSorties);
+
         $participants = $em->getRepository(Participant::class)->findOneBy([
             "username" => $user
         ]);
         $inscription = $em->getRepository(Inscription::class)->findBy([
             "id_sortie" => $listeSorties
         ]);
+
 
         $form = $this->createForm(RechercheType::class);
 
@@ -143,10 +166,6 @@ class SortieController extends AbstractController
                 $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
 
             }
-//            else {
-//                $listeSorties = $em->getRepository(Sortie::class)->findAll();
-//
-//            }
 
 
 
@@ -160,7 +179,7 @@ class SortieController extends AbstractController
             "participants" => $participants,
             'recherche' => $form->createView()
         ]);
-    }
+}
 
 
     /**
@@ -198,10 +217,6 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('liste');
 
-//        return $this->render('Sortie/detail.html.twig', [
-//            'id' => $id,
-//            'erreur' => 'blabla'
-//        ]);
     }
 
     /**
@@ -237,5 +252,6 @@ class SortieController extends AbstractController
             'erreur' => 'blabla'
         ]);
     }
+
 
 }

@@ -105,3 +105,15 @@ Code Postal : {{ detail.test2 }}
 
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function updateLieu(value) {
+            // recupérer la valeur du select
+            console.log(value);
+            console.log(val);
+
+        window.location.href="changeLieu";
+        }
+    </script>
+{% endblock %}

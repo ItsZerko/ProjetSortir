@@ -1,27 +1,49 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+<<<<<<< HEAD
+=======
 <h1>Gérer les lieux</h1>
     <h2>Filtrer les lieux :</h2>
     <p>Le nom contient : </p>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Ville</th>
-            <th>Code postal</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for ville in villes %}
-            <tr>
-                <td> {{ ville.nom }}</td>
-                <td> {{ ville.codePostal }}</td>
-                <td><a href="{{ path("supprimer_lieu",{'id':ville.id}) }}"> Supprimer </a></td>
-{#              <td><a href="{{ path("lieu_modifier",{'id':ville.id}) }}"> X </a></td>#}
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ path("formulaire_ville") }}">Ajouter</a>
+    {{ form(recherche) }}
+>>>>>>> 24ac92e762ba049cd4cc4f748a6a448f4d8f94e3
+
+
+    <div class="afficherVille">
+        <form>
+            <h1>Gérer les lieux</h1>
+            <h2>Filtrer les lieux :</h2>
+            <div>
+                <input type="search" id="maRecherche" name="q" placeholder="Le nom contient :">
+                <button>Rechercher</button>
+            </div>
+        </form>
+
+        <br>
+        <div class="table ville">
+            <table>
+                <thead class="thead-dark">
+                <tr>
+                    <th>Ville</th>
+                    <th>Code postal</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ville in villes %}
+                <tr>
+                    <td style="color:white"> {{ ville.nom }} </td>
+                    <td style="color:white"> {{ ville.codePostal }} </td>
+                    <td><a href="{{ path("supprimer_ville",{'id':ville.id}) }}" style="color:red"> Supprimer </a></td>
+
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+        </div>
+        <button><a href="{{ path("formulaire_ville") }}">Ajouter</a></button>
+    </div>
 
 {% endblock %}

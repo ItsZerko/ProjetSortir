@@ -4,10 +4,15 @@
     <header>
         <h1>Filtrer les sorties :</h1>
 
+
     </header>
 
 
     {{ form(recherche) }}
+
+
+    </form>
+    </header>
 
     <!-- tableau de liste des sorties : -->
     <div class="fond">
@@ -30,9 +35,11 @@
                     <td> {{ listeSortie.nom }}</td>
                     <td> {{ listeSortie.dateHeureDebut | date('d/m/Y') }}</td>
                     <td> {{ listeSortie.dateLimiteInscription | date('d/m/Y') }}</td>
-                    <td> {{ listeSortie | length }} / {{ listeSortie.nbInscriptionMax }}</td>
+                    <td> {{ listeSortie.idInscr.count() }} / {{ listeSortie.nbInscriptionMax }}</td>
                     <td> {{ listeSortie.etat }}</td>
                     <td><a href="{{ path('detail',{'id':listeSortie.id}) }}">afficher</a></td>
+                        <td><a href="{{ path('modifier',{'id':listeSortie.id}) }}">modifier</a></td>
+
                    {% if app.user.isInscrit(listeSortie) %}
                        <td><a href="{{ path('desinscrire',{'id':listeSortie.id}) }}">se désinscrire</a></td>
                         {% else %}

@@ -34,8 +34,9 @@ class  SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
 
+
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -66,7 +67,7 @@ class  SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_ADMIN']);
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(

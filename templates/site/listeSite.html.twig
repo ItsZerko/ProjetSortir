@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Gérer les sites</h1>
+    <h2>Filtrer les sites :</h2>
+    <p>Le nom contient : </p>
+
+    {{ form(recherche) }}
+
+    <br>
+    <div class="table site">
+        <table>
+            <thead class="thead-dark">
+            <tr>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for site in sites %}
+            <tr>
+                <td> {{ site.nom }}</td>
+                <td><a href="{{ path("supprimer_site",{'id':site.id}) }}"> Supprimer </a></td>
+                {#              <td><a href="{{ path("modifier_site",{'id':site.id}) }}"> X </a></td>#}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button><a href="{{ path("formulaire_site") }}">Ajouter</a></button>
+
+{% endblock %}

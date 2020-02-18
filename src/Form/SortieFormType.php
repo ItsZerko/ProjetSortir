@@ -22,12 +22,11 @@ class SortieFormType extends AbstractType
 {
 
 
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $listener = function (FormEvent $event) {
-            $test ='Hello';
+            $test = 'Hello';
             dump($test);
         };
         $builder
@@ -42,20 +41,28 @@ class SortieFormType extends AbstractType
             ->add('nbInscriptionMax')
             ->add('infoSortie')
             ->add('lieu', EntityType::class,
+                [
+                    'class' => Lieu ::class,
+                    'choice_label' => 'nom',
+                    'attr' => [
+                        'onchange' => 'updateLieu(this.value)'
+                    ]
+                ]
+            )
+//            ->add('save', ButtonType::class, ['attr' => ['class' => 'btn btn-sucess']])
+            ->add('enregistrer', SubmitType::class)
+            ->add('publier', SubmitType::class)
+            ->add('annuler', SubmitType::class);
 
-                ['class' => Lieu ::class, 'choice_label' => 'nom' ])
+//                    ->add('enregistrer', SubmitType::class, ['attr'=>['id'=>'save']])
+//                    ->add('publier', SubmitType::class, ['attr'=>['id'=>'publish']])
+//                    ->add('annuler', ButtonType::class);
 
 
+        /*   $builder->add('ville', EntityType::class,
+               ['class' => Lieu ::class, 'choice_label' => 'nom']);*/
 
-                    ->add('enregistrer', SubmitType::class, ['attr'=>['id'=>'save']])
-                    ->add('publier', SubmitType::class, ['attr'=>['id'=>'publish']])
-                    ->add('annuler', ButtonType::class);
-
-
-     /*   $builder->add('ville', EntityType::class,
-            ['class' => Lieu ::class, 'choice_label' => 'nom']);*/
-
-            }
+    }
 
 
     public function configureOptions(OptionsResolver $resolver)
@@ -66,7 +73,6 @@ class SortieFormType extends AbstractType
 
         ]);
     }
-
 
 
 }
