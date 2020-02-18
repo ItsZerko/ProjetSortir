@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Entity\Ville;
 use App\Form\InscriptionSortieType;
+use App\Form\RechercheType;
+use App\Form\RechercheVilleType;
 use App\Form\VilleType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,19 +53,39 @@ class VilleController extends AbstractController
     /**
      * @Route("/ville", name="ville")
      * @param EntityManagerInterface $em
+<<<<<<< HEAD
+=======
+     * @param Request $request
+>>>>>>> 24ac92e762ba049cd4cc4f748a6a448f4d8f94e3
      * @return RedirectResponse|Response
      */
-    public function listerVille(EntityManagerInterface $em)
+    public function listerVille(EntityManagerInterface $em, Request $request)
     {
 
         if ($this->isGranted("ROLE_ADMIN")) {
+            $villes = $em->getRepository(Ville::class)->findAll();
 
-        $villeRepository = $em->getRepository(Ville::class);
-        $villes = $villeRepository->findAll();
+            $form = $this->createForm( RechercheVilleType::class);
+            $form->handleRequest($request);
+
+
+            $villeRecherchee = $form->get('villeRecherchee')->getData();
+
+            if($form->isSubmitted()&& $villeRecherchee !== null)
+            {
+                $villes = $em->getRepository(Ville::class)->findBy([
+                    "nom"=>$villeRecherchee
+                ]);
+
+            }
+
+
         return $this->render("ville/listeVille.html.twig",
             [
-                "villes" => $villes
+                'villes' => $villes,
+                'recherche'=>$form->createView()
             ]);
+
     } else {
             return $this->redirectToRoute('liste');
         }

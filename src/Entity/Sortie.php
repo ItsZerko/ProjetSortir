@@ -101,6 +101,11 @@ class Sortie
      */
     private $lieu;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortieSite")
+     */
+    private $sites;
+
     public function __construct()
     {
         $this->idInscr = new ArrayCollection();
@@ -225,5 +230,18 @@ class Sortie
 
         return $this;
     }
+
+    public function getSites(): ?Site
+    {
+        return $this->sites;
+    }
+
+    public function setSites(?Site $sites): self
+    {
+        $this->sites = $sites;
+
+        return $this;
+    }
+
 }
 

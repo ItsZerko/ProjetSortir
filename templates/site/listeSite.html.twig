@@ -3,12 +3,8 @@
     <h1>Gérer les sites</h1>
     <h2>Filtrer les sites :</h2>
     <p>Le nom contient : </p>
-    <form>
-        <div>
-            <input type="search" id="maRecherche" name="q">
-            <button>Rechercher</button>
-        </div>
-    </form>
+
+    {{ form(recherche) }}
 
     <br>
     <div class="table site">

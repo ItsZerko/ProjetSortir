@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Site;
+use App\Form\RechercheSiteType;
 use App\Form\SiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,20 +44,36 @@ class SiteController extends AbstractController
     /**
      * @Route("/site", name="site")
      */
-    public function listerSite(EntityManagerInterface $em) {
+    public function listerSite(EntityManagerInterface $em, Request $request){
 
         if ($this->isGranted("ROLE_ADMIN")) {
+            $sites = $em->getRepository(Site::class)->findAll();
 
-        $siteRepository = $em->getRepository(Site::class);
-        $sites = $siteRepository->findAll();
-         return $this->render("site/listeSite.html.twig",
-             [
-                 "sites" => $sites
-             ]);
-     } else {
+            $form = $this->createForm( RechercheSiteType::class);
+            $form->handleRequest($request);
+
+            $siteRecherche = $form->get('siteRecherche')->getData();
+
+            if($form->isSubmitted()&& $siteRecherche !== null)
+            {
+                $sites = $em->getRepository(Site::class)->findBy([
+                    "nom"=>$siteRecherche
+                ]);
+
+            }
+
+            return $this->render("site/listeSite.html.twig",
+                [
+                    'sites' => $sites,
+                    'recherche'=>$form->createView()
+                ]);
+
+        } else {
             return $this->redirectToRoute('liste');
         }
     }
+
+
 
     /**
      * @Route("/supprimer_site/{id}", name="supprimer_site")
