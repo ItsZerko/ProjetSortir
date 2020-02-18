@@ -91,6 +91,10 @@ class Sortie
     private $sortie;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortieSite")
+     */
+    private $sites;
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie")
      */
     private $idInscr;
@@ -224,6 +228,22 @@ class Sortie
         $this->lieu = $lieu;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSites()
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param mixed $sites
+     */
+    public function setSites($sites): void
+    {
+        $this->sites = $sites;
     }
 }
 

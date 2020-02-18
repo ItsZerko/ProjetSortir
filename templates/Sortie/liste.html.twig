@@ -3,22 +3,11 @@
 
     <header>
         <h1>Filtrer les sorties :</h1>
-        <form action="" method="post">
-            <label for="recherche">Recherche:</label>
-            <input type="text" id="recherche" name="_recherche"  />
 
-            <button type="submit">Rechercher</button>
-        </form>
     </header>
 
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Sites :</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            {% for site in sites %}
-                <option> {{ site.nom }}</option>
-            {% endfor %}
-        </select>
-    </div>
+
+    {{ form(recherche) }}
 
     <!-- tableau de liste des sorties : -->
     <div class="fond">

@@ -27,6 +27,13 @@ class Site
      */
     private $participants;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sites")
+     */
+    private $sortieSite;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,5 +65,21 @@ class Site
     public function setParticipants($participants): void
     {
         $this->participants = $participants;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortieSite()
+    {
+        return $this->sortieSite;
+    }
+
+    /**
+     * @param mixed $sortieSite
+     */
+    public function setSortieSite($sortieSite): void
+    {
+        $this->sortieSite = $sortieSite;
     }
 }
