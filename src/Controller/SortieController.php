@@ -28,11 +28,12 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/sortie", name="sortie")
+     *  @Route("/changeLieu/{id}", name="changLieu")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function creationSortie(Request $request, EntityManagerInterface $em)
+    public function creationSortie(Request $request, EntityManagerInterface $em, $id=null)
     {
 
         $sortie = new Sortie();
@@ -53,7 +54,7 @@ class SortieController extends AbstractController
             $this->redirectToRoute('sortie');
 
         }
-        return $this->render('base/sortie.html.twig', [
+        return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
 
             'sortieForm' => $form->createView(),
@@ -120,6 +121,7 @@ class SortieController extends AbstractController
 
     /**
      * @param EntityManagerInterface $em
+     * @param Request $request
      * @return Response
      * @Route("/liste", name="liste")
      */
@@ -226,5 +228,7 @@ class SortieController extends AbstractController
             'erreur' => 'blabla'
         ]);
     }
+
+
 
 }

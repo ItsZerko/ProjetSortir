@@ -8,6 +8,7 @@ use App\Form\InscriptionSortieType;
 use App\Form\VilleType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,10 @@ class VilleController extends AbstractController
 
     /**
      * @Route("/formulaire_ville", name="formulaire_ville")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-
-
     public function formulaireVille(EntityManagerInterface $em, Request $request)
     {
         if ($this->isGranted("ROLE_ADMIN")) {
@@ -48,6 +50,8 @@ class VilleController extends AbstractController
 
     /**
      * @Route("/ville", name="ville")
+     * @param EntityManagerInterface $em
+     * @return RedirectResponse|Response
      */
     public function listerVille(EntityManagerInterface $em)
     {
@@ -67,11 +71,16 @@ class VilleController extends AbstractController
 
     /**
      * @Route("/supprimer_ville/{id}", name="supprimer_ville")
+     * @param EntityManagerInterface $em
+     * @param null $id
+     * @return RedirectResponse
      */
     public function supprimer(EntityManagerInterface $em, $id = null)
     {
+
         if ($this->isGranted("ROLE_ADMIN")) {
             $villes = $em->getRepository(Ville::class)->find($id);
+
             $em->remove($villes);
             $em->flush();
             $this->addFlash('success', 'Ville supprimée !');

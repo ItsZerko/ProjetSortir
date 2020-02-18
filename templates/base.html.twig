@@ -1,58 +1,107 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-       {% block head %} <meta charset="UTF-8">
-           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-           <link rel="stylesheet" href="{{ asset("css/style.css") }}"/>
-       {% endblock %}
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <header>
-        <img class="logo" src="{{ asset("img/logo.png") }}">
-    </header>
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset("css/style.css") }}"/>
+    {% endblock %}
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<header>
+    <img class="logo" src="{{ asset("img/logo.png") }}">
+</header>
 
-    <body>
+<body>
 
-    <!-- index : -->
-    <nav>
-        {% if is_granted ('ROLE_USER') %}
-            <div class="col-3">
-                <a href="{{ path('modifier',{'id':app.user.id})}}" class="textHeader">Mon profil</a>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    {% if user is defined %}
+  {{ app.user.username}}
+
+    {% else %}
+    <a href="{{ path('app_login') }}">Se connecter</a>
+
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% if is_granted('ROLE_USER') %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('modifier',{'id':app.user.id}) }}">Mon profil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Se déconnecter</a>
+            </li>
+
+        </ul>
+    </div>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{{ path('modifier',{'id':app.user.id}) }}" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('modifier',{'id':app.user.id}) }}">Mon profil </a>
+                            <a class="dropdown-item" href="{{ path('ville') }}">Gerer les ville </a>
+                            <a class="dropdown-item" href="{{ path('site') }}">Gerer les lieux</a>
+
+                                <a class="dropdown-item" href="{{ path('sortie') }}">Ajouter une sortie</a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ path('app_logout') }}" tabindex="-1" aria-disabled="true">Déconnection</a>
+
+                    </li>
+
+                </ul>
+
+                {% endif %}
+
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </div>
-            <div class="col-3">
-                <a href="{{ path('app_logout') }}" class="textHeader">Se déconnecter</a>
-            </div>
-        {% endif %}
-        {% if is_granted ('ROLE_ADMIN') %}
-            <div class="col-3">
-                <a href="{{ path('app_logout') }}" class="textHeader">Se déconnecter</a>
-            </div>
-            <div class="col-3">
-                <a href="{{ path('ville') }}" class="textHeader">Gérer les villes</a>
-            </div>
-            <div class="col-3">
-            <a href="{{ path('site') }}" class="textHeader">Gérer les sites</a>
-            </div>
-            <div class="col-3">
-                {#                    <a href="{{ path('utilisateur') }}" class="textHeader">Gérer les utilisateurs</a>#}
-            </div>
-        {% endif %}
-    </nav>
-    <!-- fin de l'index : -->
+</nav>
+
+{% block body %}
+
+{% endblock %}
 
 
-    {% block body %}
-      {% endblock %}
 
 
-        {% block javascripts %}
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        {% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+{% endblock %}
 
 
-    </body>
+</body>
 </html>
