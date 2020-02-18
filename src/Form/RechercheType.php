@@ -21,9 +21,12 @@ class RechercheType extends AbstractType
     {
         $builder
             ->add('RechercheSortie', TextType::class, array('required' => false))
+
+
             ->add('RechercheSite', EntityType::class, ['class' => Site ::class, 'choice_label' => 'nom',
                 'required' => false])
             ->add('villeRecherchee', TextType::class, array('required' => false))
+
 
             ->add('DateDebut', DateType::class, [
                 'required' => false,

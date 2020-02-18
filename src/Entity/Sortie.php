@@ -91,6 +91,10 @@ class Sortie
     private $sortie;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortieSite")
+     */
+    private $sites;
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie")
      */
     private $idInscr;
@@ -101,10 +105,7 @@ class Sortie
      */
     private $lieu;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortieSite")
-     */
-    private $sites;
+
 
     public function __construct()
     {
@@ -231,17 +232,20 @@ class Sortie
         return $this;
     }
 
+
     public function getSites(): ?Site
     {
         return $this->sites;
     }
 
-    public function setSites(?Site $sites): self
+    /**
+     * @param mixed $sites
+     */
+    public function setSites($sites): void
     {
         $this->sites = $sites;
-
-        return $this;
     }
+
 
 }
 

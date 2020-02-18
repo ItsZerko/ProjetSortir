@@ -7,5 +7,11 @@
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://10.27.200.16:3306/projetsortir</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="projetsortir@10.27.200.16" uuid="5cc1c427-e10e-41f5-ab70-3913d76ef5d6">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://10.27.200.16:3306/projetsortir</jdbc-url>
+    </data-source>
   </component>
 </project>

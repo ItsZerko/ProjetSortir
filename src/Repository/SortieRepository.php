@@ -14,10 +14,11 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class SortieRepository extends ServiceEntityRepository
 {
-    public function findByNomApproximatif($nom) {
+    public function findByNomApproximatif($nom)
+    {
         $queryBuider = $this->createQueryBuilder('s');
         $queryBuider->where('s.nom LIKE :nom')
-            ->setParameter('nom', '%'.$nom.'%');
+            ->setParameter('nom', '%' . $nom . '%');
 
         return $queryBuider->getQuery()->getResult();
     }
@@ -27,22 +28,38 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findByCriterion($dateDebut = null, $dateFin = null, $nomRecherche = null, $siteRecherche = null)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('s');
+        if ($dateDebut) {
+            $qb
+                ->andWhere('s.dateHeureDebut >= :dateDebut')
+                ->setParameter('dateDebut', $dateDebut);
+        }
+        if ($dateFin) {
+            $qb
+                ->andWhere('s.dateLimiteInscription <= :dateFin')
+                ->setParameter('dateFin', $dateFin);
+        }
+        if ($nomRecherche) {
+            $qb
+                ->andWhere('s.nom = :nomRecherche')
+                ->setParameter('nomRecherche', $nomRecherche);
+        }  if ($siteRecherche) {
+            $qb
+                ->andWhere('s.sites = :siteRecherche')
+                ->setParameter('siteRecherche', $siteRecherche);
+        }
+        return $qb->getQuery()->getResult();
+//            ->orderBy('s.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Sortie

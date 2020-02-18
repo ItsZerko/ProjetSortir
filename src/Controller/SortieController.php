@@ -11,6 +11,7 @@ use App\Entity\Lieu;
 use App\Entity\Ville;
 use App\Form\InscriptionSortieType;
 use App\Form\InscriptionType;
+use App\Form\RechercheType;
 use App\Form\SortieFormType;
 
 use App\Form\LieuType;
@@ -18,6 +19,9 @@ use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Console\Helper\HelperSet;
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +37,7 @@ class SortieController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
+
     public function creationSortie(Request $request, EntityManagerInterface $em, $id=null)
     {
 
@@ -72,6 +77,7 @@ class SortieController extends AbstractController
 
 
         }
+
         return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
 
@@ -122,6 +128,9 @@ class SortieController extends AbstractController
      * @param $requete
      * @return Response
      */
+
+
+
     public function recherche(EntityManagerInterface $em, Request $request, $requete){
 
         $recherche=$request->get('recherche');
@@ -135,6 +144,7 @@ class SortieController extends AbstractController
                 'entities' => $listeinscrit,
             ));
         }
+
     }
 
     /**
@@ -150,7 +160,9 @@ class SortieController extends AbstractController
         $user = $this->getUser()->getUsername();
         $sites = $em->getRepository(Site::class)->findAll();
         $listeSorties = $em->getRepository(Sortie::class)->findAll();
+
         dump($listeSorties);
+
         $participants = $em->getRepository(Participant::class)->findOneBy([
             "username" => $user
         ]);
@@ -159,17 +171,33 @@ class SortieController extends AbstractController
         ]);
 
 
+        $form = $this->createForm(RechercheType::class);
+
+
+        $form->handleRequest($request);
+        $infoRecherche = $form->get('RechercheSortie')->getData();
+            $infoSite = $form->get('RechercheSite')->getData();
+            $infoDateDebut = $form->get('DateDebut')->getData();
+            $infoDateFin = $form->get('DateFin')->getData();
+
+            if ($form->isSubmitted()) {
+                $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
+
+            }
+
+
+
         return $this->render(
-            'Sortie/liste.html.twig',
-            compact('listeSorties', 'sites', 'inscription', 'participants')
-        );
-//            [
-//            "listeSorties" => $listeSorties,
-//            "sites" => $sites,
-//            "inscription" => $inscription,
-//            "participants" => $participants,
-//        ]);
-    }
+            'Sortie/liste.html.twig'
+            // compact('listeSorties', 'sites', 'inscription', 'participants','form')
+            , [
+            "listeSorties" => $listeSorties,
+            "sites" => $sites,
+            "inscription" => $inscription,
+            "participants" => $participants,
+            'recherche' => $form->createView()
+        ]);
+}
 
 
     /**
@@ -207,10 +235,6 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('liste');
 
-//        return $this->render('Sortie/detail.html.twig', [
-//            'id' => $id,
-//            'erreur' => 'blabla'
-//        ]);
     }
 
     /**
@@ -246,7 +270,6 @@ class SortieController extends AbstractController
             'erreur' => 'blabla'
         ]);
     }
-
 
 
 }

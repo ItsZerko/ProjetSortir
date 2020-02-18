@@ -29,6 +29,7 @@ class Site
      */
     private $participants;
 
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sites")
      */
@@ -74,33 +75,45 @@ class Site
     }
 
     /**
-     * @return Collection|Sortie[]
+     * @return mixed
      */
     public function getSortieSite(): Collection
     {
         return $this->sortieSite;
     }
 
-    public function addSortieSite(Sortie $sortieSite): self
+    /**
+     * @param mixed $sortieSite
+     */
+    public function setSortieSite($sortieSite): void
     {
-        if (!$this->sortieSite->contains($sortieSite)) {
-            $this->sortieSite[] = $sortieSite;
-            $sortieSite->setSites($this);
-        }
-
-        return $this;
+        $this->sortieSite = $sortieSite;
     }
 
-    public function removeSortieSite(Sortie $sortieSite): self
-    {
-        if ($this->sortieSite->contains($sortieSite)) {
-            $this->sortieSite->removeElement($sortieSite);
-            // set the owning side to null (unless already changed)
-            if ($sortieSite->getSites() === $this) {
-                $sortieSite->setSites(null);
+        public function addSortieSite(Sortie $sortieSite): self
+        {
+            if (!$this->sortieSite->contains($sortieSite)) {
+                $this->sortieSite[] = $sortieSite;
+                $sortieSite->setSites($this);
             }
+
+            return $this;
         }
 
-        return $this;
-    }
+
+
+        public function removeSortieSite(Sortie $sortieSite): self
+        {
+            if ($this->sortieSite->contains($sortieSite)) {
+                $this->sortieSite->removeElement($sortieSite);
+                // set the owning side to null (unless already changed)
+
+                if ($sortieSite->getSites() === $this) {
+                    $sortieSite->setSites(null);
+                }
+            }
+
+            return $this;
+        }
+
 }
