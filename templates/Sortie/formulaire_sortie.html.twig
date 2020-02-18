@@ -10,7 +10,7 @@
 
     </script>
 {% endblock %}
-{% set val =0 %}
+
 {% block body %}
     <div class="sortie">
         {{ form_start(sortieForm) }}
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-4 ml-5">
                 {{ form_row(sortieForm.dateHeureDebut) }}
-{% set ville= value %}
+
             </div>
             <div class="col-4">
 Ville : {{ detail.lieu }}
