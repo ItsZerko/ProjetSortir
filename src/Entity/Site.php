@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,17 @@ class Site
      * Cas possible cascade={"remove"}
      */
     private $participants;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sites")
+     */
+    private $sortieSite;
+
+    public function __construct()
+    {
+        $this->sortieSite = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -58,5 +71,36 @@ class Site
     public function setParticipants($participants): void
     {
         $this->participants = $participants;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getSortieSite(): Collection
+    {
+        return $this->sortieSite;
+    }
+
+    public function addSortieSite(Sortie $sortieSite): self
+    {
+        if (!$this->sortieSite->contains($sortieSite)) {
+            $this->sortieSite[] = $sortieSite;
+            $sortieSite->setSites($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieSite(Sortie $sortieSite): self
+    {
+        if ($this->sortieSite->contains($sortieSite)) {
+            $this->sortieSite->removeElement($sortieSite);
+            // set the owning side to null (unless already changed)
+            if ($sortieSite->getSites() === $this) {
+                $sortieSite->setSites(null);
+            }
+        }
+
+        return $this;
     }
 }

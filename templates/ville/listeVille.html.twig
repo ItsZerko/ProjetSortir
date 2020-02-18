@@ -3,12 +3,8 @@
 <h1>Gérer les lieux</h1>
     <h2>Filtrer les lieux :</h2>
     <p>Le nom contient : </p>
-    <form>
-        <div>
-            <input type="search" id="maRecherche" name="q">
-            <button>Rechercher</button>
-        </div>
-    </form>
+
+    {{ form(recherche) }}
 
     <br>
     <div class="table ville">
