@@ -38,14 +38,14 @@ class SortieController extends AbstractController
 
         $sortie = new Sortie();
 
-        $lieu = $em->getRepository(Lieu::class)->find(2);
+        //$lieu = $em->getRepository(Lieu::class)->find(2);
         $form = $this->createForm(SortieFormType ::class, $sortie);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sortie->setLieu($lieu);
+            $sortie->setLieu($form->get('lieu')->getData());
             if ($form->get('enregistrer')->isClicked()){
 
 
