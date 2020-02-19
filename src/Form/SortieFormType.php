@@ -56,7 +56,7 @@ class SortieFormType extends AbstractType
 
             ->add('enregistrer', SubmitType::class)
             ->add('publier', SubmitType::class)
-            ->add('annuler', SubmitType::class);
+            ->add('annuler', ButtonType::class);
     }
 
 

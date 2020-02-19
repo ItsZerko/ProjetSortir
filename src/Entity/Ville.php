@@ -29,7 +29,8 @@ class Ville
     private $codePostal;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lieu", mappedBy="ville", orphanRemoval=true)
+     * @var Lieu[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieu", mappedBy="ville", orphanRemoval=true, cascade={"remove"})
      */
     private $lieus;
 
@@ -97,4 +98,36 @@ class Ville
 
         return $this;
     }
+
+
+    public function isSupprimableVille(Participant $participant)
+    {
+        foreach ($this->lieus as $lieu) {
+            if ($lieu->getSorties()->count() > 0) {
+                return false;
+            }
+        }
+
+        if (!in_array('ROLE_ADMIN', $participant->getRoles())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isModifiableVille(Participant $participant)
+    {
+        foreach ($this->lieus as $lieu) {
+            if ($lieu->getSorties()->count() > 0) {
+                return false;
+            }
+        }
+
+        if (!in_array('ROLE_ADMIN', $participant->getRoles())) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

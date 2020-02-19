@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class SortieController extends AbstractController
@@ -42,9 +43,10 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request, EntityManagerInterface $em, $id = null)
     {
 
+
         $sortie = new Sortie();
         $inscription= new Inscription();
-    $lieu = new Lieu();
+        $lieu = new Lieu();
 
 
         $lieu = $em->getRepository(Lieu::class)->find(2);
@@ -74,12 +76,11 @@ class SortieController extends AbstractController
 
             } else if ($form->get('publier')->isClicked()) {
 
-                $sortie->setEtat('Publiée');
+                $sortie->setEtat('Ouverte');
 
                 $em->persist($sortie);
                 $em->flush();
                 return $this->redirectToRoute('liste');
-
             }
 
             }
@@ -205,7 +206,6 @@ class SortieController extends AbstractController
             $user = $this->getUser();
         }
 
-
         if ($form->isSubmitted()) {
             $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
 
@@ -302,7 +302,6 @@ class SortieController extends AbstractController
 
         return $this->render('Sortie/detail.html.twig', [
             'id' => $id,
-            'erreur' => 'blabla'
         ]);
 
 

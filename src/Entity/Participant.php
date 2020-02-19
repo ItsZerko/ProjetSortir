@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  * @UniqueEntity("mail")
+ * @UniqueEntity("username")
  */
 class Participant implements UserInterface
 {
