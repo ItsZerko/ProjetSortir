@@ -125,7 +125,6 @@
     <script>
 
         function updateLieu(value) {
-            console.log(value);
             let path = "{{ url('lieu', {"id": "id"}) }}";
             let xhr = new XMLHttpRequest();
             xhr.open("get", path.replace("id", value));

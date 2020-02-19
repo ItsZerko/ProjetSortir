@@ -316,4 +316,17 @@ class Participant implements UserInterface
     {
         $this->organisateur = $organisateur;
     }
+
+    public function isSupprimable()
+    {
+        if (in_array('ROLE_ADMIN', $this->getRoles())) {
+            return false;
+        }
+
+        if ($this->id_insc->count() > 0) {
+            return false;
+        }
+
+        return true;
+    }
 }
