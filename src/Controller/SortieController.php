@@ -15,6 +15,7 @@ use App\Form\RechercheType;
 use App\Form\SortieFormType;
 
 use App\Form\LieuType;
+use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,6 +43,9 @@ class SortieController extends AbstractController
     {
 
         $sortie = new Sortie();
+        $inscription= new Inscription();
+    $lieu = new Lieu();
+
 
         $lieu = $em->getRepository(Lieu::class)->find(2);
         $form = $this->createForm(SortieFormType ::class, $sortie);
@@ -50,11 +54,20 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $sortie->setLieu($form->get('lieu')->getData());
+
             if ($form->get('enregistrer')->isClicked()) {
 
 
                 $sortie->setEtat('Créée');
+
+                $inscription->setIdSortie($sortie);
+
+
+                //  $em->persist($inscription);
+
                 $em->persist($sortie);
                 $em->flush();
                 return $this->redirectToRoute('liste');
@@ -67,18 +80,14 @@ class SortieController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('liste');
 
+            }
 
             }
 
-
-        }
-
         return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
-
             'sortieForm' => $form->createView(),
-            'detail' => ['lieu' => $lieu->getNom(),
-                'test2' => $lieu->getRue()]
+            'detailLieu'=>$lieu
         ]);
 
     }
@@ -102,6 +111,7 @@ class SortieController extends AbstractController
             $villeCode = $form->get('codePostal')->getData();
             $ville->setNom($villeNom);
             $ville->setCodePostal($villeCode);
+
             $lieu->setVille($ville);
             $em->persist($lieu);
             $em->flush();
@@ -171,6 +181,7 @@ class SortieController extends AbstractController
         $infoSite = $form->get('RechercheSite')->getData();
         $infoDateDebut = $form->get('DateDebut')->getData();
         $infoDateFin = $form->get('DateFin')->getData();
+
         $SortiePasse = $form->get('SortiePasse')->getData();
         $isOrganisateur = $form->get('isOrganisateur')->getData();
 
@@ -194,6 +205,11 @@ class SortieController extends AbstractController
             $user = $this->getUser();
         }
 
+
+        if ($form->isSubmitted()) {
+            $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
+
+        }
 
         if ($form->isSubmitted()) {
             $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut,
@@ -288,7 +304,7 @@ class SortieController extends AbstractController
             'id' => $id,
             'erreur' => 'blabla'
         ]);
+
+
     }
-
-
 }
