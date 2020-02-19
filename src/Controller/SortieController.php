@@ -38,6 +38,7 @@ class SortieController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
+
     public function creationSortie(Request $request, EntityManagerInterface $em, $id = null)
     {
 
@@ -45,6 +46,8 @@ class SortieController extends AbstractController
         $inscription= new Inscription();
     $lieu = new Lieu();
 
+
+        $lieu = $em->getRepository(Lieu::class)->find(2);
         $form = $this->createForm(SortieFormType ::class, $sortie);
 
 
@@ -55,15 +58,16 @@ class SortieController extends AbstractController
 
             $sortie->setLieu($form->get('lieu')->getData());
 
-
             if ($form->get('enregistrer')->isClicked()) {
 
 
                 $sortie->setEtat('Créée');
+
                 $inscription->setIdSortie($sortie);
 
 
                 //  $em->persist($inscription);
+
                 $em->persist($sortie);
                 $em->flush();
                 return $this->redirectToRoute('liste');
@@ -77,8 +81,8 @@ class SortieController extends AbstractController
                 return $this->redirectToRoute('liste');
 
             }
-        }
 
+            }
 
         return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
@@ -158,34 +162,65 @@ class SortieController extends AbstractController
     {
 
 
-        $user = $this->getUser()->getUsername();
         $sites = $em->getRepository(Site::class)->findAll();
         $listeSorties = $em->getRepository(Sortie::class)->findAll();
 
-        dump($listeSorties);
-
         $participants = $em->getRepository(Participant::class)->findOneBy([
-            "username" => $user
+            "username" => $this->getUser()->getUsername()
         ]);
         $inscription = $em->getRepository(Inscription::class)->findBy([
             "id_sortie" => $listeSorties
         ]);
 
-
+//      création du formulaire :
         $form = $this->createForm(RechercheType::class);
 
-
+//      on récupère les informations du formulaire :
         $form->handleRequest($request);
         $infoRecherche = $form->get('RechercheSortie')->getData();
         $infoSite = $form->get('RechercheSite')->getData();
         $infoDateDebut = $form->get('DateDebut')->getData();
         $infoDateFin = $form->get('DateFin')->getData();
 
+        $SortiePasse = $form->get('SortiePasse')->getData();
+        $isOrganisateur = $form->get('isOrganisateur')->getData();
+
+//      filtrer en fonction si l'utilisateur est inscrit :
+        $user = null;
+        $etatPasse = null;
+        $isInscrit = $form->get('isInscrit')->getData();
+        /* $isNotInscrit = $form->get('isNotInscrit')->getData();*/
+
+        if ($isInscrit /*|| $isNotInscrit*/) {
+            $user = $this->getUser();
+        }
+
+//      ici on teste si l'état de la sortie est en mode "passé" :
+        if ($SortiePasse){
+            $etatPasse='Passe';
+        }
+
+//      filtrer nous avons organisé l'événement :
+        if ($isOrganisateur) {
+            $user = $this->getUser();
+        }
+
+
         if ($form->isSubmitted()) {
             $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
 
         }
 
+        if ($form->isSubmitted()) {
+            $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut,
+                $infoDateFin,
+                $infoRecherche,
+                $infoSite,
+                $isInscrit /*$isNotInscrit*/,
+                $user,
+                $etatPasse,
+                $isOrganisateur);
+        }
 
         return $this->render(
             'Sortie/liste.html.twig'
@@ -269,7 +304,7 @@ class SortieController extends AbstractController
             'id' => $id,
             'erreur' => 'blabla'
         ]);
+
+
     }
-
-
 }

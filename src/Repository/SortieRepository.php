@@ -31,7 +31,7 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findByCriterion($dateDebut = null, $dateFin = null, $nomRecherche = null, $siteRecherche = null)
+    public function findByCriterion($dateDebut = null, $dateFin = null, $nomRecherche = null, $siteRecherche = null, $isInscrit,/*$isNotInscrit*/ $user, $etatPasse, $isOrganisateur)
     {
         $qb = $this->createQueryBuilder('s');
         if ($dateDebut) {
@@ -52,7 +52,28 @@ class SortieRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('s.sites = :siteRecherche')
                 ->setParameter('siteRecherche', $siteRecherche);
-        }
+        } if ($isInscrit) {
+        $qb
+            ->join('s.idInscr', 'i')
+            ->andWhere('i.id_participant = :user')
+            ->setParameter('user', $user);
+
+        }  if ($etatPasse) {
+        $qb
+            ->andWhere('s.etat = :etatPasse')
+            ->setParameter('etatPasse', $etatPasse);
+    } if ($isOrganisateur) {
+        $qb
+            ->join('s.idInscr', 'i')
+            ->andWhere('i.id_participant = :user')
+            ->setParameter('user', $user);
+
+//        } if ($isNotInscrit) {
+//        $qb
+//            ->join('s.idInscr', 'i')
+//            ->andWhere('i.id_participant != :user')
+//            ->setParameter('user', $user);
+    }
         return $qb->getQuery()->getResult();
 //            ->orderBy('s.id', 'ASC')
 //            ->setMaxResults(10)

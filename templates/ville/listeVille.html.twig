@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<<<<<<< HEAD
-=======
+
 <h1>Gérer les lieux</h1>
     <h2>Filtrer les lieux :</h2>
     <p>Le nom contient : </p>
 
     {{ form(recherche) }}
->>>>>>> 24ac92e762ba049cd4cc4f748a6a448f4d8f94e3
 
 
     <div class="afficherVille">
@@ -36,7 +34,7 @@
                     <td style="color:white"> {{ ville.nom }} </td>
                     <td style="color:white"> {{ ville.codePostal }} </td>
                     <td><a href="{{ path("supprimer_ville",{'id':ville.id}) }}" style="color:red"> Supprimer </a></td>
-
+                    <td><a href="{{ path("modifier_ville",{'id':ville.id}) }}" style="color:red"> Modifier </a></td>
                 </tr>
                     {% endfor %}
                 </tbody>

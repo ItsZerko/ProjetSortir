@@ -8,6 +8,7 @@ use App\Entity\Lieu;
 use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,7 +26,6 @@ class RechercheType extends AbstractType
 
             ->add('RechercheSite', EntityType::class, ['class' => Site ::class, 'choice_label' => 'nom',
                 'required' => false])
-            ->add('villeRecherchee', TextType::class, array('required' => false))
 
 
             ->add('DateDebut', DateType::class, [
@@ -36,6 +36,11 @@ class RechercheType extends AbstractType
                 'required' => false,
                 'widget' => 'single_text'
             ])
+
+            ->add('isInscrit', CheckboxType::class, array('required' => false))
+//            ->add('isNotInscrit', CheckboxType::class, array('required' => false))
+            ->add('SortiePasse', CheckboxType::class, array('required' => false))
+            ->add('isOrganisateur', CheckboxType::class, array('required' => false))
             ->add('rechercher', SubmitType::class);
 
     }

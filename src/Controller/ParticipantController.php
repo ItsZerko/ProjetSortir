@@ -50,7 +50,7 @@ class ParticipantController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute('base');
+            return $this->redirectToRoute('liste');
         }
         return $this->render('profil/modifier.html.twig', [
             'formParticipant' => $form->createView(),

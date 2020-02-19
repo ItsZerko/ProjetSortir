@@ -4,18 +4,14 @@ namespace App\Controller;
 
 
 use App\Entity\Ville;
-use App\Form\InscriptionSortieType;
-use App\Form\RechercheType;
 use App\Form\RechercheVilleType;
 use App\Form\VilleType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class VilleController extends AbstractController
 {
@@ -96,7 +92,7 @@ class VilleController extends AbstractController
      * @param null $id
      * @return RedirectResponse
      */
-    public function supprimer(EntityManagerInterface $em, $id = null)
+    public function supprimerVille(EntityManagerInterface $em, $id = null)
     {
 
         if ($this->isGranted("ROLE_ADMIN")) {
@@ -110,6 +106,40 @@ class VilleController extends AbstractController
             return $this->redirectToRoute('liste');
         }
     }
+
+    /**
+     * @Route("/modifier_ville/{id}", name="modifier_ville")
+     */
+    public function modifierVille(EntityManagerInterface $em, Request $request, $id)
+    {
+        if ($this->isGranted("ROLE_ADMIN")) {
+        $villeRepository = $em->getRepository(Ville::class);
+
+        //récupère tout mon enregistrement :
+        $villeExistantes = $villeRepository->find($id);
+
+        $form = $this->createForm(VilleType::class,  $villeExistantes);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newCodePostal = $form->get('codePostal')->getData();
+            $villeExistantes->setCodePostal($newCodePostal);
+            $newVille = $form->get('nom')->getData();
+            $villeExistantes->setNom($newVille);
+            $em->persist($villeExistantes);
+            $em->flush();
+            $this->addFlash('success', 'Ville modifiée !');
+            return $this->redirectToRoute('ville');
+        }
+
+        return $this->render('ville/modifier.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+        } else {
+            return $this->redirectToRoute('liste');
+        }
+    }
+
 }
 
 

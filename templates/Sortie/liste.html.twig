@@ -3,16 +3,13 @@
 
     <header>
         <h1>Filtrer les sorties :</h1>
-
-
+        <div class="col-sm-3">
+            <p> Date du jour : {{ "now" | date('d-m-Y') }}</p>
+            <p> Participant : {{ app.user.username }}</p>
+        </div>
     </header>
-
 
     {{ form(recherche) }}
-
-
-    </form>
-    </header>
 
     <!-- tableau de liste des sorties : -->
     <div class="fond">
@@ -37,6 +34,9 @@
                     <td> {{ listeSortie.dateLimiteInscription | date('d/m/Y') }}</td>
                     <td> {{ listeSortie.idInscr.count() }} / {{ listeSortie.nbInscriptionMax }}</td>
                     <td> {{ listeSortie.etat }}</td>
+                        {% if app.user.isInscrit(listeSortie) %}
+                            <td>X</td>
+                        {% endif %}
                     <td><a href="{{ path('detail',{'id':listeSortie.id}) }}">afficher</a></td>
                         <td><a href="{{ path('modifier',{'id':listeSortie.id}) }}">modifier</a></td>
 
