@@ -15,6 +15,7 @@ use App\Form\RechercheType;
 use App\Form\SortieFormType;
 
 use App\Form\LieuType;
+use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,58 +33,57 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/sortie", name="sortie")
-     *  @Route("/changeLieu/{id}", name="changLieu")
+     * @Route("/changeLieu/{id}", name="changLieu")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
      */
-
-    public function creationSortie(Request $request, EntityManagerInterface $em, $id=null)
+    public function creationSortie(Request $request, EntityManagerInterface $em, $id = null)
     {
 
         $sortie = new Sortie();
+        $inscription= new Inscription();
+    $lieu = new Lieu();
 
-        //$lieu = $em->getRepository(Lieu::class)->find(2);
         $form = $this->createForm(SortieFormType ::class, $sortie);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $sortie->setLieu($form->get('lieu')->getData());
-            if ($form->get('enregistrer')->isClicked()){
+
+
+            if ($form->get('enregistrer')->isClicked()) {
 
 
                 $sortie->setEtat('Créée');
+                $inscription->setIdSortie($sortie);
 
+
+                //  $em->persist($inscription);
                 $em->persist($sortie);
                 $em->flush();
-            return    $this->redirectToRoute('liste');
+                return $this->redirectToRoute('liste');
 
-            }
-            else if ($form->get('publier')->isClicked()) {
+            } else if ($form->get('publier')->isClicked()) {
 
                 $sortie->setEtat('Publiée');
 
                 $em->persist($sortie);
                 $em->flush();
-           return     $this->redirectToRoute('liste');
-
-
+                return $this->redirectToRoute('liste');
 
             }
-
-
-
-
         }
+
 
         return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
-
             'sortieForm' => $form->createView(),
-            'detail' => ['lieu' => $lieu->getNom(),
-                'test2' => $lieu->getRue()]
+            'detailLieu'=>$lieu
         ]);
 
     }
@@ -107,10 +107,11 @@ class SortieController extends AbstractController
             $villeCode = $form->get('codePostal')->getData();
             $ville->setNom($villeNom);
             $ville->setCodePostal($villeCode);
+
             $lieu->setVille($ville);
             $em->persist($lieu);
             $em->flush();
-           return $this->redirectToRoute('sortie');
+            return $this->redirectToRoute('sortie');
 
 
         }
@@ -130,11 +131,11 @@ class SortieController extends AbstractController
      */
 
 
+    public function recherche(EntityManagerInterface $em, Request $request, $requete)
+    {
 
-    public function recherche(EntityManagerInterface $em, Request $request, $requete){
-
-        $recherche=$request->get('recherche');
-        if($requete->getMethod() == 'POST'){
+        $recherche = $request->get('recherche');
+        if ($requete->getMethod() == 'POST') {
             $repository = $this->getDoctrine()
                 ->getEntityManager()
                 ->getRepository('ProjetbibliothequeBundle:Inscrit');
@@ -176,15 +177,14 @@ class SortieController extends AbstractController
 
         $form->handleRequest($request);
         $infoRecherche = $form->get('RechercheSortie')->getData();
-            $infoSite = $form->get('RechercheSite')->getData();
-            $infoDateDebut = $form->get('DateDebut')->getData();
-            $infoDateFin = $form->get('DateFin')->getData();
+        $infoSite = $form->get('RechercheSite')->getData();
+        $infoDateDebut = $form->get('DateDebut')->getData();
+        $infoDateFin = $form->get('DateFin')->getData();
 
-            if ($form->isSubmitted()) {
-                $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
+        if ($form->isSubmitted()) {
+            $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
 
-            }
-
+        }
 
 
         return $this->render(
@@ -197,7 +197,7 @@ class SortieController extends AbstractController
             "participants" => $participants,
             'recherche' => $form->createView()
         ]);
-}
+    }
 
 
     /**

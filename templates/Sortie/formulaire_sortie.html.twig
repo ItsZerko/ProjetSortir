@@ -10,7 +10,7 @@
 
     </script>
 {% endblock %}
-{% set val =0 %}
+
 {% block body %}
     <div class="sortie">
         {{ form_start(sortieForm) }}
@@ -27,7 +27,8 @@
             </div>
             <div class="col-1 mt-4">
 
-                <a href="{{ path('ajouterLieu') }}" ><img src="img/addBtn.jpeg" alt="Ajouter un lieu"  width="50" height="50" class="imgT"/></a>
+                <a href="{{ path('ajouterLieu') }}"><img src="img/addBtn.jpeg" alt="Ajouter un lieu" width="50"
+                                                         height="50" class="imgT"/></a>
 
             </div>
 
@@ -39,7 +40,8 @@
 
             </div>
             <div class="col-4">
-Ville : {{ detail.lieu }}
+
+                <label for="ville" >Ville : &nbsp;  </label><span id="ville"></span>
 
             </div>
 
@@ -53,25 +55,39 @@ Ville : {{ detail.lieu }}
 
             </div>
             <div class="col-4 ">
-Code Postal : {{ detail.test2 }}
+                <label for="rue" >Rue : &nbsp;  </label><span id="rue"></span>
+
 
             </div>
 
         </div>
         <div class="row">
-            <div class="col-4 ml-5">
+            <div class="col-4 ml-5 ">
                 {{ form_row(sortieForm.nbInscriptionMax) }}
+            </div>
+
+            <div class="col-4">
+                <label for="ville" >Code Postal :  &nbsp; </label><span id="CP"></span>
+
             </div>
         </div>
         <div class="row">
             <div class="col-4 ml-5">
                 {{ form_row(sortieForm.duree) }}
             </div>
+            <div class="col-4">
+
+                <label for="ville" >Latitude :  &nbsp; </label><span id="Lat"></span>
+            </div>
         </div>
         <div class="row">
             <div class="col-4 ml-5">
                 {{ form_row(sortieForm.infoSortie) }}
             </div>
+            <div class="col">
+
+                <label for="ville" >Longitude :  &nbsp; </label><span id="Long"></span>
+            </div>
         </div>
         <div class="row">
             <div class="col-4 ml-5">
@@ -79,15 +95,15 @@ Code Postal : {{ detail.test2 }}
             </div>
         </div>
 
-
+        <p id="test3-js"></p>
         <div class="row">
 
             <div class="col-2">
-               {{ form_row(sortieForm.enregistrer) }}
+                {{ form_row(sortieForm.enregistrer) }}
 
             </div>
             <div class="col-2">
-              {{ form_row(sortieForm.publier) }}
+                {{ form_row(sortieForm.publier) }}
 
             </div>
             <div class="col-2">
@@ -96,7 +112,6 @@ Code Postal : {{ detail.test2 }}
             </div>
 
         </div>
-
 
 
         {{ form_end(sortieForm) }}
@@ -109,19 +124,30 @@ Code Postal : {{ detail.test2 }}
     {{ parent() }}
     <script>
 
-        function onClickSelector(event)
-        {
-
-            const test = event.valueOf();
-            console.log(test);
-        }
-
         function updateLieu(value) {
-
             console.log(value);
+            let path = "{{ url('lieu', {"id": "id"}) }}";
+            let xhr = new XMLHttpRequest();
+            xhr.open("get", path.replace("id", value));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    lieu = JSON.parse(xhr.responseText);
+                    // mettre à jour le DOM avec les données dans lieu
+                 document.getElementById('ville').innerHTML = lieu.ville;
+                    document.getElementById('CP').innerHTML = lieu.CP;
+                    document.getElementById('rue').innerHTML = lieu.lieuRue;
+                    document.getElementById('Lat').innerHTML = lieu.Lat;
+                    document.getElementById('Long').innerHTML = lieu.Long;
 
-document.querySelector('#selector').addEventListener('click', onClickSelector);
+                }
+
+
+            };
+            xhr.send();
+
 
         }
+
+
     </script>
 {% endblock %}

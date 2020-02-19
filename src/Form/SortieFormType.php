@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Lieu;
 use App\Entity\Ville;
@@ -15,7 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function MongoDB\BSON\toJSON;
 
 
 class SortieFormType extends AbstractType
@@ -26,8 +29,7 @@ class SortieFormType extends AbstractType
     {
 
         $listener = function (FormEvent $event) {
-            $test = 'Hello';
-            dump($test);
+
         };
         $builder
             ->add('nom')
@@ -42,22 +44,19 @@ class SortieFormType extends AbstractType
             ->add('infoSortie')
             ->add('lieu', EntityType::class,
                 [
-                    'class' => Lieu ::class,
+                    'class' => Lieu ::class,'placeholder'=>'Lieu',
                     'choice_label' => 'nom',
-                    'attr' => ['id'=>'test',
+                    'attr' => [
                         'onchange' => 'updateLieu(this.value)'
+
                     ]
                 ]
+
             )
 
             ->add('enregistrer', SubmitType::class)
             ->add('publier', SubmitType::class)
             ->add('annuler', SubmitType::class);
-
-
-
-
-
     }
 
 
@@ -65,8 +64,6 @@ class SortieFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class
-
-
         ]);
     }
 
