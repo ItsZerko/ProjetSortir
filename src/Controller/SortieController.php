@@ -45,7 +45,7 @@ class SortieController extends AbstractController
 
 
         $sortie = new Sortie();
-        $inscription= new Inscription();
+        $inscription = new Inscription();
         $lieu = new Lieu();
 
 
@@ -83,12 +83,12 @@ class SortieController extends AbstractController
                 return $this->redirectToRoute('liste');
             }
 
-            }
+        }
 
         return $this->render('Sortie/formulaire_sortie.html.twig', [
             'controller_name' => 'SortieController',
             'sortieForm' => $form->createView(),
-            'detailLieu'=>$lieu
+            'detailLieu' => $lieu
         ]);
 
     }
@@ -197,8 +197,8 @@ class SortieController extends AbstractController
         }
 
 //      ici on teste si l'état de la sortie est en mode "passé" :
-        if ($SortiePasse){
-            $etatPasse='Passe';
+        if ($SortiePasse) {
+            $etatPasse = 'Passe';
         }
 
 //      filtrer nous avons organisé l'événement :
@@ -241,12 +241,18 @@ class SortieController extends AbstractController
      */
     public function detail($id, EntityManagerInterface $em)
     {
-        $sortieRepository = $em->getRepository(Sortie::class);
-        $sortie = $sortieRepository->find($id);
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+
+        $sortieInsc = $em->getRepository(Inscription::class)->findBy
+        ([
+            'id_sortie'=>$id
+        ]);
+
 
         return $this->render("sortie/detail.html.twig",
             [
-                "sortie" => $sortie
+                "sortie" => $sortie,
+                "sortieInsc"=>$sortieInsc
             ]
         );
     }

@@ -32,8 +32,11 @@
         </thead>
         <tbody>
         <tr>
-{#            <td>{{ sortie.participant.nom }}</td>#}
-{#            <td>{{ sortie.participant.username  }}</td>#}
+
+            <td> {% for sortieInscr in sortieInsc %}{{ sortieInscr.IdParticipant.nom }}<br> {% endfor %}</td>
+            <td> {% for sortieInscr in sortieInsc %}{{ sortieInscr.IdParticipant.username    }} <br>{% endfor %}</td>
+
+
         </tr>
         </tbody>
     </table>
