@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <h1>Modifier ville :</h1>
-
+<div class="sortie">
     <div class="row">
         <div class="col-8 offset-2">
-            {{ form(formVille) }}
-            <a href="{{ path('base') }}"><button type="submit">Modifier</button></a>
+            {{ form_start(form) }}
+            {{ form(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
-
+</div>
 
     {# Affichage des Flashes #}
     {% for label, messages in app.flashes %}

@@ -135,6 +135,7 @@ class  SecurityController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
     }
 
+
     /**
      * @Route("/administrateur", name="administrateur")
      */

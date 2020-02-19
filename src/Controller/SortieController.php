@@ -32,18 +32,18 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/sortie", name="sortie")
-     *  @Route("/changeLieu/{id}", name="changLieu")
+     * @Route("/changeLieu/{id}", name="changLieu")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
      */
 
-    public function creationSortie(Request $request, EntityManagerInterface $em, $id=null)
+    public function creationSortie(Request $request, EntityManagerInterface $em, $id = null)
     {
 
         $sortie = new Sortie();
 
-        //$lieu = $em->getRepository(Lieu::class)->find(2);
+        $lieu = $em->getRepository(Lieu::class)->find(2);
         $form = $this->createForm(SortieFormType ::class, $sortie);
 
 
@@ -51,29 +51,24 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie->setLieu($form->get('lieu')->getData());
-            if ($form->get('enregistrer')->isClicked()){
+            if ($form->get('enregistrer')->isClicked()) {
 
 
                 $sortie->setEtat('Créée');
-
                 $em->persist($sortie);
                 $em->flush();
-            return    $this->redirectToRoute('liste');
+                return $this->redirectToRoute('liste');
 
-            }
-            else if ($form->get('publier')->isClicked()) {
+            } else if ($form->get('publier')->isClicked()) {
 
                 $sortie->setEtat('Publiée');
 
                 $em->persist($sortie);
                 $em->flush();
-           return     $this->redirectToRoute('liste');
-
+                return $this->redirectToRoute('liste');
 
 
             }
-
-
 
 
         }
@@ -110,7 +105,7 @@ class SortieController extends AbstractController
             $lieu->setVille($ville);
             $em->persist($lieu);
             $em->flush();
-           return $this->redirectToRoute('sortie');
+            return $this->redirectToRoute('sortie');
 
 
         }
@@ -130,11 +125,11 @@ class SortieController extends AbstractController
      */
 
 
+    public function recherche(EntityManagerInterface $em, Request $request, $requete)
+    {
 
-    public function recherche(EntityManagerInterface $em, Request $request, $requete){
-
-        $recherche=$request->get('recherche');
-        if($requete->getMethod() == 'POST'){
+        $recherche = $request->get('recherche');
+        if ($requete->getMethod() == 'POST') {
             $repository = $this->getDoctrine()
                 ->getEntityManager()
                 ->getRepository('ProjetbibliothequeBundle:Inscrit');
@@ -157,35 +152,59 @@ class SortieController extends AbstractController
     {
 
 
-        $user = $this->getUser()->getUsername();
         $sites = $em->getRepository(Site::class)->findAll();
         $listeSorties = $em->getRepository(Sortie::class)->findAll();
 
-        dump($listeSorties);
-
         $participants = $em->getRepository(Participant::class)->findOneBy([
-            "username" => $user
+            "username" => $this->getUser()->getUsername()
         ]);
         $inscription = $em->getRepository(Inscription::class)->findBy([
             "id_sortie" => $listeSorties
         ]);
 
-
+//      création du formulaire :
         $form = $this->createForm(RechercheType::class);
 
-
+//      on récupère les informations du formulaire :
         $form->handleRequest($request);
         $infoRecherche = $form->get('RechercheSortie')->getData();
-            $infoSite = $form->get('RechercheSite')->getData();
-            $infoDateDebut = $form->get('DateDebut')->getData();
-            $infoDateFin = $form->get('DateFin')->getData();
+        $infoSite = $form->get('RechercheSite')->getData();
+        $infoDateDebut = $form->get('DateDebut')->getData();
+        $infoDateFin = $form->get('DateFin')->getData();
+        $SortiePasse = $form->get('SortiePasse')->getData();
+        $isOrganisateur = $form->get('isOrganisateur')->getData();
 
-            if ($form->isSubmitted()) {
-                $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
+//      filtrer en fonction si l'utilisateur est inscrit :
+        $user = null;
+        $etatPasse = null;
+        $isInscrit = $form->get('isInscrit')->getData();
+        /* $isNotInscrit = $form->get('isNotInscrit')->getData();*/
 
-            }
+        if ($isInscrit /*|| $isNotInscrit*/) {
+            $user = $this->getUser();
+        }
+
+//      ici on teste si l'état de la sortie est en mode "passé" :
+        if ($SortiePasse){
+            $etatPasse='Passe';
+        }
+
+//      filtrer nous avons organisé l'événement :
+        if ($isOrganisateur) {
+            $user = $this->getUser();
+        }
 
 
+        if ($form->isSubmitted()) {
+            $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut,
+                $infoDateFin,
+                $infoRecherche,
+                $infoSite,
+                $isInscrit /*$isNotInscrit*/,
+                $user,
+                $etatPasse,
+                $isOrganisateur);
+        }
 
         return $this->render(
             'Sortie/liste.html.twig'
@@ -197,7 +216,7 @@ class SortieController extends AbstractController
             "participants" => $participants,
             'recherche' => $form->createView()
         ]);
-}
+    }
 
 
     /**
