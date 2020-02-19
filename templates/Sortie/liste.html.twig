@@ -8,9 +8,9 @@
             <p> Participant : {{ app.user.username }}</p>
         </div>
     </header>
-
+{% if app.user %}
     {{ form(recherche) }}
-
+{% endif %}
     <!-- tableau de liste des sorties : -->
     <div class="fond">
     <table class="table">

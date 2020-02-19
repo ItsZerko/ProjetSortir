@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Entity\Sortie;
 use App\Form\ParticipantType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,10 +72,108 @@ class ParticipantController extends AbstractController
         $participantRepository = $em->getRepository(Participant::class);
         $participant = $participantRepository->find($id);
 
-            //afficher participant dans ma page :
-            return $this->render("profil/monProfil.html.twig",
-                [
-                    "participant" => $participant
-                ]);
+        //afficher participant dans ma page :
+        return $this->render("profil/monProfil.html.twig",
+            [
+                "participant" => $participant
+            ]);
+    }
+
+    /**
+     * @Route("/listeParticipant", name="listeParticipant")
+     */
+    public function listeUser(EntityManagerInterface $em, Request $request)
+    {
+
+        $participants = $em->getRepository(Participant::class)->findAll();
+        $sorties = $em->getRepository(Sortie::class)->findAll();
+
+        return $this->render('admin/listeUser.html.twig', [
+            'participants' => $participants,
+            'sorties' => $sorties
+        ]);
+    }
+
+
+    /**
+     * @Route("/detailParticipant/{id}", name="detailParticipant")
+     */
+    public function detailUser(EntityManagerInterface $em, Request $request, $id)
+    {
+        $null = null;
+
+        $participants = $em->getRepository(Participant::class)->findBy
+        ([
+            'id' => $id,
+
+
+        ]);
+
+        return $this->render('admin/detailUser.html.twig', [
+            'participants' => $participants
+        ]);
+
+    }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @Route("/suppressionUser/{id}", name="suppressionUser")
+     * @return RedirectResponse|Response
+     */
+    public function supprimerUser(EntityManagerInterface $em, Request $request,$id){
+
+        $null = null;
+
+
+        $participantId = $em->getRepository(Participant::class)->findOneBy(
+            [
+                'id' => $id
+            ]);
+
+            $em->remove($participantId);
+            $em->flush();
+
+        return $this->redirectToRoute('listeParticipant');
         }
-}
+
+
+    /**
+     * @Route("/detailSortie/{id}", name="detailSortie")
+     */
+    public function detailSortie(EntityManagerInterface $em, Request $request, $id)
+    {
+
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+
+        return $this->render('admin/detailSortie.html.twig', [
+            'sortie' => $sortie
+        ]);
+
+    }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @Route("/suppressionSortie/{id}", name="suppressionSortie")
+     * @return RedirectResponse|Response
+     */
+    public function supprimerSortie(EntityManagerInterface $em, Request $request,$id){
+
+
+
+        $sortie = $em->getRepository(Sortie::class)->findOneBy(
+            [
+                'id' => $id,
+            ]);
+
+        $em->remove($sortie);
+        $em->flush();
+
+
+        return $this->redirectToRoute('listeParticipant');
+
+    }
+    }

@@ -55,7 +55,7 @@ class Sortie
     /**
      * @ORM\Column(type="string", length=255)
      */
-         private $etat;
+    private $etat;
 
 
     public function getEtat(): string
@@ -86,7 +86,7 @@ class Sortie
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur", cascade={"remove"})
      */
     private $sortie;
 
@@ -104,7 +104,6 @@ class Sortie
      * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;
-
 
 
     public function __construct()
@@ -244,6 +243,15 @@ class Sortie
     public function setSites($sites): void
     {
         $this->sites = $sites;
+    }
+
+    public function isSuppSortie()
+    {
+
+        if ($this->idInscr->count() > 0) {
+            return false;
+        }
+        return true;
     }
 
 
