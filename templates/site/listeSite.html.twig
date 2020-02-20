@@ -1,31 +1,44 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Gérer les sites</h1>
-    <h2>Filtrer les sites :</h2>
-    <p>Le nom contient : </p>
-
-    {{ form(recherche) }}
-
-    <br>
-    <div class="table site">
-        <table>
-            <thead class="thead-dark">
-            <tr>
-                <th>Ville</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for site in sites %}
-            <tr>
-                <td> {{ site.nom }}</td>
-                <!--Attention on ne peut pas supprimer les sites si ils sont rattachés à des participants ou à des lieux ! -->
-                <td><a href="{{ path("supprimer_site",{'id':site.id}) }}"> Supprimer </a></td>
-                <td><a href="{{ path("modifier_site",{'id':site.id}) }}"> Modifier </a></td>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="afficherVille">
+        <h1>Gérer les sites</h1>
+        <h2>Filtrer les sites :</h2>
+        <p>Le nom contient : </p>
+        <div class="offset-4 col-4">
+            {{ form(recherche) }}
+        </div>
     </div>
-    <button><a href="{{ path("formulaire_site") }}">Ajouter</a></button>
+
+    <div class="afficherVille">
+        <form>
+
+
+
+        </form>
+
+        <br>
+        <div class="table ville offset-3 col-8">
+            <table>
+                <thead class="thead-dark">
+                <tr>
+                    <th>Ville</th>
+                    <th>Actions</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for site in sites %}
+                    <tr>
+                        <td style="color:white"> {{ site.nom }} </td>
+                        <td><a href="{{ path("supprimer_site",{'id':site.id}) }}" style="color:#007bff"> Supprimer </a></td>
+                        <td><a href="{{ path("modifier_site",{'id':site.id}) }}" style="color:#007bff"> Modifier </a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+        </div>
+        <button  class="btn btn-p btn-primary"><a href="{{ path("formulaire_ville") }}">Ajouter</a></button>
+    </div>
 
 {% endblock %}

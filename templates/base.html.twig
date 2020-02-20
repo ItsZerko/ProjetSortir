@@ -12,7 +12,7 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <header>
-    <img class="logo" src="{{ asset("img/logo.png") }}">
+
 </header>
 
 <body>
@@ -20,12 +20,14 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    {% if user is defined %}
+
+    {% if app.user %}
         {{ app.user.username }}
 
     {% else %}
-        {#    <a href="{{ path('app_login') }}">Se connecter</a>#}
-        <a href="{{ path('app_register') }}">S'inscrire</a>
+
+        <a href="{{ path('app_login') }}">Se connecter</a>
+
 
     {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -45,6 +47,7 @@
 
             </ul>
         </div>
+
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -60,21 +63,43 @@
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ path('modifier',{'id':app.user.id}) }}">Mon profil </a>
-                    <a class="dropdown-item" href="{{ path('ville') }}">Gerer les ville </a>
-                    <a class="dropdown-item" href="{{ path('site') }}">Gerer les lieux</a>
+                    <a class="dropdown-item" href="{{ path('ville') }}">Gérer les villes </a>
+                    <a class="dropdown-item" href="{{ path('site') }}">Gérer les lieux</a>
+                    <a class="dropdown-item" href="{{ path('listeParticipant') }}">Gérer les utilisateurs et les
+                        sorties</a>
+                    <a class="dropdown-item" href="{{ path('app_register') }}">Inscription</a>
+
 
                     <a class="dropdown-item" href="{{ path('sortie') }}">Ajouter une sortie</a>
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"></a>
+                </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="{{ path('app_logout') }}" tabindex="-1" aria-disabled="true">Déconnection</a>
+                <a class="nav-link " href="{{ path('app_logout') }}" tabindex="-1" aria-disabled="true">Déconnexion</a>
 
             </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{ path('liste') }}" tabindex="-1" aria-disabled="true">Liste des sorties</a>
+
+            </li>
+
+            <li class="nav-item logoPos">
+            </li>
+
+>>>>>>> Stashed changes
 
         </ul>
 
         {% endif %}
 
+
+                        <form class="form-inline my-2 my-lg-0">
+                            <img class="logo " src="{{ asset('img/logo.png') }}">
+                        </form>
+>>>>>>> Stashed changes
     </div>
 </nav>
 

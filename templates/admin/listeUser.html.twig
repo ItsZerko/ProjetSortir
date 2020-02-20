@@ -7,13 +7,9 @@
         <thead class="thead-dark">
         <tr>
             <th>Nom du participant</th>
-            <th>Date de la sortie</th>
-            <th>Clôture</th>
-            <th>Inscrits/places</th>
-            <th>Etat</th>
-            <th>Inscrit</th>
-            <th>Organisateur</th>
-            <th>Actions</th>
+            <th>Détail</th>
+            <th>Action</th>
+
         </tr>
         </thead>
         <tbody>
@@ -48,18 +44,16 @@
         <tr>
             <th>Nom de la sortie</th>
             <th>Date de la sortie</th>
-            <th>Clôture</th>
-            <th>Inscrits/places</th>
-            <th>Etat</th>
-            <th>Inscrit</th>
-            <th>Organisateur</th>
-            <th>Actions</th>
+            <th>Détail</th>
+            <th>Action</th>
+
         </tr>
         </thead>
         <tbody>
         {% for sortie in sorties %}
         <tr>
             <td> {{ sortie.nom }}</td>
+            <td> {{   sortie.dateHeureDebut | date('d/m/Y') }}</td>
             <td><a href="{{ path("detailSortie",{'id':sortie.id}) }}"> detail </a></td>
             <td>{% if sortie.isSuppSortie(app.user) %}<a href="{{ path('suppressionSortie',{'id':sortie.id}) }}">suppression sortie</a>{% endif %}</td>
 

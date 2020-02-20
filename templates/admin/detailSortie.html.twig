@@ -9,16 +9,20 @@
             <th>Date de la sortie</th>
             <th>Clôture</th>
             <th>Inscrits/places</th>
-            <th>Etat</th>
-            <th>Inscrit</th>
-            <th>Organisateur</th>
-            <th>Actions</th>
+            <th>nom des Participant</th>
+            <th>Pseudo des participants</th>
+
         </tr>
         </thead>
         <tbody>
 
         <tr>
             <td> {{ sortie.nom }}</td>
+            <td> {{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+            <td> {{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+            <td> {{ sortie.nbInscriptionMax }}</td>
+            <td> {% for inscription in inscriptions %}{{ inscription.IdParticipant.nom }}<br> {% endfor %}</td>
+            <td> {% for inscription in inscriptions %}{{ inscription.IdParticipant.username    }} <br>{% endfor %}</td>
             {#            <td> {{ listeSortie.dateHeureDebut | date('d/m/Y') }}</td>#}
             {#            <td> {{ listeSortie.dateLimiteInscription | date('d/m/Y') }}</td>#}
             {#            <td> {{ listeSortie.idInscr.count() }} / {{ listeSortie.nbInscriptionMax }}</td>#}

@@ -184,7 +184,8 @@ class SortieController extends AbstractController
                 $isInscrit /*$isNotInscrit*/,
                 $user,
                 $etatPasse,
-                $isOrganisateur);
+                $isOrganisateur
+            );
         }
 
         return $this->render(
