@@ -60,6 +60,7 @@
             <td><a href="{{ path('monProfil',{'id':listeSortie.id}) }}">{{ listeSortie.organisateur.nom }}</td></a>
             <td><a href="{{ path('detail',{'id':listeSortie.id}) }}">afficher</a></td>
             <td><a href="{{ path('modifier',{'id':listeSortie.id}) }}">modifier</a></td>
+            <td><a href="{{ path('annulerSortie',{'id':listeSortie.id}) }}">annuler</a></td>
 
             {% if app.user.isInscrit(listeSortie) %}
                 {% if listeSortie.dateHeureDebut | date('d/m/Y') > "now"  | date('d-m-Y') %}

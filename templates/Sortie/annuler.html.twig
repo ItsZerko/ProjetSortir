@@ -1,20 +1,111 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<body>
 
-<h1>Annuler une sortie</h1>
+    <div class="sortie">
 
-<p>Nom de la sortie : {{ sortie.nom }}</p>
-<p>Date de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
-{#<p>Site de l'organisateur :{{ sortie.participant.site.nom }}</p>#}
-{#<p>Lieu de la sortie : {{ sortie.lieu.nom }} {{ sortie.lieu.rue }} {{ sortie.ville.nom }} {{ sortie.ville.codePostal }}</p>#}
-<div class="form-group">
-    <label for="exampleFormControlTextarea1">Motif</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+{#                ------------------------------------------#}
+        <h1>Annuler une sortie</h1>
+        <div class="row">
+            <div class="col-4">
+               <strong>Nom de la sortie :</strong>  <label for="nom">{{ sortie.nom }}</label>
+
+            </div>
+        </div>
+            {#                ------------------------------------------#}
+<div class="row">
+
+    <div class="col-4">
+        <strong>Date et Heure de début :</strong><br> <label for="nom">{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</label>
+
+    </div>
 </div>
+            {#                ------------------------------------------#}
+            <div class="row">
 
-</body>
+                <div class="col-4">
+                    <strong>Durée :</strong> <label for="nom">{{ sortie.duree }}</label>&nbsp;Minutes
 
- <button><a href="">Annuler une sortie</a></button>
+                </div>
+            </div>
+
+            {#                ------------------------------------------#}
+
+
+
+        <div class="row">
+            <div class="col-3">
+              <strong> Date limite d'inscription :</strong>  <label
+                        for="nom">{{ sortie.dateLimiteInscription  | date('d/m/Y H:i') }}</label>
+
+            </div>
+        </div>
+
+        {#                ------------------------------------------#}
+
+      <div class="row">
+
+
+          <div class="col-4">
+             <strong>Info : </strong> <label for="nom">{{ sortie.infoSortie }}</label>
+
+          </div>
+      </div>
+        {#                ------------------------------------------#}
+        <div class="row">
+            <div class="col-3">
+             <strong> Site :</strong>   <label for="nom">{{ sortie.sites.nom }}</label>
+
+
+            </div>
+        </div>
+
+        {#                ------------------------------------------#}
+
+
+
+            <strong> Ville :</strong>   <span>{{ sortie.lieu.ville }}</span> <br>
+              <strong>Rue : </strong>  <span>{{ sortie.lieu.rue }}</span> <br>
+          <strong> Code Postal</strong>  : &nbsp    <span>{{ sortie.lieu.ville.codePostal }}</span>
+
+
+
+
+        {{ form_start(sortieForm) }}
+        <div class="row">
+
+        <div class="col">
+       <label for="nom">{{ form_row(sortieForm.motifAnnulation) }}</label>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+
+         {{ form_row(sortieForm.confirmer) }}
+
+
+        </div>
+
+        <div class="col-4">
+            <a href="{{ path('liste') }}"> {{ form_row(sortieForm.annuler) }}</a>
+
+        </div>
+
+
+        <div class="col-4">
+
+
+        </div>
+        {{ form_end(sortieForm) }}
+
+    </div>
+
+
+    </div>
+
+
+
+
 
 {% endblock %}

@@ -78,6 +78,11 @@ class Sortie
      */
     private $lieu;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $motifAnnulation;
+
 
     public function __construct()
     {
@@ -233,6 +238,20 @@ class Sortie
         $this->sites = $sites;
     }
 
+
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->motifAnnulation;
+    }
+
+    public function setMotifAnnulation(string $motifAnnulation): self
+    {
+        $this->motifAnnulation = $motifAnnulation;
+
+        return $this;
+    }
+
+
     public function isSuppSortie()
     {
 
@@ -257,6 +276,7 @@ class Sortie
     {
         $this->organisateur = $organisateur;
     }
+
 
 
 }
