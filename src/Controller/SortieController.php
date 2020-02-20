@@ -9,6 +9,7 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Lieu;
 use App\Entity\Ville;
+use App\Form\AnnulerSortieType;
 use App\Form\InscriptionSortieType;
 use App\Form\InscriptionType;
 use App\Form\RechercheType;
@@ -16,6 +17,7 @@ use App\Form\SortieFormType;
 
 use App\Form\LieuType;
 use App\Repository\LieuRepository;
+use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -92,39 +94,7 @@ class SortieController extends AbstractController
 
     }
 
-    /**
-     * @Route("/ajouterLieu", name="ajouterLieu")
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @return Response
-     */
-    public function AjouterLieu(Request $request, EntityManagerInterface $em)
-    {
-        $lieu = new Lieu();
-        $ville = new Ville();
-        $form = $this->createForm(LieuType ::class, $lieu);
 
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $villeNom = $form->get('ville')->getData();
-            $villeCode = $form->get('codePostal')->getData();
-            $ville->setNom($villeNom);
-            $ville->setCodePostal($villeCode);
-
-            $lieu->setVille($ville);
-            $em->persist($lieu);
-            $em->flush();
-            return $this->redirectToRoute('sortie');
-
-
-        }
-
-        return $this->render('Sortie/ajouterLieu.html.twig', [
-            'controller_name' => 'SortieController',
-            'formLieu' => $form->createView()]);
-
-    }
 
     /**
      * @Route ("/recherche", name="recherche")
@@ -304,7 +274,57 @@ class SortieController extends AbstractController
             'id' => $id,
             'erreur' => 'blabla'
         ]);
+    }
 
+
+    /**
+     * @Route("/annuler/{id}", name="annulerSortie")
+     * @param $id
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return Response
+     */
+    public function annulerSortie($id, EntityManagerInterface $em, Request $request)
+    {
+
+
+        $sortie=$em->getRepository(Sortie::class)->find($id);
+
+
+
+        $form = $this->createForm(AnnulerSortieType::class);
+        $form->handleRequest($request);
+
+
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $sortie->setEtat('Annulée');
+            $message=$form->get('motifAnnulation')->getData();
+
+            $sortie->setMotifAnnulation($message);
+$em->flush();
+            $this->addFlash("success",'Sortie annulée');
+
+            return $this->redirectToRoute('liste');
+
+        }
+
+
+
+
+        return $this->render('Sortie/annuler.html.twig',[
+
+
+            'sortieForm'=>   $form->createView(),
+            'sortie'=> $sortie
+
+
+
+        ]);
 
     }
-}
+
+   }
