@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  * @UniqueEntity("mail")
+ * @UniqueEntity("username")
  */
 class Participant implements UserInterface
 {
@@ -314,5 +315,18 @@ class Participant implements UserInterface
     public function setOrganisateur($organisateur): void
     {
         $this->organisateur = $organisateur;
+    }
+
+    public function isSupprimable()
+    {
+        if (in_array('ROLE_ADMIN', $this->getRoles())) {
+            return false;
+        }
+
+        if ($this->id_insc->count() > 0) {
+            return false;
+        }
+
+        return true;
     }
 }

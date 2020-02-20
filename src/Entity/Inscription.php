@@ -28,7 +28,7 @@ class Inscription
     private $id_participant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sortie", inversedBy="id_inscr")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sortie", inversedBy="idInscr")
      * @ORM\JoinColumn(nullable=false)
      */
     private $id_sortie;

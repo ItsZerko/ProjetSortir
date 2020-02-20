@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body%}
+
+    <div class="fond">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nom de la sortie</th>
+            <th>Date de la sortie</th>
+            <th>Clôture</th>
+            <th>Inscrits/places</th>
+            <th>Etat</th>
+            <th>Inscrit</th>
+            <th>Organisateur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td> {{ participants.nom }}</td>
+            {#            <td> {{ listeSortie.dateHeureDebut | date('d/m/Y') }}</td>#}
+            {#            <td> {{ listeSortie.dateLimiteInscription | date('d/m/Y') }}</td>#}
+            {#            <td> {{ listeSortie.idInscr.count() }} / {{ listeSortie.nbInscriptionMax }}</td>#}
+            {#            <td> {{ listeSortie.etat }}</td>#}
+            {#            {% if app.user.isInscrit(listeSortie) %}#}
+            {#                <td>X</td>#}
+            {#            {% endif %}#}
+            {#            <td><a href="{{ path('detail',{'id':listeSortie.id}) }}">afficher</a></td>#}
+            {#            <td><a href="{{ path('modifier',{'id':listeSortie.id}) }}">modifier</a></td>#}
+
+            {#            {% if app.user.isInscrit(listeSortie) %}#}
+            {#                <td><a href="{{ path('desinscrire',{'id':listeSortie.id}) }}">se désinscrire</a></td>#}
+            {#            {% else %}#}
+            {#                <td><a href="{{ path('inscriptionSortie',{'id':listeSortie.id}) }}">s'inscrire</a></td>#}
+            {#            {% endif %}#}
+
+        </tbody>
+    </table>
+{% endblock %}

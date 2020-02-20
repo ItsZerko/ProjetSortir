@@ -19,8 +19,9 @@
             {% for site in sites %}
             <tr>
                 <td> {{ site.nom }}</td>
+                <!--Attention on ne peut pas supprimer les sites si ils sont rattachés à des participants ou à des lieux ! -->
                 <td><a href="{{ path("supprimer_site",{'id':site.id}) }}"> Supprimer </a></td>
-                {#              <td><a href="{{ path("modifier_site",{'id':site.id}) }}"> X </a></td>#}
+                <td><a href="{{ path("modifier_site",{'id':site.id}) }}"> Modifier </a></td>
                 {% endfor %}
             </tbody>
         </table>

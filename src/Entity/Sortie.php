@@ -55,7 +55,7 @@ class Sortie
     /**
      * @ORM\Column(type="string", length=255)
      */
-         private $etat;
+    private $etat;
 
 
     public function getEtat(): string
@@ -86,7 +86,7 @@ class Sortie
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur", cascade={"remove"})
      */
     private $sortie;
 
@@ -94,13 +94,14 @@ class Sortie
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortieSite")
      */
     private $sites;
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="id_sortie", cascade={"remove"})
      */
     private $idInscr;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;
@@ -109,7 +110,6 @@ class Sortie
      * @ORM\Column(type="text")
      */
     private $motifAnnulation;
-
 
 
     public function __construct()
@@ -251,6 +251,7 @@ class Sortie
         $this->sites = $sites;
     }
 
+
     public function getMotifAnnulation(): ?string
     {
         return $this->motifAnnulation;
@@ -262,6 +263,18 @@ class Sortie
 
         return $this;
     }
+
+
+    public function isSuppSortie()
+    {
+
+        if ($this->idInscr->count() > 0) {
+            return false;
+        }
+        return true;
+    }
+
+
 
 
 }

@@ -91,6 +91,40 @@ class SiteController extends AbstractController
             return $this->redirectToRoute('liste');
         }
     }
+
+    /**
+     * @Route("/modifier_site/{id}", name="modifier_site")
+     */
+    public function modifierSite(EntityManagerInterface $em, Request $request, $id)
+    {
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $siteRepository = $em->getRepository(Site::class);
+
+            //récupère tout mon enregistrement :
+            $siteExistants = $siteRepository->find($id);
+
+            $form = $this->createForm(SiteType::class,  $siteExistants);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $newNom = $form->get('nom')->getData();
+                $siteExistants->setNom($newNom);
+
+                $em->persist($siteExistants);
+                $em->flush();
+                $this->addFlash('success', 'Site modifié !');
+                return $this->redirectToRoute('site');
+            }
+
+            return $this->render('site/modifier.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        } else {
+            return $this->redirectToRoute('liste');
+        }
+    }
+
+
 }
 
 

@@ -33,8 +33,8 @@
                 <tr>
                     <td style="color:white"> {{ ville.nom }} </td>
                     <td style="color:white"> {{ ville.codePostal }} </td>
-                    <td><a href="{{ path("supprimer_ville",{'id':ville.id}) }}" style="color:red"> Supprimer </a></td>
-                    <td><a href="{{ path("modifier_ville",{'id':ville.id}) }}" style="color:red"> Modifier </a></td>
+                    <td>{% if ville.isSupprimableVille(app.user) %}<a href="{{ path("supprimer_ville",{'id':ville.id}) }}" style="color:red"> Supprimer </a>{% endif %}</td>
+                    <td>{% if ville.isModifiableVille(app.user) %}<a href="{{ path("modifier_ville",{'id':ville.id}) }}" style="color:red"> Modifier </a>{% endif %}</td>
                 </tr>
                     {% endfor %}
                 </tbody>
