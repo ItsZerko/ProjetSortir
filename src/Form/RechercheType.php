@@ -37,10 +37,18 @@ class RechercheType extends AbstractType
                 'widget' => 'single_text'
             ])
 
-            ->add('isInscrit', CheckboxType::class, array('required' => false))
-//            ->add('isNotInscrit', CheckboxType::class, array('required' => false))
-            ->add('SortiePasse', CheckboxType::class, array('required' => false))
-            ->add('isOrganisateur', CheckboxType::class, array('required' => false))
+            ->add('isInscrit', CheckboxType::class, [
+                'label'=>'Je suis inscrit/inscrite',
+                'required' => false])
+
+            ->add('SortiePasse', CheckboxType::class, [
+                'label'=>'La sortie est passée',
+                'required'=>false])
+
+            ->add('isOrganisateur', CheckboxType::class, [
+                'label'=>'Je suis organisateur/organisatrice',
+                'required'=>false])
+
             ->add('rechercher', SubmitType::class);
 
     }

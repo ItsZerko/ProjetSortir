@@ -80,6 +80,8 @@ class Sortie
 
     /**
      * @ORM\Column(type="text")
+     * @ORM\JoinColumn(nullable=true)
+     *
      */
     private $motifAnnulation;
 
