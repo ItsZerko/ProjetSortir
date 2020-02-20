@@ -16,12 +16,12 @@
         <div class="login">
             <h1 class="h1 mb-3 font-weight-normal loginh1">Se connecter</h1>
 
-            <label for="inputMail">Email</label>
-            <input type="text" value="{{ last_username }}" name="mail" id="inputMail" class="form-control" required
+            <label for="inputMail" class="">Email</label>
+            <input type="text" value="{{ last_username }}" name="mail" id="inputMail" class="form-control boxLogin" required
                    autofocus>
             <br>
             <label for="inputPassword">Mot de passe</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" required>
+            <input type="password" name="password" id="inputPassword" class="form-control boxLogin" required>
 
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}"

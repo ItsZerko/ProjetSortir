@@ -81,7 +81,10 @@ class Sortie
     /**
      * @ORM\Column(type="text")
      * @ORM\JoinColumn(nullable=true)
+<<<<<<< HEAD
      *
+=======
+>>>>>>> ad2249823798c863625bfa222e512bda69ab5adc
      */
     private $motifAnnulation;
 

@@ -2,10 +2,10 @@
 {% block body %}
 
     <header>
-        <h1>Filtrer les sorties :</h1>
-        <div class="col-sm-3">
-            <p> Date du jour : {{ "now" | date('d-m-Y') }}</p>
-            <p> Participant : {{ app.user.username }}</p>
+        <h1 class="col-4 offset-4">Filtrer les sorties :</h1>
+        <div class="col-3 offset-">
+            <p class="textListe"> Date du jour : {{ "now" | date('d-m-Y') }}</p>
+            <p class="textListe"> Participant : {{ app.user.username }}</p>
         </div>
     </header>
 <div class="row">
@@ -40,6 +40,7 @@
             <th>Inscrit</th>
             <th>Organisateur</th>
             <th>Actions</th>
+            <th> </th>
             <th> </th>
             <th> </th>
         </tr>
@@ -79,6 +80,7 @@
     </table>
     <!-- fin du tableau de liste des sorties : -->
 
-    <button><a href="{{ path('sortie') }}">Créer une sortie</a></button>
+    <button class="btn btn-primary"><a href="{{ path('sortie') }}">Créer une sortie</a></button>
+
 
 {% endblock %}

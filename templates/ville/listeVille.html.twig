@@ -1,47 +1,50 @@
+
 {% extends 'base.html.twig' %}
 {% block body %}
-
-<h1>Gérer les lieux</h1>
-    <h2>Filtrer les lieux :</h2>
-    <p>Le nom contient : </p>
-
-    {{ form(recherche) }}
-
+    <div class="afficherVille">
+        <h1>Gérer les villes</h1>
+        <h2>Filtrer les villes :</h2>
+        <p>Le nom contient : </p>
+        <div class="offset-4 col-4">
+            {{ form(recherche) }}
+        </div>
+    </div>
 
     <div class="afficherVille">
         <form>
-            <h1>Gérer les lieux</h1>
-            <h2>Filtrer les lieux :</h2>
-            <div>
-                <input type="search" id="maRecherche" name="q" placeholder="Le nom contient :">
-                <button>Rechercher</button>
-            </div>
+
+
         </form>
 
         <br>
-        <div class="table ville">
+        <div class="table ville offset-3 col-8">
             <table>
                 <thead class="thead-dark">
                 <tr>
                     <th>Ville</th>
-                    <th>Code postal</th>
-                    <th>Actions</th>
+                    <th>Code Postal</th>
+                    <th>Action</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for ville in villes %}
-                <tr>
-                    <td style="color:white"> {{ ville.nom }} </td>
-                    <td style="color:white"> {{ ville.codePostal }} </td>
-                    <td>{% if ville.isSupprimableVille(app.user) %}<a href="{{ path("supprimer_ville",{'id':ville.id}) }}" style="color:red"> Supprimer </a>{% endif %}</td>
-                    <td>{% if ville.isModifiableVille(app.user) %}<a href="{{ path("modifier_ville",{'id':ville.id}) }}" style="color:red"> Modifier </a>{% endif %}</td>
-                </tr>
-                    {% endfor %}
+                    <tr>
+                        <td style="color:white"> {{ ville.nom }} </td>
+                        <td style="color:white"> {{ ville.codePostal }} </td>
+                        <td>{% if ville.isSupprimableVille(app.user) %}<a
+                                href="{{ path("supprimer_ville",{'id':ville.id}) }}" style="color:#007bff">
+                                    Supprimer </a>{% endif %}</td>
+                        <td>{% if ville.isModifiableVille(app.user) %}<a
+                                href="{{ path("modifier_ville",{'id':ville.id}) }}" style="color:#007bff">
+                                    Modifier </a>{% endif %}</td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
             <br>
         </div>
-        <button><a href="{{ path("formulaire_ville") }}">Ajouter</a></button>
+        <button class="btn btn-p btn-primary"><a href="{{ path("formulaire_ville") }}">Ajouter</a></button>
     </div>
 
 {% endblock %}

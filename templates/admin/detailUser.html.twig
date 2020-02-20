@@ -5,20 +5,24 @@
     <table class="table">
         <thead class="thead-dark">
         <tr>
-            <th>Nom de la sortie</th>
-            <th>Date de la sortie</th>
-            <th>Clôture</th>
-            <th>Inscrits/places</th>
-            <th>Etat</th>
-            <th>Inscrit</th>
-            <th>Organisateur</th>
-            <th>Actions</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Pseudo</th>
+            <th>Email</th>
+            <th>Sortie ou il est inscrit</th>
+            <th>Détail Sortie</th>
+
         </tr>
         </thead>
         <tbody>
 
         <tr>
             <td> {{ participants.nom }}</td>
+            <td> {{ participants.prenom }}</td>
+            <td> {{ participants.username }}</td>
+            <td> {{ participants.mail }}</td>
+            <td> {% for inscription in inscriptions %}{{ inscription.idSortie.nom }}<br> {% endfor %}</td>
+            <td> {% for inscription in inscriptions %}{{ inscription.idSortie.infoSortie}} <br>{% endfor %}</td>
             {#            <td> {{ listeSortie.dateHeureDebut | date('d/m/Y') }}</td>#}
             {#            <td> {{ listeSortie.dateLimiteInscription | date('d/m/Y') }}</td>#}
             {#            <td> {{ listeSortie.idInscr.count() }} / {{ listeSortie.nbInscriptionMax }}</td>#}

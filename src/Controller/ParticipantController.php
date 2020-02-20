@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Inscription;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\ParticipantType;
@@ -67,10 +68,9 @@ class ParticipantController extends AbstractController
      * @return Response
      */
 
-    public function monProfil($id = null, EntityManagerInterface $em, Request $request)
+    public function monProfil($id, EntityManagerInterface $em, Request $request)
     {
-        $participantRepository = $em->getRepository(Participant::class);
-        $participant = $participantRepository->find($id);
+        $participant = $em->getRepository(Participant::class)->find($id);
 
         //afficher participant dans ma page :
         return $this->render("profil/monProfil.html.twig",
@@ -84,34 +84,45 @@ class ParticipantController extends AbstractController
      */
     public function listeUser(EntityManagerInterface $em, Request $request)
     {
+        if ($this->isGranted("ROLE_ADMIN")) {
 
-        $participants = $em->getRepository(Participant::class)->findAll();
-        $sorties = $em->getRepository(Sortie::class)->findAll();
+            $participants = $em->getRepository(Participant::class)->findAll();
+            $sorties = $em->getRepository(Sortie::class)->findAll();
 
-        return $this->render('admin/listeUser.html.twig', [
-            'participants' => $participants,
-            'sorties' => $sorties
-        ]);
+            return $this->render('admin/listeUser.html.twig', [
+                'participants' => $participants,
+                'sorties' => $sorties
+            ]);
+        } else {
+            return $this->redirectToRoute('liste');
+        }
     }
 
 
     /**
      * @Route("/detailParticipant/{id}", name="detailParticipant")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @return Response
      */
     public function detailUser(EntityManagerInterface $em, Request $request, $id)
     {
-        $null = null;
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $null = null;
+            $partiInsc = $em->getRepository(Inscription::class)->findBy
+            ([
+                'id_participant'=>$id
+            ]);
+            $participants = $em->getRepository(Participant::class)->find($id);
 
-        $participants = $em->getRepository(Participant::class)->findBy
-        ([
-            'id' => $id,
-
-
-        ]);
-
-        return $this->render('admin/detailUser.html.twig', [
-            'participants' => $participants
-        ]);
+            return $this->render('admin/detailUser.html.twig', [
+                'participants' => $participants,
+                'inscriptions' =>$partiInsc
+            ]);
+        } else {
+            return $this->redirectToRoute('liste');
+        }
 
     }
 
@@ -122,34 +133,51 @@ class ParticipantController extends AbstractController
      * @Route("/suppressionUser/{id}", name="suppressionUser")
      * @return RedirectResponse|Response
      */
-    public function supprimerUser(EntityManagerInterface $em, Request $request,$id){
+    public function supprimerUser(EntityManagerInterface $em, Request $request, $id)
+    {
+        if ($this->isGranted("ROLE_ADMIN")) {
 
-        $null = null;
+            $null = null;
 
 
-        $participantId = $em->getRepository(Participant::class)->findOneBy(
-            [
-                'id' => $id
-            ]);
+            $participantId = $em->getRepository(Participant::class)->findOneBy(
+                [
+                    'id' => $id
+                ]);
 
             $em->remove($participantId);
             $em->flush();
 
-        return $this->redirectToRoute('listeParticipant');
+            return $this->redirectToRoute('listeParticipant');
+        } else {
+            return $this->redirectToRoute('liste');
         }
+    }
 
 
     /**
      * @Route("/detailSortie/{id}", name="detailSortie")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @return Response
      */
     public function detailSortie(EntityManagerInterface $em, Request $request, $id)
     {
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $sortie = $em->getRepository(Sortie::class)->find($id);
+            $sortieInsc = $em->getRepository(Inscription::class)->findBy
+            ([
+                'id_sortie'=>$id
+            ]);
 
-        $sortie = $em->getRepository(Sortie::class)->find($id);
-
-        return $this->render('admin/detailSortie.html.twig', [
-            'sortie' => $sortie
-        ]);
+            return $this->render('admin/detailSortie.html.twig', [
+                'sortie' => $sortie,
+                'inscriptions' => $sortieInsc
+            ]);
+        } else {
+            return $this->redirectToRoute('liste');
+        }
 
     }
 
@@ -160,20 +188,24 @@ class ParticipantController extends AbstractController
      * @Route("/suppressionSortie/{id}", name="suppressionSortie")
      * @return RedirectResponse|Response
      */
-    public function supprimerSortie(EntityManagerInterface $em, Request $request,$id){
+    public function supprimerSortie(EntityManagerInterface $em, Request $request, $id)
+    {
+        if ($this->isGranted("ROLE_ADMIN")) {
 
 
+            $sortie = $em->getRepository(Sortie::class)->findOneBy(
+                [
+                    'id' => $id,
+                ]);
 
-        $sortie = $em->getRepository(Sortie::class)->findOneBy(
-            [
-                'id' => $id,
-            ]);
-
-        $em->remove($sortie);
-        $em->flush();
+            $em->remove($sortie);
+            $em->flush();
 
 
-        return $this->redirectToRoute('listeParticipant');
+            return $this->redirectToRoute('listeParticipant');
 
+        } else {
+            return $this->redirectToRoute('liste');
+        }
     }
-    }
+}
