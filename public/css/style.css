@@ -1,6 +1,25 @@
+/*CSS général :*/
+
 body{
-    background-image: url("https://cdn.pixabay.com/photo/2019/11/29/08/34/space-4660847_1280.jpg");
+    background-image: url("https://cdn.pixabay.com/photo/2016/11/21/12/51/concert-1845233_960_720.jpg");
+    background-size: 100%;
+    background-repeat:no-repeat ;
+    color:white;
 }
+
+/*page de connexion : */
+.login {
+    width: 280px;
+    margin:0 auto;
+    padding-top: 80px;
+
+}
+
+
+.loginh1 {
+    text-shadow: 4px 4px 9px rgba(0,0,0,0.72);
+}
+
 
 .header {
     background-color: white;
@@ -13,11 +32,11 @@ body{
 }
 
 .table ville td {
-            background-color: white;
-        }
+    background-color: white;
+}
 
 .textHeader{
-font-size: 2em;
+    font-size: 2em;
 }
 
 a, a:hover {
@@ -85,20 +104,16 @@ a, a:hover {
 
 
 .btnS{
-
     text-decoration: none;
-
-
-
 }
 
 
 .bgList{
     background-color: #AAAAAA;
-
 }
 
 .imgT{
-display:inline-block;
+    display:inline-block;
     border-radius:50%;
 }
+

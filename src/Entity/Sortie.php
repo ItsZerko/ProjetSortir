@@ -57,38 +57,10 @@ class Sortie
      */
     private $etat;
 
-
-    public function getEtat(): string
-    {
-        return $this->etat;
-    }
-
-
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-    }
-
     /**
-     * @return mixed
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="sorties", cascade={"remove"})
      */
-    public function getSortie()
-    {
-        return $this->sortie;
-    }
-
-    /**
-     * @param mixed $sortie
-     */
-    public function setSortie($sortie): void
-    {
-        $this->sortie = $sortie;
-    }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="organisateur", cascade={"remove"})
-     */
-    private $sortie;
+    private $organisateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortieSite")
@@ -113,10 +85,25 @@ class Sortie
     }
 
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+
+
+    public function getEtat(): string
+    {
+        return $this->etat;
+    }
+
+
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+    }
+
 
     public function getNom(): ?string
     {
@@ -255,6 +242,21 @@ class Sortie
         return true;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOrganisateur()
+    {
+        return $this->organisateur;
+    }
+
+    /**
+     * @param mixed $organisateur
+     */
+    public function setOrganisateur($organisateur): void
+    {
+        $this->organisateur = $organisateur;
+    }
 
 
 }

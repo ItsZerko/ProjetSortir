@@ -2,23 +2,23 @@
 {% block body %}
     <!-- colonne de gauche -->
     <ul class="list-group-left">
-        <li class="list-group-item">Nom de la sortie : {{ sortie.nom }}</li>
-        <li class="list-group-item">Date et heure de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</li>
-        <li class="list-group-item">Date limite d'inscription :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}</li>
-        <li class="list-group-item">Nombre de places :  {{ sortie.nbInscriptionMax }}</li>
-        <li class="list-group-item">Durée : {{ sortie.duree | date('d/m/Y') }}</li>
-        <li class="list-group-item">Description et infos : {{ sortie.infoSortie}}</li>
+        <li class="list-group-item">Nom de la sortie : {{ sorties.nom }}</li>
+        <li class="list-group-item">Date et heure de la sortie : {{ sorties.dateHeureDebut | date('d/m/Y') }}</li>
+        <li class="list-group-item">Date limite d'inscription :  {{ sorties.dateLimiteInscription | date('d/m/Y') }}</li>
+        <li class="list-group-item">Nombre de places :  {{ sorties.nbInscriptionMax }}</li>
+        <li class="list-group-item">Durée : {{ sorties.duree | date('d/m/Y') }}</li>
+        <li class="list-group-item">Description et infos : {{ sorties.infoSortie}}</li>
     </ul>
     <!-- fin de colonne de gauche -->
 
     <!-- colonne de droite -->
     <ul class="list-group-right">
-        <li class="list-group-item">Lieu : {{ sortie.lieu.nom }}</li>
-        <li class="list-group-item">Rue : {{ sortie.lieu.rue }}</li>
-        <li class="list-group-item">Ville : {{ sortie.lieu.ville.nom }}</li>
-        <li class="list-group-item">Code postal : {{ sortie.lieu.ville.codePostal }}</li>
-        <li class="list-group-item">Latitude : {{ sortie.lieu.latitude }}</li>
-        <li class="list-group-item">Longitude : {{ sortie.lieu.longitude }}</li>
+        <li class="list-group-item">Lieu : {{ sorties.lieu.nom }}</li>
+        <li class="list-group-item">Rue : {{ sorties.lieu.rue }}</li>
+        <li class="list-group-item">Ville : {{ sorties.lieu.ville.nom }}</li>
+        <li class="list-group-item">Code postal : {{ sorties.lieu.ville.codePostal }}</li>
+        <li class="list-group-item">Latitude : {{ sorties.lieu.latitude }}</li>
+        <li class="list-group-item">Longitude : {{ sorties.lieu.longitude }}</li>
     </ul>
    <!-- fin de colonne de droite -->
 
@@ -32,8 +32,8 @@
         </thead>
         <tbody>
         <tr>
-{#            <td>{{ sortie.participant.nom }}</td>#}
-{#            <td>{{ sortie.participant.username  }}</td>#}
+            <td>{{ sorties.organisateur.nom  }}</td>
+            <td>{{ sorties.organisateur.username  }}</td>
         </tr>
         </tbody>
     </table>

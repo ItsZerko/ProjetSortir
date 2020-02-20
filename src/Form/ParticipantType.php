@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Participant;
 use App\Entity\Site;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,7 +17,7 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
+            ->add('username', TextType::class, ['attr'=>['label'=>'pseudo']])
             ->add('prenom')
             ->add('nom')
             ->add('telephone')

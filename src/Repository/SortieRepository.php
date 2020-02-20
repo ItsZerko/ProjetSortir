@@ -29,9 +29,17 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Sortie[] Returns an array of Sortie objects
+     * @param $dateDebut
+     * @param $dateFin
+     * @param $nomRecherche
+     * @param $siteRecherche
+     * @param $isInscrit
+     * @param $user
+     * @param $etatPasse
+     * @param $isOrganisateur
+     * @return mixed
      */
-    public function findByCriterion($dateDebut = null, $dateFin = null, $nomRecherche = null, $siteRecherche = null, $isInscrit,/*$isNotInscrit*/ $user, $etatPasse, $isOrganisateur)
+    public function findByCriterion($dateDebut, $dateFin, $nomRecherche, $siteRecherche, $isInscrit, $user, $etatPasse, $isOrganisateur)
     {
         $qb = $this->createQueryBuilder('s');
         if ($dateDebut) {
@@ -48,49 +56,30 @@ class SortieRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('s.nom = :nomRecherche')
                 ->setParameter('nomRecherche', $nomRecherche);
-        }  if ($siteRecherche) {
+        }
+        if ($siteRecherche) {
             $qb
                 ->andWhere('s.sites = :siteRecherche')
                 ->setParameter('siteRecherche', $siteRecherche);
-        } if ($isInscrit) {
-        $qb
-            ->join('s.idInscr', 'i')
-            ->andWhere('i.id_participant = :user')
-            ->setParameter('user', $user);
+        }
+        if ($isInscrit) {
+            $qb
+                ->join('s.idInscr', 'i')
+                ->andWhere('i.id_participant = :user')
+                ->setParameter('user', $user);
+        }
+        if ($etatPasse) {
+            $qb
+                ->andWhere('s.etat = :etatPasse')
+                ->setParameter('etatPasse', $etatPasse);
+        }
+        if ($isOrganisateur) {
+            $qb
+                ->join('s.idInscr', 'i')
+                ->andWhere('i.id_participant = :user')
+                ->setParameter('user', $user);
+        }
 
-        }  if ($etatPasse) {
-        $qb
-            ->andWhere('s.etat = :etatPasse')
-            ->setParameter('etatPasse', $etatPasse);
-    } if ($isOrganisateur) {
-        $qb
-            ->join('s.idInscr', 'i')
-            ->andWhere('i.id_participant = :user')
-            ->setParameter('user', $user);
-
-//        } if ($isNotInscrit) {
-//        $qb
-//            ->join('s.idInscr', 'i')
-//            ->andWhere('i.id_participant != :user')
-//            ->setParameter('user', $user);
-    }
         return $qb->getQuery()->getResult();
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

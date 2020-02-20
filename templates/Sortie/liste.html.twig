@@ -8,9 +8,25 @@
             <p> Participant : {{ app.user.username }}</p>
         </div>
     </header>
-{% if app.user %}
-    {{ form(recherche) }}
-{% endif %}
+<div class="row">
+        <div class="col-4">
+{{ form_row(recherche.RechercheSortie) }}
+{{ form_row(recherche.RechercheSite) }}
+        </div>
+    <div class="col-4">
+{{ form_row(recherche.DateDebut) }}
+{{ form_row(recherche.DateFin) }}
+        </div>
+    <div class="col-4">
+{{ form_row(recherche.isInscrit) }}
+{{ form_row(recherche.SortiePasse) }}
+{{ form_row(recherche.isOrganisateur) }}
+{{ form_row(recherche.rechercher) }}
+        </div>
+</div>
+
+
+
     <!-- tableau de liste des sorties : -->
     <div class="fond">
     <table class="table">
@@ -24,6 +40,8 @@
             <th>Inscrit</th>
             <th>Organisateur</th>
             <th>Actions</th>
+            <th> </th>
+            <th> </th>
         </tr>
         </thead>
         <tbody>
@@ -36,8 +54,10 @@
             <td> {{ listeSortie.etat }}</td>
             {% if app.user.isInscrit(listeSortie) %}
                 <td>X</td>
+                {% else %}
+                <td> </td>
             {% endif %}
-            <td><a href="{{ path('monProfil',{'id':listeSortie.id}) }}">{{ listeSortie.sortie.nom }}</td></a>
+            <td><a href="{{ path('monProfil',{'id':listeSortie.id}) }}">{{ listeSortie.organisateur.nom }}</td></a>
             <td><a href="{{ path('detail',{'id':listeSortie.id}) }}">afficher</a></td>
             <td><a href="{{ path('modifier',{'id':listeSortie.id}) }}">modifier</a></td>
 

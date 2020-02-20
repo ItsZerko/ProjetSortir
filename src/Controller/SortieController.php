@@ -161,7 +161,7 @@ class SortieController extends AbstractController
      */
     public function recupListeSortie(EntityManagerInterface $em, Request $request)
     {
-        $form = $this->createForm(RechercheType::class);
+
 
         $sites = $em->getRepository(Site::class)->findAll();
         $listeSorties = $em->getRepository(Sortie::class)->findAll();
@@ -174,7 +174,7 @@ class SortieController extends AbstractController
         ]);
 
 //      création du formulaire :
-
+        $form = $this->createForm(RechercheType::class);
 
 //      on récupère les informations du formulaire :
         $form->handleRequest($request);
@@ -206,10 +206,6 @@ class SortieController extends AbstractController
             $user = $this->getUser();
         }
 
-        if ($form->isSubmitted()) {
-            $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut, $infoDateFin, $infoRecherche, $infoSite);
-
-        }
 
         if ($form->isSubmitted()) {
             $listeSorties = $em->getRepository(Sortie::class)->findByCriterion($infoDateDebut,
@@ -226,12 +222,11 @@ class SortieController extends AbstractController
             'Sortie/liste.html.twig'
             // compact('listeSorties', 'sites', 'inscription', 'participants','form')
             , [
-            'recherche' => $form->createView(),
             "listeSorties" => $listeSorties,
             "sites" => $sites,
             "inscription" => $inscription,
             "participants" => $participants,
-
+            'recherche' => $form->createView()
         ]);
     }
 
@@ -242,11 +237,11 @@ class SortieController extends AbstractController
     public function detail($id, EntityManagerInterface $em)
     {
         $sortieRepository = $em->getRepository(Sortie::class);
-        $sortie = $sortieRepository->find($id);
+        $sorties = $sortieRepository->find($id);
 
         return $this->render("sortie/detail.html.twig",
             [
-                "sortie" => $sortie
+                "sorties" => $sorties
             ]
         );
     }

@@ -72,7 +72,6 @@ class Participant implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=8, minMessage="Votre mot de passe doit faire au moins 8 caractères")
      * @Assert\EqualTo(propertyPath="password", message="Mot de passe différent")
      */
@@ -80,9 +79,9 @@ class Participant implements UserInterface
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="sortie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateur")
      */
-    private $organisateur;
+    private $sorties;
 
     /**
      * @var Collection|Inscription[]
@@ -301,21 +300,6 @@ class Participant implements UserInterface
         return false;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOrganisateur()
-    {
-        return $this->organisateur;
-    }
-
-    /**
-     * @param mixed $organisateur
-     */
-    public function setOrganisateur($organisateur): void
-    {
-        $this->organisateur = $organisateur;
-    }
 
     public function isSupprimable()
     {
@@ -328,5 +312,21 @@ class Participant implements UserInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSorties()
+    {
+        return $this->sorties;
+    }
+
+    /**
+     * @param mixed $sorties
+     */
+    public function setSorties($sorties): void
+    {
+        $this->sorties = $sorties;
     }
 }
