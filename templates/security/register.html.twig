@@ -40,10 +40,15 @@
             </div>
 
             <div class="col-4">
+
+                {{ form_row(registerForm.site) }}
+            </div>
+{% if is_granted('ROLE_ADMIN') %}
+            <div class="col-4">
                 {{ form_row(registerForm.actif) }}
 
             </div>
-
+{% endif %}
         </div>
 
 
@@ -56,6 +61,11 @@
 
             <div class="col-4">
                 {{ form_row(registerForm.passwordVerif) }}
+
+            </div>
+            <div class="col">
+
+                {{ form_row(registerForm.actif) }}
 
             </div>
 

@@ -97,6 +97,10 @@ class ParticipantController extends AbstractController
 
     /**
      * @Route("/detailParticipant/{id}", name="detailParticipant")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @return Response
      */
     public function detailUser(EntityManagerInterface $em, Request $request, $id)
     {
@@ -141,6 +145,10 @@ class ParticipantController extends AbstractController
 
     /**
      * @Route("/detailSortie/{id}", name="detailSortie")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @return Response
      */
     public function detailSortie(EntityManagerInterface $em, Request $request, $id)
     {
